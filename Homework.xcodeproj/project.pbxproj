@@ -7,18 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F0484A92294FD34004CC8E1 /* SchoolClass+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0484A62294FD34004CC8E1 /* SchoolClass+CoreDataProperties.swift */; };
+		3F0484AD22950159004CC8E1 /* AddAssignmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0484AC22950159004CC8E1 /* AddAssignmentView.swift */; };
+		3F4D04082295FE160031E5D9 /* Assignment+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4D04062295FE160031E5D9 /* Assignment+CoreDataClass.swift */; };
+		3F4D04092295FE160031E5D9 /* Assignment+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4D04072295FE160031E5D9 /* Assignment+CoreDataProperties.swift */; };
 		3F681C022290922B0046690C /* CompletedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F681C012290922B0046690C /* CompletedViewController.swift */; };
-		3F681C0422909A870046690C /* SchoolClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F681C0322909A870046690C /* SchoolClass.swift */; };
 		3F681C0622909E1F0046690C /* AddFormviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F681C0522909E1F0046690C /* AddFormviewController.swift */; };
 		3F681C08229217290046690C /* AddClassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F681C07229217290046690C /* AddClassView.swift */; };
+		3F7C2CFA22978F6A00E28110 /* EditAssignmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7C2CF922978F6A00E28110 /* EditAssignmentViewController.swift */; };
 		3F83383A22934EEF00BAFA4F /* Homework.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3F83383822934EEF00BAFA4F /* Homework.xcdatamodeld */; };
 		3FA38FE6228624E700BFC118 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA38FE5228624E700BFC118 /* AppDelegate.swift */; };
 		3FA38FE8228624E700BFC118 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA38FE7228624E700BFC118 /* TabBarController.swift */; };
 		3FA38FED228624E900BFC118 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3FA38FEC228624E900BFC118 /* Assets.xcassets */; };
 		3FA38FFB228624E900BFC118 /* HomeworkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA38FFA228624E900BFC118 /* HomeworkTests.swift */; };
 		3FA39006228624E900BFC118 /* HomeworkUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA39005228624E900BFC118 /* HomeworkUITests.swift */; };
+		3FA761DE22973B8C00CF2F03 /* ViewAssignmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA761DD22973B8C00CF2F03 /* ViewAssignmentViewController.swift */; };
+		3FBF8ECA2293A077006DD723 /* SchoolClass+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBF8EC82293A077006DD723 /* SchoolClass+CoreDataClass.swift */; };
+		3FEA94072294892900F6A0F2 /* EditClassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FEA94062294892900F6A0F2 /* EditClassViewController.swift */; };
 		3FEE60A3228764620070F893 /* PendingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FEE60A2228764620070F893 /* PendingViewController.swift */; };
 		3FEE60A52287647E0070F893 /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FEE60A42287647E0070F893 /* AddViewController.swift */; };
+		3FFBF68A22964FD0001ECE93 /* PendingCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFBF68922964FD0001ECE93 /* PendingCellView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,10 +47,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3F0484A62294FD34004CC8E1 /* SchoolClass+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SchoolClass+CoreDataProperties.swift"; path = "Homework/SchoolClass+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3F0484AC22950159004CC8E1 /* AddAssignmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAssignmentView.swift; sourceTree = "<group>"; };
+		3F4D04062295FE160031E5D9 /* Assignment+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Assignment+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3F4D04072295FE160031E5D9 /* Assignment+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Assignment+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3F681C012290922B0046690C /* CompletedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedViewController.swift; sourceTree = "<group>"; };
-		3F681C0322909A870046690C /* SchoolClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolClass.swift; sourceTree = "<group>"; };
 		3F681C0522909E1F0046690C /* AddFormviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFormviewController.swift; sourceTree = "<group>"; };
 		3F681C07229217290046690C /* AddClassView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddClassView.swift; sourceTree = "<group>"; };
+		3F7C2CF922978F6A00E28110 /* EditAssignmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAssignmentViewController.swift; sourceTree = "<group>"; };
 		3F83383922934EEF00BAFA4F /* Homework.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Homework.xcdatamodel; sourceTree = "<group>"; };
 		3FA38FE2228624E700BFC118 /* Homework.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Homework.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FA38FE5228624E700BFC118 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -55,8 +67,12 @@
 		3FA39001228624E900BFC118 /* HomeworkUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HomeworkUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FA39005228624E900BFC118 /* HomeworkUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeworkUITests.swift; sourceTree = "<group>"; };
 		3FA39007228624E900BFC118 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3FA761DD22973B8C00CF2F03 /* ViewAssignmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewAssignmentViewController.swift; sourceTree = "<group>"; };
+		3FBF8EC82293A077006DD723 /* SchoolClass+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SchoolClass+CoreDataClass.swift"; path = "Homework/SchoolClass+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3FEA94062294892900F6A0F2 /* EditClassViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditClassViewController.swift; sourceTree = "<group>"; };
 		3FEE60A2228764620070F893 /* PendingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingViewController.swift; sourceTree = "<group>"; };
 		3FEE60A42287647E0070F893 /* AddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
+		3FFBF68922964FD0001ECE93 /* PendingCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingCellView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +103,10 @@
 		3FA38FD9228624E700BFC118 = {
 			isa = PBXGroup;
 			children = (
+				3F4D04062295FE160031E5D9 /* Assignment+CoreDataClass.swift */,
+				3F4D04072295FE160031E5D9 /* Assignment+CoreDataProperties.swift */,
+				3F0484A62294FD34004CC8E1 /* SchoolClass+CoreDataProperties.swift */,
+				3FBF8EC82293A077006DD723 /* SchoolClass+CoreDataClass.swift */,
 				3FA38FE4228624E700BFC118 /* Homework */,
 				3FA38FF9228624E900BFC118 /* HomeworkTests */,
 				3FA39004228624E900BFC118 /* HomeworkUITests */,
@@ -108,12 +128,16 @@
 			isa = PBXGroup;
 			children = (
 				3FA38FE5228624E700BFC118 /* AppDelegate.swift */,
-				3F681C0322909A870046690C /* SchoolClass.swift */,
 				3FA38FE7228624E700BFC118 /* TabBarController.swift */,
 				3FEE60A2228764620070F893 /* PendingViewController.swift */,
+				3FA761DD22973B8C00CF2F03 /* ViewAssignmentViewController.swift */,
+				3F7C2CF922978F6A00E28110 /* EditAssignmentViewController.swift */,
+				3FFBF68922964FD0001ECE93 /* PendingCellView.swift */,
 				3F681C012290922B0046690C /* CompletedViewController.swift */,
 				3FEE60A42287647E0070F893 /* AddViewController.swift */,
 				3F681C0522909E1F0046690C /* AddFormviewController.swift */,
+				3FEA94062294892900F6A0F2 /* EditClassViewController.swift */,
+				3F0484AC22950159004CC8E1 /* AddAssignmentView.swift */,
 				3F681C07229217290046690C /* AddClassView.swift */,
 				3FA38FEC228624E900BFC118 /* Assets.xcassets */,
 				3F83383822934EEF00BAFA4F /* Homework.xcdatamodeld */,
@@ -269,14 +293,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3FA761DE22973B8C00CF2F03 /* ViewAssignmentViewController.swift in Sources */,
+				3FFBF68A22964FD0001ECE93 /* PendingCellView.swift in Sources */,
 				3F83383A22934EEF00BAFA4F /* Homework.xcdatamodeld in Sources */,
 				3FEE60A3228764620070F893 /* PendingViewController.swift in Sources */,
+				3F4D04092295FE160031E5D9 /* Assignment+CoreDataProperties.swift in Sources */,
+				3F4D04082295FE160031E5D9 /* Assignment+CoreDataClass.swift in Sources */,
 				3FA38FE8228624E700BFC118 /* TabBarController.swift in Sources */,
+				3F7C2CFA22978F6A00E28110 /* EditAssignmentViewController.swift in Sources */,
 				3F681C0622909E1F0046690C /* AddFormviewController.swift in Sources */,
+				3F0484AD22950159004CC8E1 /* AddAssignmentView.swift in Sources */,
+				3FEA94072294892900F6A0F2 /* EditClassViewController.swift in Sources */,
+				3FBF8ECA2293A077006DD723 /* SchoolClass+CoreDataClass.swift in Sources */,
 				3FEE60A52287647E0070F893 /* AddViewController.swift in Sources */,
 				3F681C022290922B0046690C /* CompletedViewController.swift in Sources */,
-				3F681C0422909A870046690C /* SchoolClass.swift in Sources */,
 				3FA38FE6228624E700BFC118 /* AppDelegate.swift in Sources */,
+				3F0484A92294FD34004CC8E1 /* SchoolClass+CoreDataProperties.swift in Sources */,
 				3F681C08229217290046690C /* AddClassView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -434,6 +466,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = ZYUR4NT4F4;
 				INFOPLIST_FILE = Homework/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -451,6 +484,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = ZYUR4NT4F4;
 				INFOPLIST_FILE = Homework/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

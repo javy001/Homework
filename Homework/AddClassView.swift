@@ -12,13 +12,14 @@ protocol SavedButtonDelegate {
     func didTapSaveButton(name: String)
 }
 
-class AddClassView: UIView {
+class AddClassView: UIView, UITextFieldDelegate {
     
     var savedButtonDelegate: SavedButtonDelegate?
     var input = UITextField()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        input.delegate = self
         
         setUp()
     }
@@ -26,6 +27,12 @@ class AddClassView: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.endEditing(true)
+        return false
+    }
+    
     
     func setUp(){
         let label = UILabel()
@@ -52,11 +59,11 @@ class AddClassView: UIView {
         self.addSubview(submitButton)
         submitButton.setTitle("Save", for: .normal)
         submitButton.backgroundColor = UIColor.blue
-        submitButton.layer.cornerRadius = 5
+        submitButton.layer.cornerRadius = 8
         
         submitButton.translatesAutoresizingMaskIntoConstraints = false
         submitButton.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        submitButton.widthAnchor.constraint(equalToConstant: 60).isActive = true
+        submitButton.widthAnchor.constraint(equalToConstant: 120).isActive = true
         submitButton.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
         submitButton.heightAnchor.constraint(equalToConstant: 35).isActive = true
         

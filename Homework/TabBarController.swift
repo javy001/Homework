@@ -15,8 +15,8 @@ class TabBarController: UITabBarController {
         
         let pendingViewController = UINavigationController(rootViewController: PendingViewController())
         
-//        let icon = UITabBarItem(tabBarSystemItem: UITabBarItem.SystemItem.mostViewed, tag: 0)
-        pendingViewController.tabBarItem.image = UIImage(named: "list")
+//        pendingViewController.tabBarItem.image = UIImage(named: "list")
+        pendingViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .mostViewed, tag: 0)
         
         let addViewController = UINavigationController(rootViewController: AddViewController())
         addViewController.tabBarItem.image = UIImage(named: "plus")
