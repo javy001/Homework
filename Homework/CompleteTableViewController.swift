@@ -1,14 +1,14 @@
 //
-//  PendingViewController.swift
+//  CompleteTableViewController.swift
 //  Homework
 //
-//  Created by Javier Quintero on 5/11/19.
+//  Created by Javier Quintero on 5/23/19.
 //  Copyright © 2019 Javier Quintero. All rights reserved.
 //
 
 import UIKit
 
-class PendingViewController: UITableViewController {
+class CompleteTableViewController: UITableViewController {
 
     var cellID = "cellID"
     var rows: [Assignment] = []
@@ -18,17 +18,14 @@ class PendingViewController: UITableViewController {
         super.viewDidLoad()
         rows = []
         tableView.register(PendingCellView.self, forCellReuseIdentifier: cellID)
-        navigationItem.title = "Pending Items"
-        self.view.backgroundColor = UIColor(red: 91/255, green: 91/255, blue: 91/255, alpha: 1)
-        self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+        navigationItem.title = "Completed Assignments"
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         do{
             let fetchRequest = Assignment.assignmentFetchRequest()
-            fetchRequest.predicate = NSPredicate(format: "isComplete == false")
-            fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Assignment.dueDate), ascending: true)]
+            fetchRequest.predicate = NSPredicate(format: "isComplete == true")
             rows = try context.fetch(fetchRequest)
             self.tableView.reloadData()
         } catch {
@@ -50,20 +47,21 @@ class PendingViewController: UITableViewController {
         cell.assignmentName = assignment.name
         cell.dueDate = assignment.dueDate as Date?
         cell.layoutSubviews()
-//        cell.textLabel?.text = rows[indexPath.row].name
+        //        cell.textLabel?.text = rows[indexPath.row].name
         return cell
         
     }
     
-//    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return 55
-//    }
+    //    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    //        return 80
+    //    }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let assignment = rows[indexPath.row]
         let viewController = ViewAssignmentViewController()
         viewController.assignment = assignment
+        //        viewController.schoolClass = schoolClass
         navigationController?.pushViewController(viewController, animated: false)
     }
-
+    
 }

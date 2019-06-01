@@ -21,5 +21,6 @@ extension Assignment {
     @NSManaged public var name: String?
     @NSManaged public var isComplete: Bool
     @NSManaged public var schoolClass: SchoolClass?
+    @NSManaged public var notes: String?
 
 }

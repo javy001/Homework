@@ -21,12 +21,16 @@ class EditClassViewController: UIViewController {
     }
     
     private func setUp() {
+        self.navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveClass(_:))), animated: true)
         let subView = UIView()
         self.view.addSubview(subView)
         self.view.backgroundColor = UIColor.white
         
+        let safeOffset = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0
+        let navOffset = self.navigationController?.navigationBar.frame.size.height ?? 0
+        
         subView.translatesAutoresizingMaskIntoConstraints = false
-        subView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 100).isActive = true
+        subView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: safeOffset + navOffset).isActive = true
         subView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -100).isActive = true
         subView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
         subView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
@@ -53,28 +57,14 @@ class EditClassViewController: UIViewController {
         
         nameInput.borderStyle = .roundedRect
         
-        let saveButton = UIButton()
-        subView.addSubview(saveButton)
-        saveButton.setTitle("Save", for: .normal)
-        saveButton.backgroundColor = UIColor.blue
-        saveButton.layer.cornerRadius = 8
-        
-        saveButton.translatesAutoresizingMaskIntoConstraints = false
-        saveButton.trailingAnchor.constraint(equalTo: subView.centerXAnchor, constant: -20).isActive = true
-        saveButton.widthAnchor.constraint(equalToConstant: 120).isActive = true
-        saveButton.topAnchor.constraint(equalTo: nameInput.bottomAnchor, constant: 30).isActive = true
-        saveButton.heightAnchor.constraint(equalToConstant: 35).isActive = true
-        
-        saveButton.addTarget(self, action: #selector(EditClassViewController.saveClass(_:)), for: .touchUpInside)
-        
         let deleteButton = UIButton()
         subView.addSubview(deleteButton)
         deleteButton.setTitle("Delete", for: .normal)
-        deleteButton.backgroundColor = UIColor.red
-        deleteButton.layer.cornerRadius = 8
+        deleteButton.setTitleColor(UIColor.red, for: .normal)
+//        deleteButton.layer.cornerRadius = 8
         
         deleteButton.translatesAutoresizingMaskIntoConstraints = false
-        deleteButton.leadingAnchor.constraint(equalTo: subView.centerXAnchor, constant: 20).isActive = true
+        deleteButton.centerXAnchor.constraint(equalTo: subView.centerXAnchor).isActive = true
         deleteButton.widthAnchor.constraint(equalToConstant: 120).isActive = true
         deleteButton.topAnchor.constraint(equalTo: nameInput.bottomAnchor, constant: 30).isActive = true
         deleteButton.heightAnchor.constraint(equalToConstant: 35).isActive = true
@@ -88,17 +78,17 @@ class EditClassViewController: UIViewController {
         context.delete(schoolClass)
         do{
             try context.save()
-            navigationController?.popViewController(animated: false)
+            navigationController?.popToRootViewController(animated: false)
         } catch {
             print("Failed to save")
         }
     }
     
-    @objc func saveClass(_ sender:UIButton!) {
+    @objc func saveClass(_ sender:UIBarButtonItem) {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         schoolClass.name = nameInput.text
         appDelegate.saveContext()
-        navigationController?.popViewController(animated: false)
+        navigationController?.popToRootViewController(animated: false)
     }
     
     

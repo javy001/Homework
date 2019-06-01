@@ -16,9 +16,13 @@ public class Assignment: NSManagedObject {
         var dateString = ""
         if let dueDate = dueDate {
             let formatter = DateFormatter()
-            formatter.dateFormat = "yyyy-MM-dd"
+            formatter.dateFormat = "EEEE MMM d"
             dateString = formatter.string(from: dueDate as Date)
         }
         return dateString
+    }
+    
+    @nonobjc public class func assignmentFetchRequest() -> NSFetchRequest<Assignment> {
+        return NSFetchRequest<Assignment>(entityName: "Assignment")
     }
 }

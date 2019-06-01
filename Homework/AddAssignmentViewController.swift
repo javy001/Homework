@@ -1,14 +1,14 @@
 //
-//  EditAssignmentViewController.swift
+//  AddAssignmentViewController.swift
 //  Homework
 //
-//  Created by Javier Quintero on 5/23/19.
+//  Created by Javier Quintero on 5/29/19.
 //  Copyright © 2019 Javier Quintero. All rights reserved.
 //
 
 import UIKit
 
-class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextViewDelegate {
+class AddAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextViewDelegate {
     
     var assignment: Assignment?
     var appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -22,17 +22,17 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
     var container = UIScrollView()
     var bottomView = UIView()
     var bottomViewHeightConstraint: NSLayoutConstraint?
-    var deleteButton = UIButton()
     var containerContstraint: NSLayoutConstraint?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.picker.delegate = self
         self.picker.dataSource = self
         self.note.delegate = self
         
         
+        fetchClasses()
         setuUpView()
         getInitialClass()
         
@@ -88,22 +88,18 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     
     func setuUpView(){
+        assignment = Assignment(context: context)
+        schoolClass = classes[0]
         self.navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveAssignment(_:))), animated: true)
         self.view.backgroundColor = UIColor.white
         
-        if let text = assignment?.notes {
-            note.text = text
-        }
         self.view.addSubview(container)
         let tapListener = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
-        let safeOffset = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0
-        let navOffset = self.navigationController?.navigationBar.frame.size.height ?? 0
         container.addGestureRecognizer(tapListener)
-//        container.keyboardDismissMode = .interactive
         container.translatesAutoresizingMaskIntoConstraints = false
         container.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10).isActive = true
         container.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10).isActive = true
-        containerContstraint = container.topAnchor.constraint(equalTo: self.view.topAnchor, constant: navOffset + safeOffset)
+        containerContstraint = container.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 70)
         containerContstraint!.isActive = true
         container.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
         
@@ -123,7 +119,7 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
         picker.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -10).isActive = true
         picker.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 10).isActive = true
         picker.topAnchor.constraint(equalTo: classLabel.topAnchor).isActive = true
-
+        
         
         let assignmentLabel = UILabel()
         container.addSubview(assignmentLabel)
@@ -141,9 +137,6 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
         name.leadingAnchor.constraint(equalTo: container.leadingAnchor).isActive = true
         name.topAnchor.constraint(equalTo:assignmentLabel.bottomAnchor).isActive = true
         name.borderStyle = .roundedRect
-        if let assignment = assignment {
-            name.text = assignment.name
-        }
         
         let dateLabel = UILabel()
         container.addSubview(dateLabel)
@@ -160,9 +153,6 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
         dueDate.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -15).isActive = true
         dueDate.heightAnchor.constraint(equalToConstant: 100).isActive = true
         dueDate.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: -20).isActive = true
-        if let assignmentDate = assignment?.dueDate {
-            dueDate.date = assignmentDate as Date
-        }
         
         let noteLabel = UILabel()
         container.addSubview(noteLabel)
@@ -184,35 +174,18 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
         note.layer.borderWidth = 0.3
         note.font = UIFont(name: "HelveticaNeue", size: 15)
         
-        container.addSubview(deleteButton)
-        deleteButton.translatesAutoresizingMaskIntoConstraints = false
-        deleteButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        deleteButton.widthAnchor.constraint(equalToConstant: 180).isActive = true
-        deleteButton.centerXAnchor.constraint(equalTo: container.centerXAnchor).isActive = true
-        deleteButton.topAnchor.constraint(equalTo: note.bottomAnchor, constant: 25).isActive = true
-        deleteButton.setTitle("Delete Homework", for: .normal)
-        deleteButton.setTitleColor(UIColor.red, for: .normal)
-        deleteButton.addTarget(self, action: #selector(deleteAssignment(_:)), for: .touchUpInside)
-        
         container.addSubview(bottomView)
         bottomView.translatesAutoresizingMaskIntoConstraints = false
         bottomView.leadingAnchor.constraint(equalTo: container.leadingAnchor).isActive = true
         bottomView.trailingAnchor.constraint(equalTo: container.trailingAnchor).isActive = true
         bottomView.bottomAnchor.constraint(equalTo: container.bottomAnchor).isActive = true
-        bottomView.topAnchor.constraint(equalTo: deleteButton.bottomAnchor).isActive = true
+        bottomView.topAnchor.constraint(equalTo: note.bottomAnchor).isActive = true
         
         bottomViewHeightConstraint = bottomView.heightAnchor.constraint(equalToConstant: 50)
         bottomViewHeightConstraint!.isActive = true
-
+        
     }
     
-    @objc func deleteAssignment(_ sender:UIButton!) {
-        if let assignment = assignment {
-            context.delete(assignment)
-            appDelegate.saveContext()
-        }
-        self.navigationController?.popToRootViewController(animated: true)
-    }
     
     @objc func saveAssignment(_ sender:UIBarButtonItem) {
         if let assignment = assignment {
@@ -220,9 +193,10 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
             assignment.dueDate = dueDate.date as NSDate
             assignment.notes = note.text
             assignment.schoolClass = schoolClass
+            assignment.isComplete = false
+            appDelegate.saveContext()
+            self.navigationController?.popToRootViewController(animated: true)
         }
-        appDelegate.saveContext()
-        self.navigationController?.popToRootViewController(animated: true)
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -233,8 +207,6 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
             if let userInfo = notification.userInfo {
                 let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
                 let offset = keyboardFrame.height - 50
-                deleteButton.isUserInteractionEnabled = false
-                deleteButton.setTitleColor(.white, for: .normal)
                 let bottomOffset = CGPoint(x: 0, y: offset)
                 container.setContentOffset(bottomOffset, animated: true)
             }
@@ -246,8 +218,6 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
         bottomViewHeightConstraint?.isActive = false
         bottomViewHeightConstraint = bottomView.heightAnchor.constraint(equalToConstant: 50)
         bottomViewHeightConstraint?.isActive = true
-        deleteButton.isUserInteractionEnabled = true
-        deleteButton.setTitleColor(.red, for: .normal)
         
     }
     
@@ -260,10 +230,5 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
     @objc func hideKeyboard(sender: UITapGestureRecognizer) {
         container.endEditing(true)
     }
-    
-   
-    
-
-    
 
 }

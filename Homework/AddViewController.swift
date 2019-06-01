@@ -11,7 +11,7 @@ import UIKit
 class AddViewController: UITableViewController {
     
     let cellID = "cellID"
-    var cells = ["Homework", "Test", "Class"]
+    let cells = ["Homework", "Test", "Class"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,9 +33,14 @@ class AddViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let name = cells[indexPath.row]
-        let viewController = AddFormviewController()
-        viewController.pageTitle = name
-        navigationController?.pushViewController(viewController, animated: false)
+        if name == "Class" {
+            let viewController = AddClassViewController()
+            navigationController?.pushViewController(viewController, animated: false)
+        }
+        else {
+            let viewController = AddAssignmentViewController()
+            navigationController?.pushViewController(viewController, animated: false)
+        }
     }
     
     

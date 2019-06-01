@@ -8,13 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		3F0484A92294FD34004CC8E1 /* SchoolClass+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0484A62294FD34004CC8E1 /* SchoolClass+CoreDataProperties.swift */; };
-		3F0484AD22950159004CC8E1 /* AddAssignmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0484AC22950159004CC8E1 /* AddAssignmentView.swift */; };
+		3F1014FE229F78CD003A7D70 /* AddClassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1014FD229F78CD003A7D70 /* AddClassViewController.swift */; };
+		3F101500229F7F58003A7D70 /* AddAssignmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1014FF229F7F58003A7D70 /* AddAssignmentViewController.swift */; };
+		3F4CF6702298C6D300DADA1E /* ViewClassTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4CF66F2298C6D300DADA1E /* ViewClassTableViewController.swift */; };
+		3F4CF6722298E5A200DADA1E /* ClassAssignmentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4CF6712298E5A200DADA1E /* ClassAssignmentsViewController.swift */; };
 		3F4D04082295FE160031E5D9 /* Assignment+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4D04062295FE160031E5D9 /* Assignment+CoreDataClass.swift */; };
 		3F4D04092295FE160031E5D9 /* Assignment+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4D04072295FE160031E5D9 /* Assignment+CoreDataProperties.swift */; };
-		3F681C022290922B0046690C /* CompletedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F681C012290922B0046690C /* CompletedViewController.swift */; };
-		3F681C0622909E1F0046690C /* AddFormviewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F681C0522909E1F0046690C /* AddFormviewController.swift */; };
-		3F681C08229217290046690C /* AddClassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F681C07229217290046690C /* AddClassView.swift */; };
 		3F7C2CFA22978F6A00E28110 /* EditAssignmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7C2CF922978F6A00E28110 /* EditAssignmentViewController.swift */; };
+		3F7C2CFC2297B1E000E28110 /* CompleteTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7C2CFB2297B1E000E28110 /* CompleteTableViewController.swift */; };
 		3F83383A22934EEF00BAFA4F /* Homework.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3F83383822934EEF00BAFA4F /* Homework.xcdatamodeld */; };
 		3FA38FE6228624E700BFC118 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA38FE5228624E700BFC118 /* AppDelegate.swift */; };
 		3FA38FE8228624E700BFC118 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA38FE7228624E700BFC118 /* TabBarController.swift */; };
@@ -48,13 +49,14 @@
 
 /* Begin PBXFileReference section */
 		3F0484A62294FD34004CC8E1 /* SchoolClass+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SchoolClass+CoreDataProperties.swift"; path = "Homework/SchoolClass+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		3F0484AC22950159004CC8E1 /* AddAssignmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAssignmentView.swift; sourceTree = "<group>"; };
+		3F1014FD229F78CD003A7D70 /* AddClassViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddClassViewController.swift; sourceTree = "<group>"; };
+		3F1014FF229F7F58003A7D70 /* AddAssignmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAssignmentViewController.swift; sourceTree = "<group>"; };
+		3F4CF66F2298C6D300DADA1E /* ViewClassTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewClassTableViewController.swift; sourceTree = "<group>"; };
+		3F4CF6712298E5A200DADA1E /* ClassAssignmentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassAssignmentsViewController.swift; sourceTree = "<group>"; };
 		3F4D04062295FE160031E5D9 /* Assignment+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Assignment+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3F4D04072295FE160031E5D9 /* Assignment+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Assignment+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		3F681C012290922B0046690C /* CompletedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedViewController.swift; sourceTree = "<group>"; };
-		3F681C0522909E1F0046690C /* AddFormviewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFormviewController.swift; sourceTree = "<group>"; };
-		3F681C07229217290046690C /* AddClassView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddClassView.swift; sourceTree = "<group>"; };
 		3F7C2CF922978F6A00E28110 /* EditAssignmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAssignmentViewController.swift; sourceTree = "<group>"; };
+		3F7C2CFB2297B1E000E28110 /* CompleteTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteTableViewController.swift; sourceTree = "<group>"; };
 		3F83383922934EEF00BAFA4F /* Homework.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Homework.xcdatamodel; sourceTree = "<group>"; };
 		3FA38FE2228624E700BFC118 /* Homework.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Homework.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FA38FE5228624E700BFC118 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -69,6 +71,7 @@
 		3FA39007228624E900BFC118 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3FA761DD22973B8C00CF2F03 /* ViewAssignmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewAssignmentViewController.swift; sourceTree = "<group>"; };
 		3FBF8EC82293A077006DD723 /* SchoolClass+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SchoolClass+CoreDataClass.swift"; path = "Homework/SchoolClass+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3FC6376A229C3E02007BA6E6 /* Homework 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Homework 2.xcdatamodel"; sourceTree = "<group>"; };
 		3FEA94062294892900F6A0F2 /* EditClassViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditClassViewController.swift; sourceTree = "<group>"; };
 		3FEE60A2228764620070F893 /* PendingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingViewController.swift; sourceTree = "<group>"; };
 		3FEE60A42287647E0070F893 /* AddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
@@ -130,15 +133,16 @@
 				3FA38FE5228624E700BFC118 /* AppDelegate.swift */,
 				3FA38FE7228624E700BFC118 /* TabBarController.swift */,
 				3FEE60A2228764620070F893 /* PendingViewController.swift */,
+				3FFBF68922964FD0001ECE93 /* PendingCellView.swift */,
+				3F7C2CFB2297B1E000E28110 /* CompleteTableViewController.swift */,
 				3FA761DD22973B8C00CF2F03 /* ViewAssignmentViewController.swift */,
 				3F7C2CF922978F6A00E28110 /* EditAssignmentViewController.swift */,
-				3FFBF68922964FD0001ECE93 /* PendingCellView.swift */,
-				3F681C012290922B0046690C /* CompletedViewController.swift */,
 				3FEE60A42287647E0070F893 /* AddViewController.swift */,
-				3F681C0522909E1F0046690C /* AddFormviewController.swift */,
+				3F1014FD229F78CD003A7D70 /* AddClassViewController.swift */,
+				3F1014FF229F7F58003A7D70 /* AddAssignmentViewController.swift */,
 				3FEA94062294892900F6A0F2 /* EditClassViewController.swift */,
-				3F0484AC22950159004CC8E1 /* AddAssignmentView.swift */,
-				3F681C07229217290046690C /* AddClassView.swift */,
+				3F4CF66F2298C6D300DADA1E /* ViewClassTableViewController.swift */,
+				3F4CF6712298E5A200DADA1E /* ClassAssignmentsViewController.swift */,
 				3FA38FEC228624E900BFC118 /* Assets.xcassets */,
 				3F83383822934EEF00BAFA4F /* Homework.xcdatamodeld */,
 				3FA38FF1228624E900BFC118 /* Info.plist */,
@@ -301,15 +305,16 @@
 				3F4D04082295FE160031E5D9 /* Assignment+CoreDataClass.swift in Sources */,
 				3FA38FE8228624E700BFC118 /* TabBarController.swift in Sources */,
 				3F7C2CFA22978F6A00E28110 /* EditAssignmentViewController.swift in Sources */,
-				3F681C0622909E1F0046690C /* AddFormviewController.swift in Sources */,
-				3F0484AD22950159004CC8E1 /* AddAssignmentView.swift in Sources */,
+				3F7C2CFC2297B1E000E28110 /* CompleteTableViewController.swift in Sources */,
+				3F4CF6722298E5A200DADA1E /* ClassAssignmentsViewController.swift in Sources */,
 				3FEA94072294892900F6A0F2 /* EditClassViewController.swift in Sources */,
+				3F1014FE229F78CD003A7D70 /* AddClassViewController.swift in Sources */,
 				3FBF8ECA2293A077006DD723 /* SchoolClass+CoreDataClass.swift in Sources */,
 				3FEE60A52287647E0070F893 /* AddViewController.swift in Sources */,
-				3F681C022290922B0046690C /* CompletedViewController.swift in Sources */,
 				3FA38FE6228624E700BFC118 /* AppDelegate.swift in Sources */,
+				3F4CF6702298C6D300DADA1E /* ViewClassTableViewController.swift in Sources */,
 				3F0484A92294FD34004CC8E1 /* SchoolClass+CoreDataProperties.swift in Sources */,
-				3F681C08229217290046690C /* AddClassView.swift in Sources */,
+				3F101500229F7F58003A7D70 /* AddAssignmentViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -620,9 +625,10 @@
 		3F83383822934EEF00BAFA4F /* Homework.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				3FC6376A229C3E02007BA6E6 /* Homework 2.xcdatamodel */,
 				3F83383922934EEF00BAFA4F /* Homework.xcdatamodel */,
 			);
-			currentVersion = 3F83383922934EEF00BAFA4F /* Homework.xcdatamodel */;
+			currentVersion = 3FC6376A229C3E02007BA6E6 /* Homework 2.xcdatamodel */;
 			path = Homework.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
