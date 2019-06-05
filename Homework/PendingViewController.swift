@@ -19,7 +19,8 @@ class PendingViewController: UITableViewController {
         rows = []
         tableView.register(PendingCellView.self, forCellReuseIdentifier: cellID)
         navigationItem.title = "Pending Items"
-        self.view.backgroundColor = UIColor(red: 91/255, green: 91/255, blue: 91/255, alpha: 1)
+//        self.view.backgroundColor = UIColor(red: 91/255, green: 91/255, blue: 91/255, alpha: 1)
+        self.view.backgroundColor = .black
         self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
         
     }

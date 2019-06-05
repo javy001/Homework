@@ -48,9 +48,10 @@ class PendingCellView: UITableViewCell {
     }
     
     func setUp() {
-        self.backgroundColor = UIColor(red: 137/255, green: 137/255, blue: 137/255, alpha: 1)
+        self.backgroundColor = UIColor(red: 84/255, green: 84/255, blue: 84/255, alpha: 1)
         self.layer.borderWidth = 3
-        self.layer.borderColor = UIColor(red: 91/255, green: 91/255, blue: 91/255, alpha: 1).cgColor
+//        self.layer.borderColor = UIColor(red: 91/255, green: 91/255, blue: 91/255, alpha: 1).cgColor
+        self.layer.borderColor = UIColor.black.cgColor
         self.addSubview(classNameView)
         
         classNameView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10).isActive = true

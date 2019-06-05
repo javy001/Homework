@@ -22,7 +22,7 @@ class ViewAssignmentViewController: UIViewController {
     }
     
     func setuUpView(){
-        self.view.backgroundColor = UIColor.white
+        self.view.backgroundColor = UIColor.black
         
         let safeOffset = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0
         let navOffset = self.navigationController?.navigationBar.frame.size.height ?? 0
@@ -46,6 +46,7 @@ class ViewAssignmentViewController: UIViewController {
         if let className = assignment?.schoolClass?.name {
             classLabel.text = className
         }
+        classLabel.textColor = .white
         
         let assignmentLabel = UILabel()
         self.view.addSubview(assignmentLabel)
@@ -57,6 +58,7 @@ class ViewAssignmentViewController: UIViewController {
         if let assignment = assignment {
             assignmentLabel.text = assignment.name
         }
+        assignmentLabel.textColor = .white
         
         let dateLabel = UILabel()
         self.view.addSubview(dateLabel)
@@ -68,7 +70,7 @@ class ViewAssignmentViewController: UIViewController {
         if let assignment = assignment {
             dateLabel.text = "Due on " + assignment.getDateString()
         }
-        
+        dateLabel.textColor = .white
         
         let noteLabel = UILabel()
         self.view.addSubview(noteLabel)
@@ -81,6 +83,7 @@ class ViewAssignmentViewController: UIViewController {
         if let note = assignment?.notes {
             noteLabel.text = note
         }
+        noteLabel.textColor = .white
         
         let completeButton = UIButton()
         self.view.addSubview(completeButton)
@@ -101,10 +104,12 @@ class ViewAssignmentViewController: UIViewController {
         else {
             title = "Complete"
         }
+//        let buttonColor = UIColor(red: 0/255, green: 200/255, blue: 136/255, alpha: 1)
+        let buttonColor = AppStyle().greenColor
         completeButton.setTitle(title, for: .normal)
-        completeButton.setTitleColor(UIColor.black, for: .normal)
+        completeButton.setTitleColor(buttonColor, for: .normal)
         completeButton.layer.borderWidth = 1
-        completeButton.layer.borderColor = UIColor.black.cgColor
+        completeButton.layer.borderColor = buttonColor.cgColor
         completeButton.addTarget(self, action: #selector(handleComplete(_:)), for: .touchUpInside)
     }
     

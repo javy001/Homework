@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3F0484A92294FD34004CC8E1 /* SchoolClass+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0484A62294FD34004CC8E1 /* SchoolClass+CoreDataProperties.swift */; };
+		3F0B2ED422A6E997006031B9 /* AppStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0B2ED322A6E997006031B9 /* AppStyle.swift */; };
 		3F1014FE229F78CD003A7D70 /* AddClassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1014FD229F78CD003A7D70 /* AddClassViewController.swift */; };
 		3F101500229F7F58003A7D70 /* AddAssignmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1014FF229F7F58003A7D70 /* AddAssignmentViewController.swift */; };
 		3F4CF6702298C6D300DADA1E /* ViewClassTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4CF66F2298C6D300DADA1E /* ViewClassTableViewController.swift */; };
@@ -49,6 +50,7 @@
 
 /* Begin PBXFileReference section */
 		3F0484A62294FD34004CC8E1 /* SchoolClass+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "SchoolClass+CoreDataProperties.swift"; path = "Homework/SchoolClass+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3F0B2ED322A6E997006031B9 /* AppStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStyle.swift; sourceTree = "<group>"; };
 		3F1014FD229F78CD003A7D70 /* AddClassViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddClassViewController.swift; sourceTree = "<group>"; };
 		3F1014FF229F7F58003A7D70 /* AddAssignmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAssignmentViewController.swift; sourceTree = "<group>"; };
 		3F4CF66F2298C6D300DADA1E /* ViewClassTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewClassTableViewController.swift; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				3FA38FE5228624E700BFC118 /* AppDelegate.swift */,
+				3F0B2ED322A6E997006031B9 /* AppStyle.swift */,
 				3FA38FE7228624E700BFC118 /* TabBarController.swift */,
 				3FEE60A2228764620070F893 /* PendingViewController.swift */,
 				3FFBF68922964FD0001ECE93 /* PendingCellView.swift */,
@@ -299,6 +302,7 @@
 			files = (
 				3FA761DE22973B8C00CF2F03 /* ViewAssignmentViewController.swift in Sources */,
 				3FFBF68A22964FD0001ECE93 /* PendingCellView.swift in Sources */,
+				3F0B2ED422A6E997006031B9 /* AppStyle.swift in Sources */,
 				3F83383A22934EEF00BAFA4F /* Homework.xcdatamodeld in Sources */,
 				3FEE60A3228764620070F893 /* PendingViewController.swift in Sources */,
 				3F4D04092295FE160031E5D9 /* Assignment+CoreDataProperties.swift in Sources */,

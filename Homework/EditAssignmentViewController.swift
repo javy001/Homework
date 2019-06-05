@@ -23,7 +23,7 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
     var bottomView = UIView()
     var bottomViewHeightConstraint: NSLayoutConstraint?
     var deleteButton = UIButton()
-    var containerContstraint: NSLayoutConstraint?
+    let styles = AppStyle()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,8 +77,13 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
         return classes.count
     }
     
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return classes[row].name
+//    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+//        return classes[row].name
+//    }
+//
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        let title = classes[row].name
+        return NSAttributedString(string: title!, attributes: [NSAttributedString.Key.foregroundColor: styles.mainTextColor])
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
@@ -89,7 +94,7 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     func setuUpView(){
         self.navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveAssignment(_:))), animated: true)
-        self.view.backgroundColor = UIColor.white
+        self.view.backgroundColor = styles.backgroundColor
         
         if let text = assignment?.notes {
             note.text = text
@@ -99,32 +104,31 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
         let safeOffset = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0
         let navOffset = self.navigationController?.navigationBar.frame.size.height ?? 0
         container.addGestureRecognizer(tapListener)
-//        container.keyboardDismissMode = .interactive
         container.translatesAutoresizingMaskIntoConstraints = false
         container.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10).isActive = true
         container.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10).isActive = true
-        containerContstraint = container.topAnchor.constraint(equalTo: self.view.topAnchor, constant: navOffset + safeOffset)
-        containerContstraint!.isActive = true
+        container.topAnchor.constraint(equalTo: self.view.topAnchor, constant: navOffset + safeOffset).isActive = true
         container.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
-        
         
         let classLabel = UILabel()
         container.addSubview(classLabel)
         classLabel.translatesAutoresizingMaskIntoConstraints = false
         classLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        classLabel.trailingAnchor.constraint(equalTo: container.centerXAnchor).isActive = true
+        classLabel.trailingAnchor.constraint(equalTo: container.trailingAnchor).isActive = true
         classLabel.leadingAnchor.constraint(equalTo: container.leadingAnchor).isActive = true
         classLabel.topAnchor.constraint(equalTo: container.topAnchor).isActive = true
         classLabel.text = "Class"
+        classLabel.textColor = styles.mainTextColor
         
-        self.view.addSubview(picker)
+        
+        container.addSubview(picker)
         picker.translatesAutoresizingMaskIntoConstraints = false
-        picker.heightAnchor.constraint(equalToConstant: 120).isActive = true
-        picker.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -10).isActive = true
-        picker.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 10).isActive = true
-        picker.topAnchor.constraint(equalTo: classLabel.topAnchor).isActive = true
+        picker.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        picker.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10).isActive = true
+        picker.leadingAnchor.constraint(equalTo: container.leadingAnchor).isActive = true
+        picker.topAnchor.constraint(equalTo: classLabel.topAnchor, constant: 10).isActive = true
 
-        
+
         let assignmentLabel = UILabel()
         container.addSubview(assignmentLabel)
         assignmentLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -133,37 +137,45 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
         assignmentLabel.leadingAnchor.constraint(equalTo: container.leadingAnchor).isActive = true
         assignmentLabel.topAnchor.constraint(equalTo:picker.bottomAnchor).isActive = true
         assignmentLabel.text = "Homework Name"
-        
+        assignmentLabel.textColor = AppStyle().mainTextColor
+
         container.addSubview(name)
         name.translatesAutoresizingMaskIntoConstraints = false
         name.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        name.trailingAnchor.constraint(equalTo: container.trailingAnchor).isActive = true
+        name.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10).isActive = true
         name.leadingAnchor.constraint(equalTo: container.leadingAnchor).isActive = true
         name.topAnchor.constraint(equalTo:assignmentLabel.bottomAnchor).isActive = true
         name.borderStyle = .roundedRect
         if let assignment = assignment {
             name.text = assignment.name
         }
-        
+        name.backgroundColor = styles.greyAccent
+        name.textColor = styles.mainTextColor
+
         let dateLabel = UILabel()
         container.addSubview(dateLabel)
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
         dateLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        dateLabel.trailingAnchor.constraint(equalTo: container.trailingAnchor).isActive = true
+        dateLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10).isActive = true
         dateLabel.leadingAnchor.constraint(equalTo: container.leadingAnchor).isActive = true
         dateLabel.topAnchor.constraint(equalTo: name.bottomAnchor).isActive = true
         dateLabel.text = "Due on "
-        
+        dateLabel.textColor = styles.mainTextColor
+
         container.addSubview(dueDate)
         dueDate.translatesAutoresizingMaskIntoConstraints = false
-        dueDate.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 15).isActive = true
-        dueDate.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -15).isActive = true
+        dueDate.leadingAnchor.constraint(equalTo: container.leadingAnchor).isActive = true
+        dueDate.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10).isActive = true
         dueDate.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        dueDate.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: -20).isActive = true
+        dueDate.topAnchor.constraint(equalTo: dateLabel.bottomAnchor).isActive = true
         if let assignmentDate = assignment?.dueDate {
             dueDate.date = assignmentDate as Date
         }
-        
+        dueDate.tintColor = styles.mainTextColor
+        dueDate.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.1)
+        dueDate.layer.cornerRadius = 8
+        dueDate.setValue(styles.mainTextColor, forKey: "textColor")
+
         let noteLabel = UILabel()
         container.addSubview(noteLabel)
         noteLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -172,18 +184,21 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
         noteLabel.topAnchor.constraint(equalTo: dueDate.bottomAnchor).isActive = true
         noteLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
         noteLabel.text = "Notes"
-        
+        noteLabel.textColor = styles.mainTextColor
+
         container.addSubview(note)
         note.clipsToBounds = true
         note.layer.cornerRadius = 7
         note.translatesAutoresizingMaskIntoConstraints = false
         note.leadingAnchor.constraint(equalTo: container.leadingAnchor).isActive = true
-        note.trailingAnchor.constraint(equalTo: container.trailingAnchor).isActive = true
+        note.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10).isActive = true
         note.topAnchor.constraint(equalTo: noteLabel.bottomAnchor).isActive = true
         note.bottomAnchor.constraint(equalTo: noteLabel.bottomAnchor, constant: 150).isActive = true
         note.layer.borderWidth = 0.3
         note.font = UIFont(name: "HelveticaNeue", size: 15)
-        
+        note.backgroundColor = styles.greyAccent
+        note.textColor = styles.mainTextColor
+
         container.addSubview(deleteButton)
         deleteButton.translatesAutoresizingMaskIntoConstraints = false
         deleteButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
@@ -193,16 +208,17 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
         deleteButton.setTitle("Delete Homework", for: .normal)
         deleteButton.setTitleColor(UIColor.red, for: .normal)
         deleteButton.addTarget(self, action: #selector(deleteAssignment(_:)), for: .touchUpInside)
-        
+
         container.addSubview(bottomView)
         bottomView.translatesAutoresizingMaskIntoConstraints = false
         bottomView.leadingAnchor.constraint(equalTo: container.leadingAnchor).isActive = true
-        bottomView.trailingAnchor.constraint(equalTo: container.trailingAnchor).isActive = true
+        bottomView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10).isActive = true
         bottomView.bottomAnchor.constraint(equalTo: container.bottomAnchor).isActive = true
         bottomView.topAnchor.constraint(equalTo: deleteButton.bottomAnchor).isActive = true
-        
+
         bottomViewHeightConstraint = bottomView.heightAnchor.constraint(equalToConstant: 50)
         bottomViewHeightConstraint!.isActive = true
+        
 
     }
     
@@ -234,7 +250,7 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
                 let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
                 let offset = keyboardFrame.height - 50
                 deleteButton.isUserInteractionEnabled = false
-                deleteButton.setTitleColor(.white, for: .normal)
+                deleteButton.setTitleColor(styles.backgroundColor, for: .normal)
                 let bottomOffset = CGPoint(x: 0, y: offset)
                 container.setContentOffset(bottomOffset, animated: true)
             }

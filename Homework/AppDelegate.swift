@@ -26,14 +26,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        teal
 //        UINavigationBar.appearance().barTintColor = UIColor(red: 76/255, green: 217/255, blue: 219/255, alpha: 1)
 //        purple
-        UINavigationBar.appearance().barTintColor = UIColor(red: 152/255, green: 73/255, blue: 234/255, alpha: 1)
+        UINavigationBar.appearance().barTintColor = UIColor(red: 233/255, green: 48/255, blue: 92/255, alpha: 1)
         UINavigationBar.appearance().tintColor = UIColor.white
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
         
-        UITabBar.appearance().barTintColor = UIColor(red: 123/255, green: 80/255, blue: 167/255, alpha: 1)
+        UITabBar.appearance().barTintColor = UIColor.clear
 //        UITabBar.appearance().unselectedItemTintColor = UIColor(red: 206/255, green: 167/255, blue: 219/255, alpha: 1)
-        UITabBar.appearance().unselectedItemTintColor = UIColor(red: 228/255, green: 189/255, blue: 240/255, alpha: 1)
-        UITabBar.appearance().tintColor = UIColor(red: 226/255, green: 141/255, blue: 255/255, alpha: 1)
+        UITabBar.appearance().unselectedItemTintColor = UIColor(red: 248/255, green: 192/255, blue: 206/255, alpha: 1)
+        UITabBar.appearance().tintColor = UIColor(red: 239/255, green: 110/255, blue: 140/255, alpha: 1)
         return true
     }
 
