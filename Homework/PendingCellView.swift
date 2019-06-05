@@ -13,12 +13,15 @@ class PendingCellView: UITableViewCell {
     var className: String?
     var assignmentName: String?
     var dueDate: Date?
+    var daysLeft: Double?
+    var cellColor = UIColor.gray
+    var textMainColor = UIColor.white
+    let style = AppStyle()
     
     var classNameView: UILabel = {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.font = UIFont(name: "Avenir-Heavy", size: 17)
-        view.textColor = .white
         return view
     }()
     
@@ -47,8 +50,28 @@ class PendingCellView: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func genColors() {
+        if let daysLeft = daysLeft {
+            if daysLeft <= 0 {
+                cellColor = style.genRedColor(alpha: 0.5)
+                textMainColor = style.genRedColor(alpha: 1)
+            }
+            else if daysLeft <= 2 {
+                cellColor = style.genOrangeColor(alpha: 0.5)
+                textMainColor = style.genOrangeColor(alpha: 1)
+            }
+            else {
+                cellColor = style.genGreenColor(alpha: 0.5)
+                textMainColor = style.genGreenColor(alpha: 1)
+            }
+        }
+        classNameView.textColor = textMainColor
+        assignmentNameView.textColor = textMainColor
+        dueDateView.textColor = textMainColor
+        self.backgroundColor = cellColor
+    }
+    
     func setUp() {
-        self.backgroundColor = UIColor(red: 84/255, green: 84/255, blue: 84/255, alpha: 1)
         self.layer.borderWidth = 3
 //        self.layer.borderColor = UIColor(red: 91/255, green: 91/255, blue: 91/255, alpha: 1).cgColor
         self.layer.borderColor = UIColor.black.cgColor

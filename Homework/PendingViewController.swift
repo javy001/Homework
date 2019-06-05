@@ -50,6 +50,11 @@ class PendingViewController: UITableViewController {
         cell.className = assignment.schoolClass?.name
         cell.assignmentName = assignment.name
         cell.dueDate = assignment.dueDate as Date?
+        if let daysLeft = cell.dueDate?.timeIntervalSinceNow {
+            cell.daysLeft = daysLeft/3600/24
+            cell.genColors()
+        }
+        print()
         cell.layoutSubviews()
 //        cell.textLabel?.text = rows[indexPath.row].name
         return cell
