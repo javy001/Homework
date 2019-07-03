@@ -11,8 +11,6 @@ import UIKit
 class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextViewDelegate {
     
     var assignment: Assignment?
-    var appDelegate = UIApplication.shared.delegate as! AppDelegate
-    var context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var classes: [SchoolClass] = []
     var picker = UIPickerView()
     var name = UITextField()
@@ -24,6 +22,8 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
     var bottomViewHeightConstraint: NSLayoutConstraint?
     var deleteButton = UIButton()
     let styles = AppStyle()
+    var persistantData: PersistantData?
+    var dateLabel = UILabel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,7 +43,7 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        context.reset()
+        persistantData!.context.reset()
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
@@ -63,7 +63,7 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     func fetchClasses () {
         do {
-            classes = try context.fetch(SchoolClass.fetchRequest())
+            classes = try persistantData!.context.fetch(SchoolClass.fetchRequest())
         } catch {
             print("Fetch Failed")
         }
@@ -77,10 +77,6 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
         return classes.count
     }
     
-//    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-//        return classes[row].name
-//    }
-//
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         let title = classes[row].name
         return NSAttributedString(string: title!, attributes: [NSAttributedString.Key.foregroundColor: styles.mainTextColor])
@@ -149,18 +145,19 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
         if let assignment = assignment {
             name.text = assignment.name
         }
-        name.backgroundColor = styles.greyAccent
+//        name.backgroundColor = styles.greyAccent
         name.textColor = styles.mainTextColor
 
-        let dateLabel = UILabel()
+        
         container.addSubview(dateLabel)
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
         dateLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
         dateLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10).isActive = true
         dateLabel.leadingAnchor.constraint(equalTo: container.leadingAnchor).isActive = true
         dateLabel.topAnchor.constraint(equalTo: name.bottomAnchor).isActive = true
-        dateLabel.text = "Due on "
+        
         dateLabel.textColor = styles.mainTextColor
+        
 
         container.addSubview(dueDate)
         dueDate.translatesAutoresizingMaskIntoConstraints = false
@@ -170,11 +167,17 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
         dueDate.topAnchor.constraint(equalTo: dateLabel.bottomAnchor).isActive = true
         if let assignmentDate = assignment?.dueDate {
             dueDate.date = assignmentDate as Date
+            let formatter = DateFormatter()
+            formatter.dateFormat = "E, MMM-dd"
+            let dateString = formatter.string(from: dueDate.date)
+            dateLabel.text = "Due on \(dateString)"
         }
         dueDate.tintColor = styles.mainTextColor
         dueDate.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.1)
         dueDate.layer.cornerRadius = 8
         dueDate.setValue(styles.mainTextColor, forKey: "textColor")
+        dueDate.datePickerMode = .date
+        dueDate.addTarget(self, action: #selector(dateDidChange(picker:)), for: .valueChanged)
 
         let noteLabel = UILabel()
         container.addSubview(noteLabel)
@@ -196,7 +199,7 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
         note.bottomAnchor.constraint(equalTo: noteLabel.bottomAnchor, constant: 150).isActive = true
         note.layer.borderWidth = 0.3
         note.font = UIFont(name: "HelveticaNeue", size: 15)
-        note.backgroundColor = styles.greyAccent
+//        note.backgroundColor = styles.greyAccent
         note.textColor = styles.mainTextColor
 
         container.addSubview(deleteButton)
@@ -224,8 +227,8 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     @objc func deleteAssignment(_ sender:UIButton!) {
         if let assignment = assignment {
-            context.delete(assignment)
-            appDelegate.saveContext()
+            persistantData!.context.delete(assignment)
+            persistantData!.appDelegate.saveContext()
         }
         self.navigationController?.popToRootViewController(animated: true)
     }
@@ -237,7 +240,7 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
             assignment.notes = note.text
             assignment.schoolClass = schoolClass
         }
-        appDelegate.saveContext()
+        persistantData!.appDelegate.saveContext()
         self.navigationController?.popToRootViewController(animated: true)
     }
     
@@ -278,8 +281,12 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
     }
     
    
-    
+    @objc func dateDidChange(picker: UIDatePicker) {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "E, MMM-dd"
+        let dateString = formatter.string(from: picker.date)
+        dateLabel.text = "Due on \(dateString)"
+    }
 
-    
 
 }

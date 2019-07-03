@@ -12,7 +12,7 @@ class ViewClassTableViewController: UITableViewController {
     
     var cellId = "cellId"
     var rows: [SchoolClass] = []
-    var context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    var persistantData: PersistantData?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,13 +20,15 @@ class ViewClassTableViewController: UITableViewController {
         rows = []
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
         navigationItem.title = "Classes"
+        self.view.backgroundColor = .white
+        self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
     }
     
     override func viewWillAppear(_ animated: Bool) {
         do{
 //            let fetchRequest = SchoolClass.fetchRequest()
 //            fetchRequest.predicate = NSPredicate(format: "isComplete == true")
-            rows = try context.fetch(SchoolClass.fetchRequest())
+            rows = try persistantData!.context.fetch(SchoolClass.fetchRequest())
             self.tableView.reloadData()
         } catch {
             print("fetch failed")
@@ -53,6 +55,7 @@ class ViewClassTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let viewController = ClassAssignmentsViewController()
         viewController.schoolClass = rows[indexPath.row]
+        viewController.persistantData = persistantData
         self.navigationController?.pushViewController(viewController, animated: false)
     }
     

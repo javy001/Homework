@@ -13,6 +13,8 @@ class ClassAssignmentsViewController: UITableViewController {
     var schoolClass: SchoolClass?
     var cellID = "cellID"
     var assignments: [Assignment] = []
+    let style = AppStyle()
+    var persistantData: PersistantData?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,27 +43,35 @@ class ClassAssignmentsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! PendingCellView
-        if let assignments = schoolClass?.assignment {
-            let assignmentArray = assignments.allObjects as! [Assignment]
-            let assignment = assignmentArray[indexPath.row]
-//            cell.textLabel?.text = assignment.name
-            cell.className = assignment.schoolClass?.name
-            cell.assignmentName = assignment.name
-            cell.dueDate = assignment.dueDate as Date?
-            cell.layoutSubviews()
+        let assignment = assignments[indexPath.row]
+        //            cell.textLabel?.text = assignment.name
+        cell.className = assignment.schoolClass?.name
+        cell.isComplete = assignment.isComplete
+        cell.assignmentName = assignment.name
+        cell.dueDate = assignment.dueDate as Date?
+        if let daysLeft = cell.dueDate?.timeIntervalSinceNow {
+            cell.daysLeft = daysLeft/3600/24
+            cell.genColors()
         }
+        
+        cell.layoutSubviews()
         return cell
     }
     
     func setuUpView(){
         if let assignmentSet = schoolClass?.assignment {
-            assignments = assignmentSet.allObjects as! [Assignment]
+            let tempAssignments = assignmentSet.allObjects as! [Assignment]
+            let sortedAssignments = tempAssignments.sorted(by: { $0.dueDate?.timeIntervalSinceNow ?? 0 > $1.dueDate?.timeIntervalSinceNow ?? 0 })
+            assignments = sortedAssignments
         }
+        self.view.backgroundColor = style.backgroundColor
+        self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let newView = ViewAssignmentViewController()
         newView.assignment = assignments[indexPath.row]
+        newView.persistantData = persistantData
         navigationController?.pushViewController(newView, animated: false)
     }
     

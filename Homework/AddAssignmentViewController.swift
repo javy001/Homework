@@ -11,8 +11,7 @@ import UIKit
 class AddAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextViewDelegate {
     
     var assignment: Assignment?
-    var appDelegate = UIApplication.shared.delegate as! AppDelegate
-    var context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    var persistantData: PersistantData?
     var classes: [SchoolClass] = []
     var picker = UIPickerView()
     var name = UITextField()
@@ -23,6 +22,7 @@ class AddAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPic
     var bottomView = UIView()
     var bottomViewHeightConstraint: NSLayoutConstraint?
     var containerContstraint: NSLayoutConstraint?
+    var dateLabel = UILabel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,12 +40,21 @@ class AddAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPic
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyBoardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel(_:)))
+        
+        self.navigationController?.navigationBar.barTintColor = UIColor(red: 200/255, green: 168/255, blue: 250/255, alpha: 1.0)
+        
+        
+        
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        context.reset()
+        persistantData!.context.reset()
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        navigationController?.navigationBar.barTintColor = .white
     }
     
     func getInitialClass() {
@@ -63,7 +72,7 @@ class AddAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPic
     
     func fetchClasses () {
         do {
-            classes = try context.fetch(SchoolClass.fetchRequest())
+            classes = try persistantData!.context.fetch(SchoolClass.fetchRequest())
         } catch {
             print("Fetch Failed")
         }
@@ -88,7 +97,7 @@ class AddAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPic
     
     
     func setuUpView(){
-        assignment = Assignment(context: context)
+        assignment = Assignment(context: persistantData!.context)
         schoolClass = classes[0]
         self.navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveAssignment(_:))), animated: true)
         self.view.backgroundColor = UIColor.white
@@ -138,14 +147,17 @@ class AddAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPic
         name.topAnchor.constraint(equalTo:assignmentLabel.bottomAnchor).isActive = true
         name.borderStyle = .roundedRect
         
-        let dateLabel = UILabel()
+        
         container.addSubview(dateLabel)
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
         dateLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
         dateLabel.trailingAnchor.constraint(equalTo: container.trailingAnchor).isActive = true
         dateLabel.leadingAnchor.constraint(equalTo: container.leadingAnchor).isActive = true
         dateLabel.topAnchor.constraint(equalTo: name.bottomAnchor).isActive = true
-        dateLabel.text = "Due on "
+        let formatter = DateFormatter()
+        formatter.dateFormat = "E, MMM-dd"
+        let dateString = formatter.string(from: dueDate.date)
+        dateLabel.text = "Due on \(dateString)"
         
         container.addSubview(dueDate)
         dueDate.translatesAutoresizingMaskIntoConstraints = false
@@ -153,6 +165,8 @@ class AddAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPic
         dueDate.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -15).isActive = true
         dueDate.heightAnchor.constraint(equalToConstant: 100).isActive = true
         dueDate.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: -20).isActive = true
+        dueDate.datePickerMode = .date
+        dueDate.addTarget(self, action: #selector(dateDidChange(picker:)), for: .valueChanged)
         
         let noteLabel = UILabel()
         container.addSubview(noteLabel)
@@ -194,9 +208,13 @@ class AddAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPic
             assignment.notes = note.text
             assignment.schoolClass = schoolClass
             assignment.isComplete = false
-            appDelegate.saveContext()
-            self.navigationController?.popToRootViewController(animated: true)
+            persistantData!.appDelegate.saveContext()
+            self.navigationController?.popToRootViewController(animated: false)
         }
+    }
+    
+    @objc func cancel(_ sender:UIBarButtonItem) {
+        self.navigationController?.popToRootViewController(animated: false)
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -229,6 +247,13 @@ class AddAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPic
     
     @objc func hideKeyboard(sender: UITapGestureRecognizer) {
         container.endEditing(true)
+    }
+    
+    @objc func dateDidChange(picker: UIDatePicker) {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "E, MMM-dd"
+        let dateString = formatter.string(from: picker.date)
+        dateLabel.text = "Due on \(dateString)"
     }
 
 }

@@ -12,12 +12,15 @@ class AddViewController: UITableViewController {
     
     let cellID = "cellID"
     let cells = ["Homework", "Test", "Class"]
+    var persistantData: PersistantData?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationItem.title = "Add Item"
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellID)
+        tableView.register(TableViewCellButton.self, forCellReuseIdentifier: cellID)
+        self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+        
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -26,8 +29,10 @@ class AddViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as UITableViewCell
-        cell.textLabel!.text = cells[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! TableViewCellButton
+        cell.textLabel?.text = cells[indexPath.row]
+        cell.textLabel?.textAlignment = .center
+        cell.setUp()
         return cell
     }
     
@@ -35,10 +40,12 @@ class AddViewController: UITableViewController {
         let name = cells[indexPath.row]
         if name == "Class" {
             let viewController = AddClassViewController()
+            viewController.persistantData = persistantData
             navigationController?.pushViewController(viewController, animated: false)
         }
         else {
             let viewController = AddAssignmentViewController()
+            viewController.persistantData = persistantData
             navigationController?.pushViewController(viewController, animated: false)
         }
     }

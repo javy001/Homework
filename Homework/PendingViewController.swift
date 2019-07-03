@@ -12,15 +12,15 @@ class PendingViewController: UITableViewController {
 
     var cellID = "cellID"
     var rows: [Assignment] = []
-    var context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    var style = AppStyle()
+    var persistantData: PersistantData?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         rows = []
         tableView.register(PendingCellView.self, forCellReuseIdentifier: cellID)
         navigationItem.title = "Pending Items"
-//        self.view.backgroundColor = UIColor(red: 91/255, green: 91/255, blue: 91/255, alpha: 1)
-        self.view.backgroundColor = .black
+        self.view.backgroundColor = style.backgroundColor
         self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
         
     }
@@ -30,7 +30,7 @@ class PendingViewController: UITableViewController {
             let fetchRequest = Assignment.assignmentFetchRequest()
             fetchRequest.predicate = NSPredicate(format: "isComplete == false")
             fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Assignment.dueDate), ascending: true)]
-            rows = try context.fetch(fetchRequest)
+            rows = try persistantData!.context.fetch(fetchRequest)
             self.tableView.reloadData()
         } catch {
             print("fetch failed")
@@ -48,13 +48,13 @@ class PendingViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! PendingCellView
         
         cell.className = assignment.schoolClass?.name
+        cell.isComplete = assignment.isComplete
         cell.assignmentName = assignment.name
         cell.dueDate = assignment.dueDate as Date?
         if let daysLeft = cell.dueDate?.timeIntervalSinceNow {
             cell.daysLeft = daysLeft/3600/24
             cell.genColors()
         }
-        print()
         cell.layoutSubviews()
 //        cell.textLabel?.text = rows[indexPath.row].name
         return cell
@@ -69,6 +69,7 @@ class PendingViewController: UITableViewController {
         let assignment = rows[indexPath.row]
         let viewController = ViewAssignmentViewController()
         viewController.assignment = assignment
+        viewController.persistantData = persistantData
         navigationController?.pushViewController(viewController, animated: false)
     }
 

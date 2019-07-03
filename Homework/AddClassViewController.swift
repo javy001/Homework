@@ -12,11 +12,15 @@ class AddClassViewController: UIViewController {
     
     var input = UITextField()
     var schoolClass = SchoolClass()
+    var persistantData: PersistantData?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveClass(_:))), animated: true)
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel(_:)))
+        self.navigationController?.navigationBar.barTintColor = UIColor(red: 241/255, green: 184/255, blue: 251/255, alpha: 1)
         
         setUp()
     }
@@ -28,8 +32,9 @@ class AddClassViewController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        context.reset()
+        persistantData!.context.reset()
+        
+        self.navigationController?.navigationBar.barTintColor = .white
     }
     
     
@@ -60,8 +65,7 @@ class AddClassViewController: UIViewController {
     }
     
     @objc func saveClass(_ sender:UIBarButtonItem) {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let context = appDelegate.persistentContainer.viewContext
+        let context = persistantData!.context
         var names: [String] = []
         do {
             let schoolClasses = try context.fetch(SchoolClass.fetchRequest()) as! [SchoolClass]
@@ -79,14 +83,14 @@ class AddClassViewController: UIViewController {
             if checkClassNames(name: name, classes: names) {
                 let schoolClass = SchoolClass(context: context)
                 schoolClass.name = name
-                appDelegate.saveContext()
+                persistantData!.appDelegate.saveContext()
             }
             else {
                 print("dq fail")
             }
         }
         
-        navigationController?.popViewController(animated: true)
+        navigationController?.popViewController(animated: false)
     }
     
     func checkClassNames(name: String, classes: [String]) -> Bool {
@@ -96,6 +100,10 @@ class AddClassViewController: UIViewController {
             }
         }
         return true
+    }
+    
+    @objc func cancel(_ sender:UIBarButtonItem) {
+        self.navigationController?.popToRootViewController(animated: false)
     }
 
 }

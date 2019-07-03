@@ -11,6 +11,7 @@ import UIKit
 class ViewAssignmentViewController: UIViewController {
     
     var assignment: Assignment?
+    var persistantData: PersistantData?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +23,7 @@ class ViewAssignmentViewController: UIViewController {
     }
     
     func setuUpView(){
-        self.view.backgroundColor = UIColor.black
+        self.view.backgroundColor = UIColor.white
         
         let safeOffset = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0
         let navOffset = self.navigationController?.navigationBar.frame.size.height ?? 0
@@ -36,17 +37,28 @@ class ViewAssignmentViewController: UIViewController {
         container.topAnchor.constraint(equalTo: self.view.topAnchor, constant: safeOffset + navOffset).isActive = true
         container.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 15).isActive = true
         
+        let viewTitle = UILabel()
+        self.view.addSubview(viewTitle)
+        viewTitle.translatesAutoresizingMaskIntoConstraints = false
+        viewTitle.heightAnchor.constraint(equalToConstant: 28).isActive = true
+        viewTitle.topAnchor.constraint(equalTo: container.topAnchor,constant: 15).isActive = true
+        viewTitle.leadingAnchor.constraint(equalTo: container.leadingAnchor).isActive = true
+        viewTitle.trailingAnchor.constraint(equalTo: container.trailingAnchor).isActive = true
+        viewTitle.text = "Assignment Details"
+        viewTitle.font = UIFont(name: "Avenir-Heavy", size: 24)
+        
         let classLabel = UILabel()
         self.view.addSubview(classLabel)
         classLabel.translatesAutoresizingMaskIntoConstraints = false
         classLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
         classLabel.trailingAnchor.constraint(equalTo: container.trailingAnchor).isActive = true
         classLabel.leadingAnchor.constraint(equalTo: container.leadingAnchor).isActive = true
-        classLabel.topAnchor.constraint(equalTo: container.topAnchor).isActive = true
+        classLabel.topAnchor.constraint(equalTo: viewTitle.bottomAnchor).isActive = true
         if let className = assignment?.schoolClass?.name {
             classLabel.text = className
         }
-        classLabel.textColor = .white
+        classLabel.textColor = .black
+        classLabel.font = UIFont(name: "Avenir-Medium", size: 17)
         
         let assignmentLabel = UILabel()
         self.view.addSubview(assignmentLabel)
@@ -55,10 +67,11 @@ class ViewAssignmentViewController: UIViewController {
         assignmentLabel.trailingAnchor.constraint(equalTo: container.trailingAnchor).isActive = true
         assignmentLabel.leadingAnchor.constraint(equalTo: container.leadingAnchor).isActive = true
         assignmentLabel.topAnchor.constraint(equalTo:classLabel.bottomAnchor).isActive = true
+        assignmentLabel.numberOfLines = 0
         if let assignment = assignment {
-            assignmentLabel.text = assignment.name
+            assignmentLabel.text = "Assignment: \n\(assignment.name!) "
         }
-        assignmentLabel.textColor = .white
+        assignmentLabel.textColor = .black
         
         let dateLabel = UILabel()
         self.view.addSubview(dateLabel)
@@ -70,7 +83,7 @@ class ViewAssignmentViewController: UIViewController {
         if let assignment = assignment {
             dateLabel.text = "Due on " + assignment.getDateString()
         }
-        dateLabel.textColor = .white
+        dateLabel.textColor = .black
         
         let noteLabel = UILabel()
         self.view.addSubview(noteLabel)
@@ -83,7 +96,7 @@ class ViewAssignmentViewController: UIViewController {
         if let note = assignment?.notes {
             noteLabel.text = note
         }
-        noteLabel.textColor = .white
+        noteLabel.textColor = .black
         
         let completeButton = UIButton()
         self.view.addSubview(completeButton)
@@ -115,6 +128,7 @@ class ViewAssignmentViewController: UIViewController {
     
     @objc private func editAssignment(_ sender:UIBarButtonItem!) {
         let viewController = EditAssignmentViewController()
+        viewController.persistantData = persistantData
         viewController.fetchClasses()
         if let assignment = assignment {
             viewController.assignment = assignment
@@ -131,8 +145,7 @@ class ViewAssignmentViewController: UIViewController {
                 assignment.isComplete = true
             }
         }
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        appDelegate.saveContext()
+        persistantData!.appDelegate.saveContext()
         navigationController?.popViewController(animated: false)
     }
     

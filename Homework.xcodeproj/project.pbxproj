@@ -15,9 +15,11 @@
 		3F4CF6722298E5A200DADA1E /* ClassAssignmentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4CF6712298E5A200DADA1E /* ClassAssignmentsViewController.swift */; };
 		3F4D04082295FE160031E5D9 /* Assignment+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4D04062295FE160031E5D9 /* Assignment+CoreDataClass.swift */; };
 		3F4D04092295FE160031E5D9 /* Assignment+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4D04072295FE160031E5D9 /* Assignment+CoreDataProperties.swift */; };
+		3F521CA822B6A5F400ED3DEC /* PersistantData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F521CA722B6A5F400ED3DEC /* PersistantData.swift */; };
 		3F7C2CFA22978F6A00E28110 /* EditAssignmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7C2CF922978F6A00E28110 /* EditAssignmentViewController.swift */; };
 		3F7C2CFC2297B1E000E28110 /* CompleteTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7C2CFB2297B1E000E28110 /* CompleteTableViewController.swift */; };
 		3F83383A22934EEF00BAFA4F /* Homework.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3F83383822934EEF00BAFA4F /* Homework.xcdatamodeld */; };
+		3F92A36E22CC53870019F2F1 /* TableViewCellButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F92A36D22CC53870019F2F1 /* TableViewCellButton.swift */; };
 		3FA38FE6228624E700BFC118 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA38FE5228624E700BFC118 /* AppDelegate.swift */; };
 		3FA38FE8228624E700BFC118 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA38FE7228624E700BFC118 /* TabBarController.swift */; };
 		3FA38FED228624E900BFC118 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3FA38FEC228624E900BFC118 /* Assets.xcassets */; };
@@ -57,9 +59,11 @@
 		3F4CF6712298E5A200DADA1E /* ClassAssignmentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassAssignmentsViewController.swift; sourceTree = "<group>"; };
 		3F4D04062295FE160031E5D9 /* Assignment+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Assignment+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3F4D04072295FE160031E5D9 /* Assignment+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Assignment+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3F521CA722B6A5F400ED3DEC /* PersistantData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistantData.swift; sourceTree = "<group>"; };
 		3F7C2CF922978F6A00E28110 /* EditAssignmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAssignmentViewController.swift; sourceTree = "<group>"; };
 		3F7C2CFB2297B1E000E28110 /* CompleteTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteTableViewController.swift; sourceTree = "<group>"; };
 		3F83383922934EEF00BAFA4F /* Homework.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Homework.xcdatamodel; sourceTree = "<group>"; };
+		3F92A36D22CC53870019F2F1 /* TableViewCellButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCellButton.swift; sourceTree = "<group>"; };
 		3FA38FE2228624E700BFC118 /* Homework.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Homework.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FA38FE5228624E700BFC118 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3FA38FE7228624E700BFC118 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
@@ -133,14 +137,16 @@
 			isa = PBXGroup;
 			children = (
 				3FA38FE5228624E700BFC118 /* AppDelegate.swift */,
-				3F0B2ED322A6E997006031B9 /* AppStyle.swift */,
 				3FA38FE7228624E700BFC118 /* TabBarController.swift */,
+				3F521CA722B6A5F400ED3DEC /* PersistantData.swift */,
+				3F0B2ED322A6E997006031B9 /* AppStyle.swift */,
 				3FEE60A2228764620070F893 /* PendingViewController.swift */,
 				3FFBF68922964FD0001ECE93 /* PendingCellView.swift */,
 				3F7C2CFB2297B1E000E28110 /* CompleteTableViewController.swift */,
 				3FA761DD22973B8C00CF2F03 /* ViewAssignmentViewController.swift */,
 				3F7C2CF922978F6A00E28110 /* EditAssignmentViewController.swift */,
 				3FEE60A42287647E0070F893 /* AddViewController.swift */,
+				3F92A36D22CC53870019F2F1 /* TableViewCellButton.swift */,
 				3F1014FD229F78CD003A7D70 /* AddClassViewController.swift */,
 				3F1014FF229F7F58003A7D70 /* AddAssignmentViewController.swift */,
 				3FEA94062294892900F6A0F2 /* EditClassViewController.swift */,
@@ -303,9 +309,11 @@
 				3FA761DE22973B8C00CF2F03 /* ViewAssignmentViewController.swift in Sources */,
 				3FFBF68A22964FD0001ECE93 /* PendingCellView.swift in Sources */,
 				3F0B2ED422A6E997006031B9 /* AppStyle.swift in Sources */,
+				3F92A36E22CC53870019F2F1 /* TableViewCellButton.swift in Sources */,
 				3F83383A22934EEF00BAFA4F /* Homework.xcdatamodeld in Sources */,
 				3FEE60A3228764620070F893 /* PendingViewController.swift in Sources */,
 				3F4D04092295FE160031E5D9 /* Assignment+CoreDataProperties.swift in Sources */,
+				3F521CA822B6A5F400ED3DEC /* PersistantData.swift in Sources */,
 				3F4D04082295FE160031E5D9 /* Assignment+CoreDataClass.swift in Sources */,
 				3FA38FE8228624E700BFC118 /* TabBarController.swift in Sources */,
 				3F7C2CFA22978F6A00E28110 /* EditAssignmentViewController.swift in Sources */,
