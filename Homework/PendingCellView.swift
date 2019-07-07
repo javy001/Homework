@@ -91,7 +91,7 @@ class PendingCellView: UITableViewCell {
         self.backgroundColor = style.greyAccent
         
         classNameView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10).isActive = true
-        classNameView.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        classNameView.trailingAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         classNameView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         classNameView.heightAnchor.constraint(equalToConstant: 35).isActive = true
         

@@ -26,7 +26,10 @@ class AppStyle {
             genPurpleColor(alpha: 0.3),
             genPinkColor(alpha: 0.3),
             genNeonGreenColor(alpha: 0.3),
-            genNeonPinkColor(alpha: 0.3)
+            genAltRed(alpha: 0.3),
+            genDarkPurple(alpha: 0.3),
+            genPaleMaroon(alpha: 0.3),
+            genBlueVapor(alpha: 0.3)
         ]
         
         textColors = [
@@ -36,7 +39,10 @@ class AppStyle {
             genPurpleColor(alpha: 1),
             genPinkColor(alpha: 1),
             genNeonGreenColor(alpha: 1),
-            genNeonPinkColor(alpha: 0.3)
+            genAltRed(alpha: 1),
+            genDarkPurple(alpha: 1),
+            genPaleMaroon(alpha: 1),
+            genBlueVapor(alpha: 1)
         ]
     }
     
@@ -68,5 +74,25 @@ class AppStyle {
         return UIColor(red: 255/255, green: 0/255, blue: 180/255, alpha: alpha)
     }
     
+    func genDarkPurple(alpha: CGFloat) -> UIColor {
+        return UIColor(red: 70/255, green: 2/255, blue: 70/255, alpha: alpha)
+    }
     
+    func genPaleOrange(alpha: CGFloat) -> UIColor {
+        return UIColor(red: 238/255, green: 169/255, blue: 144/255, alpha: alpha)
+    }
+    
+    func genPaleMaroon(alpha: CGFloat) -> UIColor {
+        return UIColor(red: 170/255, green: 111/255, blue: 115/255, alpha: alpha)
+    }
+    
+    func genBlueVapor(alpha: CGFloat) -> UIColor {
+        return UIColor(red: 1/255, green: 205/255, blue: 254/255, alpha: alpha)
+    }
+    
+    func genAltRed(alpha: CGFloat) -> UIColor {
+        return UIColor(red: 255/255, green: 34/255, blue: 129/255, alpha: alpha)
+    }
 }
+
+

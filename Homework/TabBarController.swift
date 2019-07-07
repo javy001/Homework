@@ -21,7 +21,7 @@ class TabBarController: UITabBarController {
         
         pendingViewController.tabBarItem.image = UIImage(named: "list")
         pendingViewController.tabBarItem.title = "Pending"
-        pendingViewController.tabBarItem.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: 5)
+        pendingViewController.tabBarItem.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: 10)
         
         let addViewController = AddViewController()
         addViewController.persistantData = persistantData
@@ -29,16 +29,12 @@ class TabBarController: UITabBarController {
         addNavigationController.tabBarItem.image = UIImage(named: "plus")
         
         
-//        let completeViewController = CompleteTableViewController()
-//        let completedNavigationController = UINavigationController(rootViewController: completeViewController)
-//        completedNavigationController.tabBarItem.image = UIImage(named: "clock")
-        
         let schoolClassTableViewController = ViewClassTableViewController()
         schoolClassTableViewController.persistantData = persistantData
         let schooClassNavigationController = UINavigationController(rootViewController: schoolClassTableViewController)
         schooClassNavigationController.tabBarItem.image = UIImage(named: "class")
         schooClassNavigationController.tabBarItem.title = "Classes"
-        schooClassNavigationController.tabBarItem.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: 5)
+        schooClassNavigationController.tabBarItem.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: 10)
         
         
         viewControllers = [pendingNavigationController, addNavigationController, schooClassNavigationController]

@@ -50,21 +50,22 @@ class ViewAssignmentViewController: UIViewController {
         viewTitle.text = "\(viewType!) Details"
         viewTitle.font = UIFont(name: "Avenir-Heavy", size: 24)
         
-        let classLabel = UILabel()
+        let classLabel = UIButton(type: .system)
         self.view.addSubview(classLabel)
         classLabel.translatesAutoresizingMaskIntoConstraints = false
         classLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        classLabel.trailingAnchor.constraint(equalTo: container.trailingAnchor).isActive = true
+        classLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 50).isActive = true
         classLabel.leadingAnchor.constraint(equalTo: container.leadingAnchor).isActive = true
         classLabel.topAnchor.constraint(equalTo: viewTitle.bottomAnchor).isActive = true
         if let className = assignment?.schoolClass?.name {
-            classLabel.text = className
+            classLabel.setTitle(className, for: .normal)
         }
         if let exam = exam {
-            classLabel.text = exam.schoolClass?.name
+            classLabel.setTitle(exam.schoolClass?.name, for: .normal)
         }
-        classLabel.textColor = .black
-        classLabel.font = UIFont(name: "Avenir-Medium", size: 17)
+        
+        classLabel.titleLabel?.font = UIFont(name: "Avenir-Medium", size: 20)
+        classLabel.addTarget(self, action: #selector(goToClass(_:)), for: .touchUpInside)
         
         let assignmentLabel = UILabel()
         self.view.addSubview(assignmentLabel)
@@ -179,6 +180,20 @@ class ViewAssignmentViewController: UIViewController {
         
         persistantData!.appDelegate.saveContext()
         navigationController?.popViewController(animated: false)
+    }
+    
+    @objc func goToClass(_ sender: UIButton) {
+        let viewController = ClassAssignmentsViewController()
+        if let schoolClass = assignment?.schoolClass {
+            viewController.schoolClass = schoolClass
+        }
+        
+        if let schoolClass = exam?.schoolClass {
+            viewController.schoolClass = schoolClass
+        }
+        
+        viewController.persistantData = persistantData
+        navigationController?.pushViewController(viewController, animated: false)
     }
     
 

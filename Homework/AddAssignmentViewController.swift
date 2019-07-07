@@ -44,13 +44,6 @@ class AddAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPic
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel(_:)))
         
-        if addType! == "Homework" {
-            self.navigationController?.navigationBar.barTintColor = UIColor(red: 200/255, green: 168/255, blue: 250/255, alpha: 1.0)
-        }
-        else {
-            self.navigationController?.navigationBar.barTintColor = UIColor(red: 255/255, green: 145/255, blue: 193/255, alpha: 1)
-        }
-        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
