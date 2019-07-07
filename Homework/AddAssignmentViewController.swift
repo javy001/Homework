@@ -11,6 +11,7 @@ import UIKit
 class AddAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextViewDelegate {
     
     var assignment: Assignment?
+    var exam: Exam?
     var persistantData: PersistantData?
     var classes: [SchoolClass] = []
     var picker = UIPickerView()
@@ -23,6 +24,7 @@ class AddAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPic
     var bottomViewHeightConstraint: NSLayoutConstraint?
     var containerContstraint: NSLayoutConstraint?
     var dateLabel = UILabel()
+    var addType: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,10 +44,12 @@ class AddAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPic
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel(_:)))
         
-        self.navigationController?.navigationBar.barTintColor = UIColor(red: 200/255, green: 168/255, blue: 250/255, alpha: 1.0)
-        
-        
-        
+        if addType! == "Homework" {
+            self.navigationController?.navigationBar.barTintColor = UIColor(red: 200/255, green: 168/255, blue: 250/255, alpha: 1.0)
+        }
+        else {
+            self.navigationController?.navigationBar.barTintColor = UIColor(red: 255/255, green: 145/255, blue: 193/255, alpha: 1)
+        }
         
     }
     
@@ -98,8 +102,9 @@ class AddAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPic
     
     func setuUpView(){
         assignment = Assignment(context: persistantData!.context)
+        exam = Exam(context: persistantData!.context)
         schoolClass = classes[0]
-        self.navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveAssignment(_:))), animated: true)
+        self.navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveData(_:))), animated: true)
         self.view.backgroundColor = UIColor.white
         
         self.view.addSubview(container)
@@ -137,7 +142,7 @@ class AddAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPic
         assignmentLabel.trailingAnchor.constraint(equalTo: container.centerXAnchor).isActive = true
         assignmentLabel.leadingAnchor.constraint(equalTo: container.leadingAnchor).isActive = true
         assignmentLabel.topAnchor.constraint(equalTo:picker.bottomAnchor).isActive = true
-        assignmentLabel.text = "Homework Name"
+        assignmentLabel.text = "\(addType!) Name"
         
         container.addSubview(name)
         name.translatesAutoresizingMaskIntoConstraints = false
@@ -201,16 +206,30 @@ class AddAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPic
     }
     
     
-    @objc func saveAssignment(_ sender:UIBarButtonItem) {
-        if let assignment = assignment {
-            assignment.name = name.text
-            assignment.dueDate = dueDate.date as NSDate
-            assignment.notes = note.text
-            assignment.schoolClass = schoolClass
-            assignment.isComplete = false
-            persistantData!.appDelegate.saveContext()
-            self.navigationController?.popToRootViewController(animated: false)
+    @objc func saveData(_ sender:UIBarButtonItem) {
+        if addType == "Homework"{
+            if let assignment = assignment {
+                assignment.name = name.text
+                assignment.dueDate = dueDate.date as NSDate
+                assignment.notes = note.text
+                assignment.schoolClass = schoolClass
+                assignment.isComplete = false
+                persistantData!.appDelegate.saveContext()
+                self.navigationController?.popToRootViewController(animated: false)
+            }
         }
+        else {
+            if let exam = exam {
+                exam.name = name.text
+                exam.dueDate = dueDate.date as NSDate
+                exam.notes = note.text
+                exam.schoolClass = schoolClass
+                exam.isComplete = false
+                persistantData!.appDelegate.saveContext()
+                self.navigationController?.popToRootViewController(animated: false)
+            }
+        }
+        
     }
     
     @objc func cancel(_ sender:UIBarButtonItem) {

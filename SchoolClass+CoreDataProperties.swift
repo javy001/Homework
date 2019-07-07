@@ -2,7 +2,7 @@
 //  SchoolClass+CoreDataProperties.swift
 //  Homework
 //
-//  Created by Javier Quintero on 5/21/19.
+//  Created by Javier Quintero on 7/6/19.
 //  Copyright © 2019 Javier Quintero. All rights reserved.
 //
 //
@@ -18,7 +18,9 @@ extension SchoolClass {
     }
 
     @NSManaged public var name: String?
+    @NSManaged public var color: Int16
     @NSManaged public var assignment: NSSet?
+    @NSManaged public var exam: NSSet?
 
 }
 
@@ -36,5 +38,22 @@ extension SchoolClass {
 
     @objc(removeAssignment:)
     @NSManaged public func removeFromAssignment(_ values: NSSet)
+
+}
+
+// MARK: Generated accessors for exam
+extension SchoolClass {
+
+    @objc(addExamObject:)
+    @NSManaged public func addToExam(_ value: Exam)
+
+    @objc(removeExamObject:)
+    @NSManaged public func removeFromExam(_ value: Exam)
+
+    @objc(addExam:)
+    @NSManaged public func addToExam(_ values: NSSet)
+
+    @objc(removeExam:)
+    @NSManaged public func removeFromExam(_ values: NSSet)
 
 }

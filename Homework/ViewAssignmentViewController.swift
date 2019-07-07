@@ -12,9 +12,12 @@ class ViewAssignmentViewController: UIViewController {
     
     var assignment: Assignment?
     var persistantData: PersistantData?
+    var exam: Exam?
+    var viewType: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
         self.navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(editAssignment(_:))), animated: true)
         
@@ -44,7 +47,7 @@ class ViewAssignmentViewController: UIViewController {
         viewTitle.topAnchor.constraint(equalTo: container.topAnchor,constant: 15).isActive = true
         viewTitle.leadingAnchor.constraint(equalTo: container.leadingAnchor).isActive = true
         viewTitle.trailingAnchor.constraint(equalTo: container.trailingAnchor).isActive = true
-        viewTitle.text = "Assignment Details"
+        viewTitle.text = "\(viewType!) Details"
         viewTitle.font = UIFont(name: "Avenir-Heavy", size: 24)
         
         let classLabel = UILabel()
@@ -56,6 +59,9 @@ class ViewAssignmentViewController: UIViewController {
         classLabel.topAnchor.constraint(equalTo: viewTitle.bottomAnchor).isActive = true
         if let className = assignment?.schoolClass?.name {
             classLabel.text = className
+        }
+        if let exam = exam {
+            classLabel.text = exam.schoolClass?.name
         }
         classLabel.textColor = .black
         classLabel.font = UIFont(name: "Avenir-Medium", size: 17)
@@ -71,6 +77,10 @@ class ViewAssignmentViewController: UIViewController {
         if let assignment = assignment {
             assignmentLabel.text = "Assignment: \n\(assignment.name!) "
         }
+        
+        if let exam = exam {
+            assignmentLabel.text = "Test: \n\(exam.name!)"
+        }
         assignmentLabel.textColor = .black
         
         let dateLabel = UILabel()
@@ -82,6 +92,9 @@ class ViewAssignmentViewController: UIViewController {
         dateLabel.topAnchor.constraint(equalTo: assignmentLabel.bottomAnchor).isActive = true
         if let assignment = assignment {
             dateLabel.text = "Due on " + assignment.getDateString()
+        }
+        if let exam = exam {
+            dateLabel.text = "Due on " + exam.getDateString()
         }
         dateLabel.textColor = .black
         
@@ -106,18 +119,21 @@ class ViewAssignmentViewController: UIViewController {
         completeButton.centerXAnchor.constraint(equalTo: container.centerXAnchor).isActive = true
         completeButton.topAnchor.constraint(equalTo: noteLabel.bottomAnchor, constant: 25).isActive = true
         var title: String
-        if let assignment = assignment {
-            if assignment.isComplete {
-                title = "Mark Pending"
-            }
-            else {
-               title = "Complete"
-            }
+        var isComplete = false
+        if viewType == "Homework" {
+            isComplete = assignment!.isComplete
+        }
+        else {
+            isComplete = exam!.isComplete
+        }
+        
+        if isComplete {
+            title = "Mark Pending"
         }
         else {
             title = "Complete"
         }
-//        let buttonColor = UIColor(red: 0/255, green: 200/255, blue: 136/255, alpha: 1)
+        
         let buttonColor = AppStyle().greenColor
         completeButton.setTitle(title, for: .normal)
         completeButton.setTitleColor(buttonColor, for: .normal)
@@ -132,7 +148,14 @@ class ViewAssignmentViewController: UIViewController {
         viewController.fetchClasses()
         if let assignment = assignment {
             viewController.assignment = assignment
+            viewController.viewType = "Homework"
         }
+        
+        if let exam = exam {
+            viewController.exam = exam
+            viewController.viewType = "Test"
+        }
+        
         navigationController?.pushViewController(viewController, animated: false)
     }
         
@@ -145,6 +168,15 @@ class ViewAssignmentViewController: UIViewController {
                 assignment.isComplete = true
             }
         }
+        
+        if let exam = exam {
+            if exam.isComplete {
+                exam.isComplete = false
+            } else {
+                exam.isComplete = true
+            }
+        }
+        
         persistantData!.appDelegate.saveContext()
         navigationController?.popViewController(animated: false)
     }

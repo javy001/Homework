@@ -7,12 +7,22 @@
         <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="schoolClass" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SchoolClass" inverseName="assignment" inverseEntity="SchoolClass" syncable="YES"/>
     </entity>
+    <entity name="Exam" representedClassName=".Exam" syncable="YES">
+        <attribute name="dueDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="isComplete" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="schoolClass" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SchoolClass" inverseName="exam" inverseEntity="SchoolClass" syncable="YES"/>
+    </entity>
     <entity name="SchoolClass" representedClassName=".SchoolClass" syncable="YES">
+        <attribute name="color" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" attributeType="String" syncable="YES"/>
         <relationship name="assignment" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Assignment" inverseName="schoolClass" inverseEntity="Assignment" syncable="YES"/>
+        <relationship name="exam" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Exam" inverseName="schoolClass" inverseEntity="Exam" syncable="YES"/>
     </entity>
     <elements>
         <element name="Assignment" positionX="-63" positionY="-9" width="128" height="120"/>
-        <element name="SchoolClass" positionX="-63" positionY="-18" width="128" height="75"/>
+        <element name="Exam" positionX="-54" positionY="36" width="128" height="120"/>
+        <element name="SchoolClass" positionX="-63" positionY="-18" width="128" height="105"/>
     </elements>
 </model>

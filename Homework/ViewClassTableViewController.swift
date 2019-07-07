@@ -18,7 +18,7 @@ class ViewClassTableViewController: UITableViewController {
         super.viewDidLoad()
         
         rows = []
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellId)
+        tableView.register(ClassTableViewCell.self, forCellReuseIdentifier: cellId)
         navigationItem.title = "Classes"
         self.view.backgroundColor = .white
         self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
@@ -47,8 +47,11 @@ class ViewClassTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! ClassTableViewCell
         cell.textLabel?.text = rows[indexPath.row].name
+        cell.textLabel?.textAlignment = .center
+        cell.colorIndex = Int(rows[indexPath.row].color)
+        cell.setUp()
         return cell
     }
     

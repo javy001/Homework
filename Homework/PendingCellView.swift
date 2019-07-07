@@ -18,6 +18,7 @@ class PendingCellView: UITableViewCell {
     var textMainColor = UIColor.white
     var isComplete = false
     let style = AppStyle()
+    var colorIndex = 0
     
     var classNameView: UILabel = {
         let view = UILabel()
@@ -54,20 +55,22 @@ class PendingCellView: UITableViewCell {
     
     func genColors() {
         if !isComplete {
-            if let daysLeft = daysLeft {
-                if daysLeft <= 1 {
-                    cellColor = style.genRedColor(alpha: 0.3)
-                    textMainColor = style.genRedColor(alpha: 1)
-                }
-                else if daysLeft <= 2 {
-                    cellColor = style.genOrangeColor(alpha: 0.3)
-                    textMainColor = style.genOrangeColor(alpha: 1)
-                }
-                else {
-                    cellColor = style.genGreenColor(alpha: 0.3)
-                    textMainColor = style.genGreenColor(alpha: 1)
-                }
-            }
+//            if let daysLeft = daysLeft {
+//                if daysLeft <= 1 {
+//                    cellColor = style.genRedColor(alpha: 0.3)
+//                    textMainColor = style.genRedColor(alpha: 1)
+//                }
+//                else if daysLeft <= 2 {
+//                    cellColor = style.genOrangeColor(alpha: 0.3)
+//                    textMainColor = style.genOrangeColor(alpha: 1)
+//                }
+//                else {
+//                    cellColor = style.genGreenColor(alpha: 0.3)
+//                    textMainColor = style.genGreenColor(alpha: 1)
+//                }
+//            }
+            cellColor = style.backgroundColors[colorIndex]
+            textMainColor = style.textColors[colorIndex]
         }
         else {
             cellColor = style.greyAccent

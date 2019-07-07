@@ -11,6 +11,7 @@ import UIKit
 class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextViewDelegate {
     
     var assignment: Assignment?
+    var exam: Exam?
     var classes: [SchoolClass] = []
     var picker = UIPickerView()
     var name = UITextField()
@@ -24,10 +25,11 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
     let styles = AppStyle()
     var persistantData: PersistantData?
     var dateLabel = UILabel()
+    var viewType: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.picker.delegate = self
         self.picker.dataSource = self
         self.note.delegate = self
@@ -43,21 +45,30 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        persistantData!.context.reset()
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     func getInitialClass() {
         var i = 0
-        if let name = assignment?.schoolClass?.name {
-            for row in classes {
-                if name == row.name {
-                    picker.selectRow(i, inComponent: 0, animated: false)
-                    schoolClass = row
-                }
-                i += 1
+        var name = ""
+        if viewType == "Homework"{
+            if let className = assignment?.schoolClass?.name {
+                name = className
             }
+        }
+        else if viewType == "Test" {
+            if let className = exam?.schoolClass?.name {
+                name = className
+            }
+        }
+        
+        for row in classes {
+            if name == row.name {
+                picker.selectRow(i, inComponent: 0, animated: false)
+                schoolClass = row
+            }
+            i += 1
         }
     }
     
@@ -92,14 +103,18 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
         self.navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveAssignment(_:))), animated: true)
         self.view.backgroundColor = styles.backgroundColor
         
-        if let text = assignment?.notes {
-            note.text = text
+        if viewType == "Homework" {
+            note.text = assignment?.notes
+        }
+        else if viewType == "Test" {
+            note.text = exam?.notes
         }
         self.view.addSubview(container)
         let tapListener = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         let safeOffset = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0
         let navOffset = self.navigationController?.navigationBar.frame.size.height ?? 0
         container.addGestureRecognizer(tapListener)
+        
         container.translatesAutoresizingMaskIntoConstraints = false
         container.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10).isActive = true
         container.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10).isActive = true
@@ -132,7 +147,7 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
         assignmentLabel.trailingAnchor.constraint(equalTo: container.centerXAnchor).isActive = true
         assignmentLabel.leadingAnchor.constraint(equalTo: container.leadingAnchor).isActive = true
         assignmentLabel.topAnchor.constraint(equalTo:picker.bottomAnchor).isActive = true
-        assignmentLabel.text = "Homework Name"
+        assignmentLabel.text = "\(viewType!) Name"
         assignmentLabel.textColor = AppStyle().mainTextColor
 
         container.addSubview(name)
@@ -142,10 +157,13 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
         name.leadingAnchor.constraint(equalTo: container.leadingAnchor).isActive = true
         name.topAnchor.constraint(equalTo:assignmentLabel.bottomAnchor).isActive = true
         name.borderStyle = .roundedRect
-        if let assignment = assignment {
-            name.text = assignment.name
+        if viewType == "Homework" {
+            name.text = assignment?.name
         }
-//        name.backgroundColor = styles.greyAccent
+        else if viewType == "Test" {
+            name.text = exam?.name
+        }
+
         name.textColor = styles.mainTextColor
 
         
@@ -165,13 +183,18 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
         dueDate.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10).isActive = true
         dueDate.heightAnchor.constraint(equalToConstant: 100).isActive = true
         dueDate.topAnchor.constraint(equalTo: dateLabel.bottomAnchor).isActive = true
-        if let assignmentDate = assignment?.dueDate {
-            dueDate.date = assignmentDate as Date
-            let formatter = DateFormatter()
-            formatter.dateFormat = "E, MMM-dd"
-            let dateString = formatter.string(from: dueDate.date)
-            dateLabel.text = "Due on \(dateString)"
+        if viewType == "Homework" {
+            dueDate.date = (assignment!.dueDate! as Date)
         }
+        else {
+            dueDate.date = (exam!.dueDate! as Date)
+        }
+        let formatter = DateFormatter()
+        formatter.dateFormat = "E, MMM-dd"
+        let dateString = formatter.string(from: dueDate.date)
+        dateLabel.text = "Due on \(dateString)"
+        
+        
         dueDate.tintColor = styles.mainTextColor
         dueDate.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.1)
         dueDate.layer.cornerRadius = 8
@@ -199,7 +222,6 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
         note.bottomAnchor.constraint(equalTo: noteLabel.bottomAnchor, constant: 150).isActive = true
         note.layer.borderWidth = 0.3
         note.font = UIFont(name: "HelveticaNeue", size: 15)
-//        note.backgroundColor = styles.greyAccent
         note.textColor = styles.mainTextColor
 
         container.addSubview(deleteButton)
@@ -208,7 +230,7 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
         deleteButton.widthAnchor.constraint(equalToConstant: 180).isActive = true
         deleteButton.centerXAnchor.constraint(equalTo: container.centerXAnchor).isActive = true
         deleteButton.topAnchor.constraint(equalTo: note.bottomAnchor, constant: 25).isActive = true
-        deleteButton.setTitle("Delete Homework", for: .normal)
+        deleteButton.setTitle("Delete \(viewType!)", for: .normal)
         deleteButton.setTitleColor(UIColor.red, for: .normal)
         deleteButton.addTarget(self, action: #selector(deleteAssignment(_:)), for: .touchUpInside)
 
@@ -230,6 +252,10 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
             persistantData!.context.delete(assignment)
             persistantData!.appDelegate.saveContext()
         }
+        if let exam = exam {
+            persistantData!.context.delete(exam)
+            persistantData!.appDelegate.saveContext()
+        }
         self.navigationController?.popToRootViewController(animated: true)
     }
     
@@ -239,6 +265,13 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
             assignment.dueDate = dueDate.date as NSDate
             assignment.notes = note.text
             assignment.schoolClass = schoolClass
+        }
+        
+        if let exam = exam {
+            exam.name = name.text
+            exam.dueDate = dueDate.date as NSDate
+            exam.notes = note.text
+            exam.schoolClass = schoolClass
         }
         persistantData!.appDelegate.saveContext()
         self.navigationController?.popToRootViewController(animated: true)

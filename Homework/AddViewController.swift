@@ -43,8 +43,15 @@ class AddViewController: UITableViewController {
             viewController.persistantData = persistantData
             navigationController?.pushViewController(viewController, animated: false)
         }
+        else if name == "Homework" {
+            let viewController = AddAssignmentViewController()
+            viewController.addType = name
+            viewController.persistantData = persistantData
+            navigationController?.pushViewController(viewController, animated: false)
+        }
         else {
             let viewController = AddAssignmentViewController()
+            viewController.addType = name
             viewController.persistantData = persistantData
             navigationController?.pushViewController(viewController, animated: false)
         }

@@ -38,7 +38,7 @@ class TableViewCellButton: UITableViewCell {
         
         self.layer.borderWidth = 3
         self.layer.borderColor = UIColor.white.cgColor
-        self.textLabel?.font = UIFont(name: "Avenir-Heavy", size: 22)
+        self.textLabel?.font = UIFont(name: "Avenir-Heavy", size: 18)
 
     }
 

@@ -13,11 +13,18 @@ class ClassAssignmentsViewController: UITableViewController {
     var schoolClass: SchoolClass?
     var cellID = "cellID"
     var assignments: [Assignment] = []
+    var exams: [Exam] = []
+    var rows: [[AnyObject]] = [[]]
+    var sectionCount = 1
+    var sections = ["Homework"]
     let style = AppStyle()
     var persistantData: PersistantData?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setInitialConditions()
+        self.tableView.reloadData()
+        
         if let name = schoolClass?.name {
             self.navigationItem.title = name
         }
@@ -28,34 +35,52 @@ class ClassAssignmentsViewController: UITableViewController {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.tableView.reloadData()
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return sections.count
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let assignments = schoolClass?.assignment {
-            return assignments.count
-        }
-        else {
-            return 0
-        }
+        return rows[section].count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! PendingCellView
-        let assignment = assignments[indexPath.row]
-        //            cell.textLabel?.text = assignment.name
-        cell.className = assignment.schoolClass?.name
-        cell.isComplete = assignment.isComplete
-        cell.assignmentName = assignment.name
-        cell.dueDate = assignment.dueDate as Date?
+        let item = rows[indexPath.section][indexPath.row]
+        cell.className = item.schoolClass?.name
+        cell.isComplete = item.isComplete
+        cell.assignmentName = item.name
+        cell.dueDate = item.dueDate as Date?
+        if let color = item.schoolClass?.color {
+            cell.colorIndex = Int(color)
+        }
         if let daysLeft = cell.dueDate?.timeIntervalSinceNow {
             cell.daysLeft = daysLeft/3600/24
-            cell.genColors()
         }
-        
+        cell.genColors()
         cell.layoutSubviews()
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = UIView()
+        view.backgroundColor = .white
+        let label = UILabel()
+        view.addSubview(label)
+        
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        label.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10).isActive = true
+        label.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        
+        label.text = sections[section]
+        label.font = UIFont(name: "Avenir-Heavy", size: 22)
+        
+        return view
     }
     
     func setuUpView(){
@@ -63,6 +88,18 @@ class ClassAssignmentsViewController: UITableViewController {
             let tempAssignments = assignmentSet.allObjects as! [Assignment]
             let sortedAssignments = tempAssignments.sorted(by: { $0.dueDate?.timeIntervalSinceNow ?? 0 > $1.dueDate?.timeIntervalSinceNow ?? 0 })
             assignments = sortedAssignments
+            rows[0] = assignments
+        }
+        
+        if let tests = schoolClass?.exam {
+            let tempExams = tests.allObjects as! [Exam]
+            if tempExams.count > 0 {
+                let sortedExams = tempExams.sorted(by: { $0.dueDate?.timeIntervalSinceNow ?? 0 > $1.dueDate?.timeIntervalSinceNow ?? 0 })
+                exams = sortedExams
+                rows.insert(exams, at: 0)
+                sections.insert("Tests", at: 0)
+                sectionCount = 2
+            }
         }
         self.view.backgroundColor = style.backgroundColor
         self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
@@ -70,7 +107,16 @@ class ClassAssignmentsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let newView = ViewAssignmentViewController()
-        newView.assignment = assignments[indexPath.row]
+        if sections[indexPath.section] == "Homework" {
+            newView.assignment = assignments[indexPath.row]
+            newView.viewType = "Homework"
+            
+        }
+        else if sections[indexPath.section] == "Tests" {
+            newView.exam = exams[indexPath.row]
+            newView.viewType = "Test"
+        }
+        
         newView.persistantData = persistantData
         navigationController?.pushViewController(newView, animated: false)
     }
@@ -79,8 +125,17 @@ class ClassAssignmentsViewController: UITableViewController {
         if let schoolClass = schoolClass {
             let viewController = EditClassViewController()
             viewController.schoolClass = schoolClass
+            viewController.persistantData = persistantData
             navigationController?.pushViewController(viewController, animated: false)
         }  
     }
-
+    
+    func setInitialConditions() {
+        rows = [[]]
+        exams = []
+        assignments = []
+        sections = ["Homework"]
+        sectionCount = 1
+    }
+    
 }
