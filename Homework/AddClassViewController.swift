@@ -77,6 +77,8 @@ class AddClassViewController: UIViewController {
         colorLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
         
         genColorButtons(n: buttons.count-1)
+        buttons[0].layer.borderWidth = 1
+        buttons[0].layer.borderColor = UIColor.black.cgColor
     }
     
     @objc func addColor(_ sender:UIButton){
@@ -110,7 +112,16 @@ class AddClassViewController: UIViewController {
                 persistantData!.appDelegate.saveContext()
             }
             else {
-                print("dq fail")
+                let alert = UIAlertController(title: "Pick a different name",
+                                              message: "A class already exists with the name \(name)",
+                                              preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "OK",
+                                                 style: .default) { (action) in
+                }
+                alert.addAction(okAction)
+                present(alert, animated: true) {
+                    
+                }
             }
         }
         

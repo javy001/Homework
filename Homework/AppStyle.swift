@@ -25,7 +25,7 @@ class AppStyle {
             genOrangeColor(alpha: 0.3),
             genPurpleColor(alpha: 0.3),
             genPinkColor(alpha: 0.3),
-            genNeonGreenColor(alpha: 0.3),
+            genBlue(alpha: 0.3),
             genAltRed(alpha: 0.3),
             genDarkPurple(alpha: 0.3),
             genPaleMaroon(alpha: 0.3),
@@ -38,7 +38,7 @@ class AppStyle {
             genOrangeColor(alpha: 1),
             genPurpleColor(alpha: 1),
             genPinkColor(alpha: 1),
-            genNeonGreenColor(alpha: 1),
+            genBlue(alpha: 1),
             genAltRed(alpha: 1),
             genDarkPurple(alpha: 1),
             genPaleMaroon(alpha: 1),
@@ -92,6 +92,10 @@ class AppStyle {
     
     func genAltRed(alpha: CGFloat) -> UIColor {
         return UIColor(red: 255/255, green: 34/255, blue: 129/255, alpha: alpha)
+    }
+    
+    func genBlue(alpha: CGFloat) -> UIColor {
+        return UIColor(red: 0/255, green: 51/255, blue: 102/255, alpha: alpha)
     }
 }
 

@@ -42,6 +42,8 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyBoardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel(_:)))
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -321,5 +323,7 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
         dateLabel.text = "Due on \(dateString)"
     }
 
-
+    @objc func cancel(_ sender:UIBarButtonItem) {
+        self.navigationController?.popViewController(animated: true)
+    }
 }

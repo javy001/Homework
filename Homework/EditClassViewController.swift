@@ -30,12 +30,17 @@ class EditClassViewController: UIViewController {
         
         buttons[color].layer.borderWidth = 1
         buttons[color].layer.borderColor = UIColor.black.cgColor
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel(_:)))
+        
+        self.navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveClass(_:))), animated: true)
+        
         setUp()
 
     }
     
     private func setUp() {
-        self.navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveClass(_:))), animated: true)
+        
         let subView = UIView()
         self.view.addSubview(subView)
         self.view.backgroundColor = UIColor.white
@@ -134,12 +139,31 @@ class EditClassViewController: UIViewController {
     }
     
     @objc func deleteClass(_ sender:UIButton!){
-        persistantData!.context.delete(schoolClass!)
-        do{
-            try persistantData!.context.save()
-            navigationController?.popToRootViewController(animated: false)
-        } catch {
-            print("Failed to save")
+        
+        let defaultAction = UIAlertAction(title: "Delete",
+                                          style: .destructive) { (action) in
+            self.persistantData!.context.delete(self.schoolClass!)
+            do{
+                try self.persistantData!.context.save()
+                self.navigationController?.popToRootViewController(animated: false)
+            } catch {
+                print("Failed to save")
+            }
+
+                                            
+        }
+        let cancelAction = UIAlertAction(title: "Cancel",
+                                         style: .cancel) { (action) in
+        }
+        
+        let alert = UIAlertController(title: "Are you sure?",
+                                      message: "Deleting this class will also delete all of its homework and tests.",
+                                      preferredStyle: .alert)
+        alert.addAction(defaultAction)
+        alert.addAction(cancelAction)
+        
+        self.present(alert, animated: true) {
+
         }
     }
     
@@ -150,6 +174,8 @@ class EditClassViewController: UIViewController {
         navigationController?.popToRootViewController(animated: false)
     }
     
-    
+    @objc func cancel(_ sender:UIBarButtonItem) {
+        self.navigationController?.popToRootViewController(animated: false)
+    }
 
 }
