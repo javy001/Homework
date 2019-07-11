@@ -29,7 +29,10 @@ class AppStyle {
             genAltRed(alpha: 0.3),
             genDarkPurple(alpha: 0.3),
             genPaleMaroon(alpha: 0.3),
-            genBlueVapor(alpha: 0.3)
+            genBlueVapor(alpha: 0.3),
+            UIColor.blue.withAlphaComponent(0.3),
+            genMaroon(alpha: 0.3),
+            genDarkGreen(alpha: 0.4)
         ]
         
         textColors = [
@@ -42,7 +45,10 @@ class AppStyle {
             genAltRed(alpha: 1),
             genDarkPurple(alpha: 1),
             genPaleMaroon(alpha: 1),
-            genBlueVapor(alpha: 1)
+            genBlueVapor(alpha: 1),
+            UIColor.blue,
+            genMaroon(alpha: 1),
+            genDarkGreen(alpha: 1)
         ]
     }
     
@@ -96,6 +102,13 @@ class AppStyle {
     
     func genBlue(alpha: CGFloat) -> UIColor {
         return UIColor(red: 0/255, green: 51/255, blue: 102/255, alpha: alpha)
+    }
+    
+    func genMaroon(alpha: CGFloat) ->UIColor {
+        return UIColor(red: 120/255, green: 3/255, blue: 3/255, alpha: alpha)
+    }
+    func genDarkGreen(alpha: CGFloat) ->UIColor {
+        return UIColor(red: 37/255, green: 80/255, blue: 96/255, alpha: alpha)
     }
 }
 

@@ -44,6 +44,8 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel(_:)))
         
+        navigationItem.largeTitleDisplayMode = .never
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -76,7 +78,8 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
     
     func fetchClasses () {
         do {
-            classes = try persistantData!.context.fetch(SchoolClass.fetchRequest())
+            let tempClasses = try persistantData!.context.fetch(SchoolClass.fetchRequest()) as [SchoolClass]
+            classes = tempClasses.sorted(by: { $0.name ?? "_" < $1.name ?? "_" })
         } catch {
             print("Fetch Failed")
         }

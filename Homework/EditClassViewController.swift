@@ -35,6 +35,8 @@ class EditClassViewController: UIViewController {
         
         self.navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveClass(_:))), animated: true)
         
+        navigationItem.largeTitleDisplayMode = .never
+        
         setUp()
 
     }
@@ -168,10 +170,57 @@ class EditClassViewController: UIViewController {
     }
     
     @objc func saveClass(_ sender:UIBarButtonItem) {
-        schoolClass?.name = nameInput.text
-        schoolClass?.color = Int16(color)
-        persistantData!.appDelegate.saveContext()
-        navigationController?.popToRootViewController(animated: false)
+        let context = persistantData!.context
+        var names: [String] = []
+        do {
+            let schoolClasses = try context.fetch(SchoolClass.fetchRequest()) as! [SchoolClass]
+            for schoolCLass in schoolClasses {
+                if let name = schoolCLass.name {
+                    names.append(name)
+                }
+            }
+        }
+        catch {
+            print("Failed Fetch")
+        }
+        
+//        removing existsing class name from names array
+        for i in 0...names.count-1 {
+            if schoolClass!.name! == names[i] {
+                names.remove(at: i)
+                break
+            }
+        }
+
+        if let name = nameInput.text {
+            if checkClassNames(name: name, classes: names) {
+                schoolClass?.name = name
+                schoolClass?.color = Int16(color)
+                persistantData!.appDelegate.saveContext()
+                navigationController?.popToRootViewController(animated: false)
+            }
+            else {
+                let alert = UIAlertController(title: "Pick a different name",
+                                              message: "A class already exists with the name \(name)",
+                    preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "OK",
+                                             style: .default) { (action) in
+                }
+                alert.addAction(okAction)
+                present(alert, animated: true) {
+                    
+                }
+            }
+        }
+    }
+    
+    func checkClassNames(name: String, classes: [String]) -> Bool {
+        for schoolClass in classes {
+            if schoolClass == name {
+                return false
+            }
+        }
+        return true
     }
     
     @objc func cancel(_ sender:UIBarButtonItem) {

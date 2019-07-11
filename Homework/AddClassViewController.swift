@@ -24,6 +24,8 @@ class AddClassViewController: UIViewController {
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel(_:)))
         
+        navigationItem.largeTitleDisplayMode = .never
+        
         for i in 0...style.backgroundColors.count - 1 {
             buttons.insert(UIButton(), at: i)
         }
@@ -110,6 +112,8 @@ class AddClassViewController: UIViewController {
                 schoolClass.name = name
                 schoolClass.color = Int16(color)
                 persistantData!.appDelegate.saveContext()
+                
+                navigationController?.popViewController(animated: false)
             }
             else {
                 let alert = UIAlertController(title: "Pick a different name",
@@ -124,8 +128,6 @@ class AddClassViewController: UIViewController {
                 }
             }
         }
-        
-        navigationController?.popViewController(animated: false)
     }
     
     func checkClassNames(name: String, classes: [String]) -> Bool {

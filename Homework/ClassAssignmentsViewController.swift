@@ -15,8 +15,8 @@ class ClassAssignmentsViewController: UITableViewController {
     var assignments: [Assignment] = []
     var exams: [Exam] = []
     var rows: [[AnyObject]] = [[]]
-    var sectionCount = 1
-    var sections = ["Homework"]
+    var sectionCount = 0
+    var sections: [String] = []
     let style = AppStyle()
     var persistantData: PersistantData?
     
@@ -88,7 +88,12 @@ class ClassAssignmentsViewController: UITableViewController {
             let tempAssignments = assignmentSet.allObjects as! [Assignment]
             let sortedAssignments = tempAssignments.sorted(by: { $0.dueDate?.timeIntervalSinceNow ?? 0 > $1.dueDate?.timeIntervalSinceNow ?? 0 })
             assignments = sortedAssignments
-            rows[0] = assignments
+            if assignments.count > 0 {
+                rows[0] = assignments
+                sectionCount += 1
+                sections.insert("Homework", at: 0)
+            }
+            
         }
         
         if let tests = schoolClass?.exam {
@@ -98,7 +103,7 @@ class ClassAssignmentsViewController: UITableViewController {
                 exams = sortedExams
                 rows.insert(exams, at: 0)
                 sections.insert("Tests", at: 0)
-                sectionCount = 2
+                sectionCount += 2
             }
         }
         self.view.backgroundColor = style.backgroundColor
@@ -134,8 +139,8 @@ class ClassAssignmentsViewController: UITableViewController {
         rows = [[]]
         exams = []
         assignments = []
-        sections = ["Homework"]
-        sectionCount = 1
+        sections = []
+        sectionCount = 0
     }
     
 }

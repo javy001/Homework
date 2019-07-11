@@ -44,6 +44,8 @@ class AddAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPic
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel(_:)))
         
+        navigationItem.largeTitleDisplayMode = .never
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -70,6 +72,7 @@ class AddAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPic
     func fetchClasses () {
         do {
             classes = try persistantData!.context.fetch(SchoolClass.fetchRequest())
+            classes = classes.sorted(by: { $0.name ?? "_" < $1.name ?? "_" })
         } catch {
             print("Fetch Failed")
         }

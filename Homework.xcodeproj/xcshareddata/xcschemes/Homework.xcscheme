@@ -17,7 +17,7 @@
                BlueprintIdentifier = "3FA38FE1228624E700BFC118"
                BuildableName = "Homework.app"
                BlueprintName = "Homework"
-               ReferencedContainer = "container:Postd.xcodeproj">
+               ReferencedContainer = "container:Homework.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,7 +35,7 @@
                BlueprintIdentifier = "3FA38FF5228624E900BFC118"
                BuildableName = "HomeworkTests.xctest"
                BlueprintName = "HomeworkTests"
-               ReferencedContainer = "container:Postd.xcodeproj">
+               ReferencedContainer = "container:Homework.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -45,7 +45,7 @@
                BlueprintIdentifier = "3FA39000228624E900BFC118"
                BuildableName = "HomeworkUITests.xctest"
                BlueprintName = "HomeworkUITests"
-               ReferencedContainer = "container:Postd.xcodeproj">
+               ReferencedContainer = "container:Homework.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,7 +55,7 @@
             BlueprintIdentifier = "3FA38FE1228624E700BFC118"
             BuildableName = "Homework.app"
             BlueprintName = "Homework"
-            ReferencedContainer = "container:Postd.xcodeproj">
+            ReferencedContainer = "container:Homework.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -78,7 +78,7 @@
             BlueprintIdentifier = "3FA38FE1228624E700BFC118"
             BuildableName = "Homework.app"
             BlueprintName = "Homework"
-            ReferencedContainer = "container:Postd.xcodeproj">
+            ReferencedContainer = "container:Homework.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -97,7 +97,7 @@
             BlueprintIdentifier = "3FA38FE1228624E700BFC118"
             BuildableName = "Homework.app"
             BlueprintName = "Homework"
-            ReferencedContainer = "container:Postd.xcodeproj">
+            ReferencedContainer = "container:Homework.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

@@ -22,6 +22,10 @@ class ViewClassTableViewController: UITableViewController {
         navigationItem.title = "Classes"
         self.view.backgroundColor = .white
         self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+        
+        self.navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addItem(_:))), animated: true)
+        
+        navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -60,6 +64,59 @@ class ViewClassTableViewController: UITableViewController {
         viewController.schoolClass = rows[indexPath.row]
         viewController.persistantData = persistantData
         self.navigationController?.pushViewController(viewController, animated: false)
+    }
+    
+    @objc func addItem(_ sender:UIBarButtonItem){
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let homeWorkAction = UIAlertAction(title: "Homework", style: .default) { (action) in
+            self.checkForClasses()
+            let viewController = AddAssignmentViewController()
+            viewController.addType = "Homework"
+            viewController.persistantData = self.persistantData
+            self.navigationController?.pushViewController(viewController, animated: false)
+            
+        }
+        let testAction = UIAlertAction(title: "Test", style: .default) { (action) in
+            self.checkForClasses()
+            let viewController = AddAssignmentViewController()
+            viewController.addType = "Test"
+            viewController.persistantData = self.persistantData
+            self.navigationController?.pushViewController(viewController, animated: false)
+        }
+        let classAction = UIAlertAction(title: "Class", style: .default) { (action) in
+            let viewController = AddClassViewController()
+            viewController.persistantData = self.persistantData
+            self.navigationController?.pushViewController(viewController, animated: false)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+        }
+        for action in [homeWorkAction, testAction, classAction, cancelAction] {
+            alert.addAction(action)
+        }
+        present(alert, animated: true)
+    }
+    
+    func checkForClasses() {
+        let context = persistantData!.context
+        do {
+            let schoolClasses = try context.fetch(SchoolClass.fetchRequest()) as! [SchoolClass]
+            if !(schoolClasses.count > 0) {
+                let alert = UIAlertController(title: "No Classes",
+                                              message: "You need to add a class before you can add a test or homework assignment.",
+                                              preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "OK",
+                                             style: .default) { (action) in
+                }
+                alert.addAction(okAction)
+                present(alert, animated: true) {
+                    
+                }
+            }
+        }
+        catch {
+            print("Failed Fetch")
+        }
+        
     }
     
 }

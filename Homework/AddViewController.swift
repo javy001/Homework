@@ -44,12 +44,14 @@ class AddViewController: UITableViewController {
             navigationController?.pushViewController(viewController, animated: false)
         }
         else if name == "Homework" {
+            checkForClasses()
             let viewController = AddAssignmentViewController()
             viewController.addType = name
             viewController.persistantData = persistantData
             navigationController?.pushViewController(viewController, animated: false)
         }
         else {
+            checkForClasses()
             let viewController = AddAssignmentViewController()
             viewController.addType = name
             viewController.persistantData = persistantData
@@ -57,6 +59,27 @@ class AddViewController: UITableViewController {
         }
     }
     
-    
+    func checkForClasses() {
+        let context = persistantData!.context
+        do {
+            let schoolClasses = try context.fetch(SchoolClass.fetchRequest()) as! [SchoolClass]
+            if !(schoolClasses.count > 0) {
+                let alert = UIAlertController(title: "No Classes",
+                                              message: "You need to add a class before you can add a test or homework assignment.",
+                    preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "OK",
+                                             style: .default) { (action) in
+                }
+                alert.addAction(okAction)
+                present(alert, animated: true) {
+                    
+                }
+            }
+        }
+        catch {
+            print("Failed Fetch")
+        }
+        
+    }
 
 }

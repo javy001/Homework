@@ -13,11 +13,11 @@ class PendingViewController: UITableViewController {
     var cellID = "cellID"
     var assignments: [Assignment] = []
     var exams: [Exam] = []
-    var sections = ["Homework", "Tests"]
+    var sections: [String] = []
     var rows: [[AnyObject]] = [[]]
     var style = AppStyle()
     var persistantData: PersistantData?
-    var sectionCount = 1
+    var sectionCount = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +26,10 @@ class PendingViewController: UITableViewController {
         navigationItem.title = "Pending Items"
         self.view.backgroundColor = style.backgroundColor
         self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+        
+        self.navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addItem(_:))), animated: true)
+        
+        navigationController?.navigationBar.prefersLargeTitles = true
         
     }
     
@@ -36,7 +40,12 @@ class PendingViewController: UITableViewController {
             fetchRequest.predicate = NSPredicate(format: "isComplete == false")
             fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Assignment.dueDate), ascending: true)]
             assignments = try persistantData!.context.fetch(fetchRequest)
-            rows[0] = assignments
+            if assignments.count > 0 {
+                sectionCount += 1
+                rows[0] = assignments
+                sections.insert("Homework", at: 0)
+            }
+            
             self.tableView.reloadData()
         } catch {
             print("fetch failed")
@@ -48,7 +57,7 @@ class PendingViewController: UITableViewController {
             fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Exam.dueDate), ascending: true)]
             exams = try persistantData!.context.fetch(fetchRequest)
             if exams.count > 0 {
-                sectionCount = 2
+                sectionCount += 1
                 rows.insert(exams, at: 0)
                 sections.insert("Tests", at: 0)
             }
@@ -127,8 +136,61 @@ class PendingViewController: UITableViewController {
     
     func setInitialConditions() {
         rows = [[]]
-        sections = ["Homework"]
-        sectionCount = 1
+        sections = []
+        sectionCount = 0
+    }
+    
+    @objc func addItem(_ sender:UIBarButtonItem){
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let homeWorkAction = UIAlertAction(title: "Homework", style: .default) { (action) in
+            self.checkForClasses()
+            let viewController = AddAssignmentViewController()
+            viewController.addType = "Homework"
+            viewController.persistantData = self.persistantData
+            self.navigationController?.pushViewController(viewController, animated: false)
+            
+        }
+        let testAction = UIAlertAction(title: "Test", style: .default) { (action) in
+            self.checkForClasses()
+            let viewController = AddAssignmentViewController()
+            viewController.addType = "Test"
+            viewController.persistantData = self.persistantData
+            self.navigationController?.pushViewController(viewController, animated: false)
+        }
+        let classAction = UIAlertAction(title: "Class", style: .default) { (action) in
+            let viewController = AddClassViewController()
+            viewController.persistantData = self.persistantData
+            self.navigationController?.pushViewController(viewController, animated: false)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+        }
+        for action in [homeWorkAction, testAction, classAction, cancelAction] {
+            alert.addAction(action)
+        }
+        present(alert, animated: true)
+    }
+    
+    func checkForClasses() {
+        let context = persistantData!.context
+        do {
+            let schoolClasses = try context.fetch(SchoolClass.fetchRequest()) as! [SchoolClass]
+            if !(schoolClasses.count > 0) {
+                let alert = UIAlertController(title: "No Classes",
+                                              message: "You need to add a class before you can add a test or homework assignment.",
+                                              preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "OK",
+                                             style: .default) { (action) in
+                }
+                alert.addAction(okAction)
+                present(alert, animated: true) {
+                    
+                }
+            }
+        }
+        catch {
+            print("Failed Fetch")
+        }
+        
     }
 
 }

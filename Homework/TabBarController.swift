@@ -37,7 +37,7 @@ class TabBarController: UITabBarController {
         schooClassNavigationController.tabBarItem.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: 2)
         
         
-        viewControllers = [pendingNavigationController, addNavigationController, schooClassNavigationController]
+        viewControllers = [pendingNavigationController, schooClassNavigationController]
         
         for controller in viewControllers! {
             controller.tabBarItem.imageInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
