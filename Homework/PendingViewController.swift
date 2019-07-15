@@ -30,7 +30,6 @@ class PendingViewController: UITableViewController {
         self.navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addItem(_:))), animated: true)
         
         navigationController?.navigationBar.prefersLargeTitles = true
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {

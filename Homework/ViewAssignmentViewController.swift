@@ -42,16 +42,6 @@ class ViewAssignmentViewController: UIViewController {
         container.topAnchor.constraint(equalTo: self.view.topAnchor, constant: safeOffset + navOffset).isActive = true
         container.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
         
-//        let viewTitle = UILabel()
-//        container.addSubview(viewTitle)
-//        viewTitle.translatesAutoresizingMaskIntoConstraints = false
-//        viewTitle.heightAnchor.constraint(equalToConstant: 28).isActive = true
-//        viewTitle.topAnchor.constraint(equalTo: container.topAnchor,constant: 15).isActive = true
-//        viewTitle.leadingAnchor.constraint(equalTo: container.leadingAnchor).isActive = true
-//        viewTitle.trailingAnchor.constraint(equalTo: container.trailingAnchor).isActive = true
-//        viewTitle.text = "\(viewType!) Details"
-//        viewTitle.font = UIFont(name: "Avenir-Heavy", size: 24)
-        
         let classColor = UIButton()
         container.addSubview(classColor)
         classColor.translatesAutoresizingMaskIntoConstraints = false
@@ -61,8 +51,18 @@ class ViewAssignmentViewController: UIViewController {
         classColor.leadingAnchor.constraint(equalTo: container.leadingAnchor).isActive = true
         classColor.widthAnchor.constraint(equalToConstant: 24).isActive = true
         
-        classColor.backgroundColor = style.backgroundColors[Int(assignment!.schoolClass!.color)]
-        classColor.layer.cornerRadius = 12
+        if let viewType = viewType {
+            if viewType == "Homework" {
+                classColor.backgroundColor = style.backgroundColors[Int(assignment!.schoolClass!.color)]
+            }
+            else if viewType == "Test" {
+                classColor.backgroundColor = style.backgroundColors[Int(exam!.schoolClass!.color)]
+            }
+            classColor.layer.cornerRadius = 12
+        }
+        
+        
+        
 
         
         let classButton = UIButton(type: .system)
@@ -83,13 +83,7 @@ class ViewAssignmentViewController: UIViewController {
         classButton.addTarget(self, action: #selector(goToClass(_:)), for: .touchUpInside)
         
         
-        let assignmentLabel = UILabel()
-        container.addSubview(assignmentLabel)
-        assignmentLabel.translatesAutoresizingMaskIntoConstraints = false
-        assignmentLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        assignmentLabel.trailingAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-        assignmentLabel.leadingAnchor.constraint(equalTo: container.leadingAnchor).isActive = true
-        assignmentLabel.topAnchor.constraint(equalTo:classButton.bottomAnchor).isActive = true
+        let assignmentLabel = genLabelLayout(container: container, topAnchor: classButton.bottomAnchor, topMargin: 10)
         assignmentLabel.numberOfLines = 0
         if let assignment = assignment {
             assignmentLabel.text = "Homework: \n\(assignment.name!) "
@@ -99,14 +93,11 @@ class ViewAssignmentViewController: UIViewController {
             assignmentLabel.text = "Test: \n\(exam.name!)"
         }
         assignmentLabel.textColor = .black
+        
+        let separator1 = genHLine(topAnchor: assignmentLabel.bottomAnchor, container: container, topMargin: 10)
+        
+        let dateLabel = genLabelLayout(container: container, topAnchor: separator1.bottomAnchor, topMargin: 10)
 
-        let dateLabel = UILabel()
-        container.addSubview(dateLabel)
-        dateLabel.translatesAutoresizingMaskIntoConstraints = false
-        dateLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        dateLabel.trailingAnchor.constraint(equalTo: container.trailingAnchor).isActive = true
-        dateLabel.leadingAnchor.constraint(equalTo: container.leadingAnchor).isActive = true
-        dateLabel.topAnchor.constraint(equalTo: assignmentLabel.bottomAnchor).isActive = true
         if let assignment = assignment {
             dateLabel.text = "Due on " + assignment.getDateString()
         }
@@ -114,22 +105,25 @@ class ViewAssignmentViewController: UIViewController {
             dateLabel.text = "Due on " + exam.getDateString()
         }
         dateLabel.textColor = .black
-
-        let noteLabel = UILabel()
-        container.addSubview(noteLabel)
-        noteLabel.translatesAutoresizingMaskIntoConstraints = false
-        noteLabel.topAnchor.constraint(equalTo: dateLabel.bottomAnchor).isActive = true
-        noteLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 0).isActive = true
-        noteLabel.leadingAnchor.constraint(equalTo: container.leadingAnchor).isActive = true
-        noteLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -15).isActive = true
+        
+        
+        let noteTitle = genLabelLayout(container: container, topAnchor: dateLabel.bottomAnchor, topMargin: 10)
+        noteTitle.text = "Notes:"
+        
+        let separator3 = genHLine(topAnchor: noteTitle.bottomAnchor, container: container, topMargin: 5)
+        
+        let noteLabel = genLabelLayout(container: container, topAnchor: separator3.bottomAnchor, topMargin: 10)
         noteLabel.numberOfLines = 0
         if let note = assignment?.notes {
-            noteLabel.text = "Notes: \n\(note)"
+            noteLabel.text = note
         }
         if let note = exam?.notes {
-            noteLabel.text = "Notes: \n\(note)"
+            noteLabel.text = note
         }
         noteLabel.textColor = .black
+        
+        let separator2 = genHLine(topAnchor: noteLabel.bottomAnchor, container: container, topMargin: 10)
+        
 
         let completeButton = UIButton()
         container.addSubview(completeButton)
@@ -137,7 +131,7 @@ class ViewAssignmentViewController: UIViewController {
         completeButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
         completeButton.widthAnchor.constraint(greaterThanOrEqualToConstant: 120).isActive = true
         completeButton.centerXAnchor.constraint(equalTo: container.centerXAnchor).isActive = true
-        completeButton.topAnchor.constraint(equalTo: noteLabel.bottomAnchor, constant: 25).isActive = true
+        completeButton.topAnchor.constraint(equalTo: separator2.bottomAnchor, constant: 25).isActive = true
         var title: String
         var isComplete = false
         if viewType == "Homework" {
@@ -227,5 +221,29 @@ class ViewAssignmentViewController: UIViewController {
         navigationController?.pushViewController(viewController, animated: false)
     }
     
+    func genHLine(topAnchor: NSLayoutYAxisAnchor, container: UIView, topMargin: CGFloat) -> UIView {
+        let view = UIView()
+        container.addSubview(view)
+        view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.15)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.topAnchor.constraint(equalTo: topAnchor, constant: topMargin).isActive = true
+        view.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+        
+        return view
+    }
+    
+    func genLabelLayout(container: UIView, topAnchor: NSLayoutYAxisAnchor, topMargin: CGFloat) -> UILabel {
+        let label = UILabel()
+        container.addSubview(label)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.heightAnchor.constraint(greaterThanOrEqualToConstant: 10).isActive = true
+        label.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -15).isActive = true
+        label.leadingAnchor.constraint(equalTo: container.leadingAnchor).isActive = true
+        label.topAnchor.constraint(equalTo: topAnchor, constant: topMargin).isActive = true
+        
+        return label
+    }
 
 }

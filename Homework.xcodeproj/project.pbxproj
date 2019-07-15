@@ -32,7 +32,7 @@
 		3FA761DE22973B8C00CF2F03 /* ViewAssignmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA761DD22973B8C00CF2F03 /* ViewAssignmentViewController.swift */; };
 		3FEA94072294892900F6A0F2 /* EditClassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FEA94062294892900F6A0F2 /* EditClassViewController.swift */; };
 		3FEE60A3228764620070F893 /* PendingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FEE60A2228764620070F893 /* PendingViewController.swift */; };
-		3FEE60A52287647E0070F893 /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FEE60A42287647E0070F893 /* AddViewController.swift */; };
+		3FF072F222D95FC5008BFB99 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF072F122D95FC5008BFB99 /* CalendarView.swift */; };
 		3FFBF68A22964FD0001ECE93 /* PendingCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFBF68922964FD0001ECE93 /* PendingCellView.swift */; };
 /* End PBXBuildFile section */
 
@@ -86,7 +86,7 @@
 		3FC6376A229C3E02007BA6E6 /* Homework 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Homework 2.xcdatamodel"; sourceTree = "<group>"; };
 		3FEA94062294892900F6A0F2 /* EditClassViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditClassViewController.swift; sourceTree = "<group>"; };
 		3FEE60A2228764620070F893 /* PendingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingViewController.swift; sourceTree = "<group>"; };
-		3FEE60A42287647E0070F893 /* AddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
+		3FF072F122D95FC5008BFB99 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		3FFBF68922964FD0001ECE93 /* PendingCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingCellView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -153,7 +153,6 @@
 				3F7C2CFB2297B1E000E28110 /* CompleteTableViewController.swift */,
 				3FA761DD22973B8C00CF2F03 /* ViewAssignmentViewController.swift */,
 				3F7C2CF922978F6A00E28110 /* EditAssignmentViewController.swift */,
-				3FEE60A42287647E0070F893 /* AddViewController.swift */,
 				3F92A36D22CC53870019F2F1 /* TableViewCellButton.swift */,
 				3F1014FD229F78CD003A7D70 /* AddClassViewController.swift */,
 				3F1014FF229F7F58003A7D70 /* AddAssignmentViewController.swift */,
@@ -161,6 +160,7 @@
 				3F4CF66F2298C6D300DADA1E /* ViewClassTableViewController.swift */,
 				3F4CF6712298E5A200DADA1E /* ClassAssignmentsViewController.swift */,
 				3F645A0522D1730300496EBD /* ClassTableViewCell.swift */,
+				3FF072F122D95FC5008BFB99 /* CalendarView.swift */,
 				3FA38FEC228624E900BFC118 /* Assets.xcassets */,
 				3F83383822934EEF00BAFA4F /* Homework.xcdatamodeld */,
 				3FA38FF1228624E900BFC118 /* Info.plist */,
@@ -317,6 +317,7 @@
 			files = (
 				3FA761DE22973B8C00CF2F03 /* ViewAssignmentViewController.swift in Sources */,
 				3FFBF68A22964FD0001ECE93 /* PendingCellView.swift in Sources */,
+				3FF072F222D95FC5008BFB99 /* CalendarView.swift in Sources */,
 				3F0B2ED422A6E997006031B9 /* AppStyle.swift in Sources */,
 				3F92A36E22CC53870019F2F1 /* TableViewCellButton.swift in Sources */,
 				3F32A9C322D06BFB002C9A68 /* SchoolClass+CoreDataClass.swift in Sources */,
@@ -334,7 +335,6 @@
 				3FEA94072294892900F6A0F2 /* EditClassViewController.swift in Sources */,
 				3F32A9C922D06C5F002C9A68 /* Exam+CoreDataClass.swift in Sources */,
 				3F1014FE229F78CD003A7D70 /* AddClassViewController.swift in Sources */,
-				3FEE60A52287647E0070F893 /* AddViewController.swift in Sources */,
 				3F645A0622D1730300496EBD /* ClassTableViewCell.swift in Sources */,
 				3FA38FE6228624E700BFC118 /* AppDelegate.swift in Sources */,
 				3F4CF6702298C6D300DADA1E /* ViewClassTableViewController.swift in Sources */,
@@ -495,14 +495,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = ZYUR4NT4F4;
+				DEVELOPMENT_TEAM = YT7XVS87LD;
 				INFOPLIST_FILE = Homework/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = JQ.Homework;
+				PRODUCT_BUNDLE_IDENTIFIER = PQ.Homework;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -514,14 +514,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = ZYUR4NT4F4;
+				DEVELOPMENT_TEAM = YT7XVS87LD;
 				INFOPLIST_FILE = Homework/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = JQ.Homework;
+				PRODUCT_BUNDLE_IDENTIFIER = PQ.Homework;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

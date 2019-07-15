@@ -23,11 +23,6 @@ class TabBarController: UITabBarController {
         pendingViewController.tabBarItem.title = "Pending"
         pendingViewController.tabBarItem.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: 2)
         
-        let addViewController = AddViewController()
-        addViewController.persistantData = persistantData
-        let addNavigationController = UINavigationController(rootViewController: addViewController)
-        addNavigationController.tabBarItem.image = UIImage(named: "plus")
-        
         
         let schoolClassTableViewController = ViewClassTableViewController()
         schoolClassTableViewController.persistantData = persistantData

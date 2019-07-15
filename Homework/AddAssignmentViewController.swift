@@ -25,6 +25,7 @@ class AddAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPic
     var containerContstraint: NSLayoutConstraint?
     var dateLabel = UILabel()
     var addType: String?
+    var calendar = CalendarView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -143,7 +144,7 @@ class AddAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPic
         container.addSubview(name)
         name.translatesAutoresizingMaskIntoConstraints = false
         name.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        name.trailingAnchor.constraint(equalTo: container.trailingAnchor).isActive = true
+        name.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -15).isActive = true
         name.leadingAnchor.constraint(equalTo: container.leadingAnchor).isActive = true
         name.topAnchor.constraint(equalTo:assignmentLabel.bottomAnchor).isActive = true
         name.borderStyle = .roundedRect
@@ -155,26 +156,32 @@ class AddAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPic
         dateLabel.trailingAnchor.constraint(equalTo: container.trailingAnchor).isActive = true
         dateLabel.leadingAnchor.constraint(equalTo: container.leadingAnchor).isActive = true
         dateLabel.topAnchor.constraint(equalTo: name.bottomAnchor).isActive = true
-        let formatter = DateFormatter()
-        formatter.dateFormat = "E, MMM-dd"
-        let dateString = formatter.string(from: dueDate.date)
-        dateLabel.text = "Due on \(dateString)"
+        dateLabel.text = "Due on"
         
-        container.addSubview(dueDate)
-        dueDate.translatesAutoresizingMaskIntoConstraints = false
-        dueDate.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 15).isActive = true
-        dueDate.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -15).isActive = true
-        dueDate.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        dueDate.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: -20).isActive = true
-        dueDate.datePickerMode = .date
-        dueDate.addTarget(self, action: #selector(dateDidChange(picker:)), for: .valueChanged)
+//        container.addSubview(dueDate)
+//        dueDate.translatesAutoresizingMaskIntoConstraints = false
+//        dueDate.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 15).isActive = true
+//        dueDate.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -15).isActive = true
+//        dueDate.heightAnchor.constraint(equalToConstant: 100).isActive = true
+//        dueDate.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: -20).isActive = true
+//        dueDate.datePickerMode = .date
+//        dueDate.addTarget(self, action: #selector(dateDidChange(picker:)), for: .valueChanged)
+        
+        container.addSubview(calendar)
+        calendar.superWidth = self.view.frame.width - 30
+        calendar.translatesAutoresizingMaskIntoConstraints = false
+        calendar.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -15).isActive = true
+        calendar.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 15).isActive = true
+        calendar.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 10).isActive = true
+        calendar.heightAnchor.constraint(equalToConstant: 261).isActive = true
+        calendar.genCalendar(seedDate: Date())
         
         let noteLabel = UILabel()
         container.addSubview(noteLabel)
         noteLabel.translatesAutoresizingMaskIntoConstraints = false
         noteLabel.leadingAnchor.constraint(equalTo: container.leadingAnchor).isActive = true
         noteLabel.trailingAnchor.constraint(equalTo: container.centerXAnchor).isActive = true
-        noteLabel.topAnchor.constraint(equalTo: dueDate.bottomAnchor).isActive = true
+        noteLabel.topAnchor.constraint(equalTo: calendar.bottomAnchor).isActive = true
         noteLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
         noteLabel.text = "Notes"
         
@@ -183,7 +190,7 @@ class AddAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPic
         note.layer.cornerRadius = 7
         note.translatesAutoresizingMaskIntoConstraints = false
         note.leadingAnchor.constraint(equalTo: container.leadingAnchor).isActive = true
-        note.trailingAnchor.constraint(equalTo: container.trailingAnchor).isActive = true
+        note.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -15).isActive = true
         note.topAnchor.constraint(equalTo: noteLabel.bottomAnchor).isActive = true
         note.bottomAnchor.constraint(equalTo: noteLabel.bottomAnchor, constant: 150).isActive = true
         note.layer.borderWidth = 0.3
@@ -206,7 +213,7 @@ class AddAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPic
         if addType == "Homework"{
             if let assignment = assignment {
                 assignment.name = name.text
-                assignment.dueDate = dueDate.date as NSDate
+                assignment.dueDate = calendar.selectedDay as NSDate
                 assignment.notes = note.text
                 assignment.schoolClass = schoolClass
                 assignment.isComplete = false
@@ -217,7 +224,7 @@ class AddAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPic
         else {
             if let exam = exam {
                 exam.name = name.text
-                exam.dueDate = dueDate.date as NSDate
+                exam.dueDate = calendar.selectedDay as NSDate
                 exam.notes = note.text
                 exam.schoolClass = schoolClass
                 exam.isComplete = false

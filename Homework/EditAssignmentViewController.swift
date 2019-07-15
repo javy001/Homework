@@ -26,10 +26,10 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
     var persistantData: PersistantData?
     var dateLabel = UILabel()
     var viewType: String?
+    let calendar = CalendarView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.picker.delegate = self
         self.picker.dataSource = self
         self.note.delegate = self
@@ -182,37 +182,53 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
         dateLabel.textColor = styles.mainTextColor
         
 
-        container.addSubview(dueDate)
-        dueDate.translatesAutoresizingMaskIntoConstraints = false
-        dueDate.leadingAnchor.constraint(equalTo: container.leadingAnchor).isActive = true
-        dueDate.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10).isActive = true
-        dueDate.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        dueDate.topAnchor.constraint(equalTo: dateLabel.bottomAnchor).isActive = true
+//        container.addSubview(dueDate)
+//        dueDate.translatesAutoresizingMaskIntoConstraints = false
+//        dueDate.leadingAnchor.constraint(equalTo: container.leadingAnchor).isActive = true
+//        dueDate.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10).isActive = true
+//        dueDate.heightAnchor.constraint(equalToConstant: 100).isActive = true
+//        dueDate.topAnchor.constraint(equalTo: dateLabel.bottomAnchor).isActive = true
+        //
+//
+//        dueDate.tintColor = styles.mainTextColor
+//        dueDate.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.1)
+//        dueDate.layer.cornerRadius = 8
+//        dueDate.setValue(styles.mainTextColor, forKey: "textColor")
+//        dueDate.datePickerMode = .date
+//        dueDate.addTarget(self, action: #selector(dateDidChange(picker:)), for: .valueChanged)
+        
+        
+        container.addSubview(calendar)
+        calendar.superWidth = self.view.frame.width - 30
+        calendar.translatesAutoresizingMaskIntoConstraints = false
+        calendar.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -15).isActive = true
+        calendar.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 15).isActive = true
+        calendar.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 10).isActive = true
+        calendar.heightAnchor.constraint(equalToConstant: 261).isActive = true
+        
         if viewType == "Homework" {
-            dueDate.date = (assignment!.dueDate! as Date)
+            let date = assignment!.dueDate! as Date
+            calendar.selectedDay = date
+            calendar.color = Int(assignment!.schoolClass!.color)
+            calendar.genCalendar(seedDate: date)
+            
         }
         else {
-            dueDate.date = (exam!.dueDate! as Date)
+            let date = exam!.dueDate! as Date
+            calendar.selectedDay = date
+            calendar.color = Int(exam!.schoolClass!.color)
+            calendar.genCalendar(seedDate: date)
         }
-        let formatter = DateFormatter()
-        formatter.dateFormat = "E, MMM-dd"
-        let dateString = formatter.string(from: dueDate.date)
-        dateLabel.text = "Due on \(dateString)"
-        
-        
-        dueDate.tintColor = styles.mainTextColor
-        dueDate.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.1)
-        dueDate.layer.cornerRadius = 8
-        dueDate.setValue(styles.mainTextColor, forKey: "textColor")
-        dueDate.datePickerMode = .date
-        dueDate.addTarget(self, action: #selector(dateDidChange(picker:)), for: .valueChanged)
+
+        dateLabel.text = "Due on"
+
 
         let noteLabel = UILabel()
         container.addSubview(noteLabel)
         noteLabel.translatesAutoresizingMaskIntoConstraints = false
         noteLabel.leadingAnchor.constraint(equalTo: container.leadingAnchor).isActive = true
         noteLabel.trailingAnchor.constraint(equalTo: container.centerXAnchor).isActive = true
-        noteLabel.topAnchor.constraint(equalTo: dueDate.bottomAnchor).isActive = true
+        noteLabel.topAnchor.constraint(equalTo: calendar.bottomAnchor).isActive = true
         noteLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
         noteLabel.text = "Notes"
         noteLabel.textColor = styles.mainTextColor
@@ -267,14 +283,14 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
     @objc func saveAssignment(_ sender:UIBarButtonItem) {
         if let assignment = assignment {
             assignment.name = name.text
-            assignment.dueDate = dueDate.date as NSDate
+            assignment.dueDate = calendar.selectedDay as NSDate
             assignment.notes = note.text
             assignment.schoolClass = schoolClass
         }
         
         if let exam = exam {
             exam.name = name.text
-            exam.dueDate = dueDate.date as NSDate
+            exam.dueDate = calendar.selectedDay as NSDate
             exam.notes = note.text
             exam.schoolClass = schoolClass
         }

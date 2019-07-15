@@ -20,35 +20,43 @@ class AppStyle {
     
     init() {
         backgroundColors = [
+            genGreenColor(alpha: 0.8),
+            genRedColor(alpha: 0.7),
+            genPurpleColor(alpha: 0.7),
+            genOrangeColor(alpha: 0.7),
+            genBlueVapor(alpha: 1),
+            
             genGreenColor(alpha: 0.3),
             genRedColor(alpha: 0.3),
-            genOrangeColor(alpha: 0.3),
             genPurpleColor(alpha: 0.3),
-            genPinkColor(alpha: 0.3),
-            genBlue(alpha: 0.3),
-            genAltRed(alpha: 0.3),
-            genDarkPurple(alpha: 0.3),
-            genPaleMaroon(alpha: 0.3),
-            genBlueVapor(alpha: 0.3),
+            genOrangeColor(alpha: 0.3),
             UIColor.blue.withAlphaComponent(0.3),
-            genMaroon(alpha: 0.3),
-            genDarkGreen(alpha: 0.4)
+            
+            genBlue(alpha: 0.3),
+            genPinkColor(alpha: 0.3),
+            genAltRed(alpha: 0.3),
+            genPaleMaroon(alpha: 0.3),
+            genDarkPurple(alpha: 0.3)
         ]
         
         textColors = [
+            UIColor.white,
+            UIColor.white,
+            UIColor.white,
+            UIColor.white,
+            UIColor.white,
+            
             genGreenColor(alpha: 1),
             genRedColor(alpha: 1),
-            genOrangeColor(alpha: 1),
             genPurpleColor(alpha: 1),
-            genPinkColor(alpha: 1),
-            genBlue(alpha: 1),
-            genAltRed(alpha: 1),
-            genDarkPurple(alpha: 1),
-            genPaleMaroon(alpha: 1),
-            genBlueVapor(alpha: 1),
+            genOrangeColor(alpha: 1),
             UIColor.blue,
-            genMaroon(alpha: 1),
-            genDarkGreen(alpha: 1)
+
+            genBlue(alpha: 1),
+            genPinkColor(alpha: 1),
+            genAltRed(alpha: 1),
+            genPaleMaroon(alpha: 1),
+            genDarkPurple(alpha: 1)
         ]
     }
     
