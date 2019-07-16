@@ -74,6 +74,15 @@ class CalendarView: UIView {
     
     func genCalendar(seedDate: Date) {
         
+        let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(nextMonth(_:)))
+        let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(prevMonth(_:)))
+        
+        leftSwipe.direction = .left
+        rightSwipe.direction = .right
+        
+        self.addGestureRecognizer(leftSwipe)
+        self.addGestureRecognizer(rightSwipe)
+        
         let margin = (superWidth! - 7 * 30)/8
         month = calendar.component(.month, from: seedDate)
         year = calendar.component(.year, from: seedDate)
@@ -89,7 +98,7 @@ class CalendarView: UIView {
         monthLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         monthLabel.widthAnchor.constraint(equalToConstant: 90).isActive = true
         monthLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        
+        monthLabel.font = .boldSystemFont(ofSize: 19)
         
         nextButton.setTitle(">", for: .normal)
         nextButton.setTitleColor(.black, for: .normal)
@@ -157,7 +166,7 @@ class CalendarView: UIView {
         hLine.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -1 * margin).isActive = true
         hLine.heightAnchor.constraint(equalToConstant: 1).isActive = true
         
-        dateformatter.dateFormat = "yyyy-M-dd"
+        dateformatter.dateFormat = "yyyy-M-d"
         for i in 1...42 {
             let button = DayButton()
             button.addTarget(self, action: #selector(selectDay(_:)), for: .touchUpInside)
@@ -203,9 +212,8 @@ class CalendarView: UIView {
                 day.topAnchor.constraint(equalTo: days[i-7].bottomAnchor, constant: 3).isActive = true
                 day.leadingAnchor.constraint(equalTo: days[i-7].leadingAnchor).isActive = true
                 day.trailingAnchor.constraint(equalTo: days[i-7].trailingAnchor).isActive = true
-                day.heightAnchor.constraint(equalToConstant: 30).isActive = true
             }
-            
+            day.heightAnchor.constraint(equalToConstant: 30).isActive = true
             i+=1
         }
         
