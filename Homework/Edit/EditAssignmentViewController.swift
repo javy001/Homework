@@ -181,23 +181,6 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
         
         dateLabel.textColor = styles.mainTextColor
         
-
-//        container.addSubview(dueDate)
-//        dueDate.translatesAutoresizingMaskIntoConstraints = false
-//        dueDate.leadingAnchor.constraint(equalTo: container.leadingAnchor).isActive = true
-//        dueDate.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10).isActive = true
-//        dueDate.heightAnchor.constraint(equalToConstant: 100).isActive = true
-//        dueDate.topAnchor.constraint(equalTo: dateLabel.bottomAnchor).isActive = true
-        //
-//
-//        dueDate.tintColor = styles.mainTextColor
-//        dueDate.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.1)
-//        dueDate.layer.cornerRadius = 8
-//        dueDate.setValue(styles.mainTextColor, forKey: "textColor")
-//        dueDate.datePickerMode = .date
-//        dueDate.addTarget(self, action: #selector(dateDidChange(picker:)), for: .valueChanged)
-        
-        
         container.addSubview(calendar)
         calendar.superWidth = self.view.frame.width - 30
         calendar.translatesAutoresizingMaskIntoConstraints = false
@@ -269,15 +252,39 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
     }
     
     @objc func deleteAssignment(_ sender:UIButton!) {
-        if let assignment = assignment {
-            persistantData!.context.delete(assignment)
-            persistantData!.appDelegate.saveContext()
+        let lowerViewType = viewType?.lowercased()
+        let defaultAction = UIAlertAction(title: "Delete", style: .destructive) { (action) in
+            if let assignment = self.assignment {
+                self.persistantData!.context.delete(assignment)
+                self.persistantData!.appDelegate.saveContext()
+            }
+            if let exam = self.exam {
+                self.persistantData!.context.delete(exam)
+                self.persistantData!.appDelegate.saveContext()
+            }
+            self.navigationController?.popToRootViewController(animated: true)
+            do{
+                try self.persistantData!.context.save()
+                self.navigationController?.popToRootViewController(animated: false)
+            } catch {
+                print("Failed to save")
+            }
         }
-        if let exam = exam {
-            persistantData!.context.delete(exam)
-            persistantData!.appDelegate.saveContext()
+        let cancelAction = UIAlertAction(title: "Cancel",
+                                         style: .cancel) { (action) in
         }
-        self.navigationController?.popToRootViewController(animated: true)
+        
+        let alert = UIAlertController(title: "Are you sure you want to delete this \(lowerViewType!)?",
+                                      message: nil,
+                                      preferredStyle: .alert)
+        alert.addAction(defaultAction)
+        alert.addAction(cancelAction)
+        
+        self.present(alert, animated: true) {
+            
+        }
+        
+        
     }
     
     @objc func saveAssignment(_ sender:UIBarButtonItem) {

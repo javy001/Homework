@@ -158,15 +158,6 @@ class AddAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPic
         dateLabel.topAnchor.constraint(equalTo: name.bottomAnchor).isActive = true
         dateLabel.text = "Due on"
         
-//        container.addSubview(dueDate)
-//        dueDate.translatesAutoresizingMaskIntoConstraints = false
-//        dueDate.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 15).isActive = true
-//        dueDate.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -15).isActive = true
-//        dueDate.heightAnchor.constraint(equalToConstant: 100).isActive = true
-//        dueDate.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: -20).isActive = true
-//        dueDate.datePickerMode = .date
-//        dueDate.addTarget(self, action: #selector(dateDidChange(picker:)), for: .valueChanged)
-        
         container.addSubview(calendar)
         calendar.superWidth = self.view.frame.width - 30
         calendar.translatesAutoresizingMaskIntoConstraints = false

@@ -25,6 +25,7 @@ class CalendarView: UIView {
     var color = 0
     let style = AppStyle()
     var superWidth: CGFloat?
+    let today = Date()
     
     
     func updateData(seedDate: Date) {
@@ -39,6 +40,7 @@ class CalendarView: UIView {
             selectedButton?.backgroundColor = style.backgroundColors[color]
             selectedButton?.setTitleColor(style.textColors[color], for: .normal)
         }
+        
         let monthString = dateformatter.string(from: seedDate)
         monthLabel.text = monthString
         
@@ -49,11 +51,19 @@ class CalendarView: UIView {
         for button in days {
             if i >= firstWeekDay && i < (numDays + firstWeekDay) {
                 let j = firstWeekDay - 1
-                let ds = "\(year!)-\(month!)-\(i-j)"
+                var ds = "\(year!)-\(month!)-\(i-j)"
                 button.day = i - j
                 button.date = dateformatter.date(from: ds)!
                 if i == firstWeekDay {
                     firstDate = button.date
+                }
+                ds = dateformatter.string(from: today)
+                if button.date == dateformatter.date(from: ds) {
+                    button.layer.borderWidth = 1
+                    button.layer.borderColor = UIColor.black.withAlphaComponent(0.3).cgColor
+                }
+                else {
+                    button.layer.borderWidth = 0
                 }
                 lastDate = button.date
                 button.setTitle("\(i - j)", for: .normal)
@@ -96,7 +106,7 @@ class CalendarView: UIView {
         monthLabel.translatesAutoresizingMaskIntoConstraints = false
         monthLabel.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         monthLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        monthLabel.widthAnchor.constraint(equalToConstant: 90).isActive = true
+        monthLabel.widthAnchor.constraint(equalToConstant: 100).isActive = true
         monthLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
         monthLabel.font = .boldSystemFont(ofSize: 19)
         
@@ -165,7 +175,6 @@ class CalendarView: UIView {
         hLine.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: margin).isActive = true
         hLine.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -1 * margin).isActive = true
         hLine.heightAnchor.constraint(equalToConstant: 1).isActive = true
-        
         dateformatter.dateFormat = "yyyy-M-d"
         for i in 1...42 {
             let button = DayButton()
@@ -176,6 +185,7 @@ class CalendarView: UIView {
                 button.day = i - j
                 let date = dateformatter.date(from: ds)!
                 button.date = date
+                
                 if ds == dateformatter.string(from: selectedDay) {
                     button.backgroundColor = style.backgroundColors[color]
                     button.setTitleColor(style.textColors[color], for: .normal)
@@ -184,6 +194,11 @@ class CalendarView: UIView {
                 else {
                     button.setTitleColor(UIColor.black.withAlphaComponent(0.7), for: .normal)
                 }
+                if ds == dateformatter.string(from: today) {
+                    button.layer.borderWidth = 1
+                    button.layer.borderColor = UIColor.black.withAlphaComponent(0.35).cgColor
+                }
+                
                 if i == firstWeekDay {
                     firstDate = button.date
                 }

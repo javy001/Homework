@@ -107,13 +107,14 @@ class EditClassViewController: UIViewController {
     }
     
     func genColorButtons(n: Int) {
+        let margin = (self.view.frame.width - 270)/2
         for i in 0...n {
             let btn = buttons[i]
             self.view.addSubview(btn)
             btn.translatesAutoresizingMaskIntoConstraints = false
             if i == 0 {
                 btn.topAnchor.constraint(equalTo: colorLabel.bottomAnchor, constant: 10).isActive = true
-                btn.leadingAnchor.constraint(equalTo: colorLabel.leadingAnchor).isActive = true
+                btn.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: margin).isActive = true
             }
             else if i <= 4 {
                 btn.topAnchor.constraint(equalTo: colorLabel.bottomAnchor, constant: 10).isActive = true

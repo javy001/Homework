@@ -21,9 +21,7 @@
 		3F521CA822B6A5F400ED3DEC /* PersistantData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F521CA722B6A5F400ED3DEC /* PersistantData.swift */; };
 		3F645A0622D1730300496EBD /* ClassTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F645A0522D1730300496EBD /* ClassTableViewCell.swift */; };
 		3F7C2CFA22978F6A00E28110 /* EditAssignmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7C2CF922978F6A00E28110 /* EditAssignmentViewController.swift */; };
-		3F7C2CFC2297B1E000E28110 /* CompleteTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7C2CFB2297B1E000E28110 /* CompleteTableViewController.swift */; };
 		3F83383A22934EEF00BAFA4F /* Homework.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3F83383822934EEF00BAFA4F /* Homework.xcdatamodeld */; };
-		3F92A36E22CC53870019F2F1 /* TableViewCellButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F92A36D22CC53870019F2F1 /* TableViewCellButton.swift */; };
 		3FA38FE6228624E700BFC118 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA38FE5228624E700BFC118 /* AppDelegate.swift */; };
 		3FA38FE8228624E700BFC118 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA38FE7228624E700BFC118 /* TabBarController.swift */; };
 		3FA38FED228624E900BFC118 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3FA38FEC228624E900BFC118 /* Assets.xcassets */; };
@@ -33,6 +31,9 @@
 		3FEA94072294892900F6A0F2 /* EditClassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FEA94062294892900F6A0F2 /* EditClassViewController.swift */; };
 		3FEE60A3228764620070F893 /* PendingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FEE60A2228764620070F893 /* PendingViewController.swift */; };
 		3FF072F222D95FC5008BFB99 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF072F122D95FC5008BFB99 /* CalendarView.swift */; };
+		3FF072F422E25FFE008BFB99 /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF072F322E25FFE008BFB99 /* ScheduleViewController.swift */; };
+		3FF072FA22E280EC008BFB99 /* ScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF072F922E280EC008BFB99 /* ScheduleView.swift */; };
+		3FF072FC22E2B575008BFB99 /* ScheduleDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF072FB22E2B575008BFB99 /* ScheduleDay.swift */; };
 		3FFBF68A22964FD0001ECE93 /* PendingCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFBF68922964FD0001ECE93 /* PendingCellView.swift */; };
 /* End PBXBuildFile section */
 
@@ -68,9 +69,7 @@
 		3F521CA722B6A5F400ED3DEC /* PersistantData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistantData.swift; sourceTree = "<group>"; };
 		3F645A0522D1730300496EBD /* ClassTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassTableViewCell.swift; sourceTree = "<group>"; };
 		3F7C2CF922978F6A00E28110 /* EditAssignmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAssignmentViewController.swift; sourceTree = "<group>"; };
-		3F7C2CFB2297B1E000E28110 /* CompleteTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteTableViewController.swift; sourceTree = "<group>"; };
 		3F83383922934EEF00BAFA4F /* Homework.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Homework.xcdatamodel; sourceTree = "<group>"; };
-		3F92A36D22CC53870019F2F1 /* TableViewCellButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCellButton.swift; sourceTree = "<group>"; };
 		3FA38FE2228624E700BFC118 /* Homework.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Homework.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FA38FE5228624E700BFC118 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3FA38FE7228624E700BFC118 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
@@ -87,6 +86,9 @@
 		3FEA94062294892900F6A0F2 /* EditClassViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditClassViewController.swift; sourceTree = "<group>"; };
 		3FEE60A2228764620070F893 /* PendingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingViewController.swift; sourceTree = "<group>"; };
 		3FF072F122D95FC5008BFB99 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		3FF072F322E25FFE008BFB99 /* ScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
+		3FF072F922E280EC008BFB99 /* ScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleView.swift; sourceTree = "<group>"; };
+		3FF072FB22E2B575008BFB99 /* ScheduleDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDay.swift; sourceTree = "<group>"; };
 		3FFBF68922964FD0001ECE93 /* PendingCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingCellView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -148,19 +150,10 @@
 				3FA38FE7228624E700BFC118 /* TabBarController.swift */,
 				3F521CA722B6A5F400ED3DEC /* PersistantData.swift */,
 				3F0B2ED322A6E997006031B9 /* AppStyle.swift */,
-				3FEE60A2228764620070F893 /* PendingViewController.swift */,
-				3FFBF68922964FD0001ECE93 /* PendingCellView.swift */,
-				3F7C2CFB2297B1E000E28110 /* CompleteTableViewController.swift */,
-				3FA761DD22973B8C00CF2F03 /* ViewAssignmentViewController.swift */,
-				3F7C2CF922978F6A00E28110 /* EditAssignmentViewController.swift */,
-				3F92A36D22CC53870019F2F1 /* TableViewCellButton.swift */,
-				3F1014FD229F78CD003A7D70 /* AddClassViewController.swift */,
-				3F1014FF229F7F58003A7D70 /* AddAssignmentViewController.swift */,
-				3FEA94062294892900F6A0F2 /* EditClassViewController.swift */,
-				3F4CF66F2298C6D300DADA1E /* ViewClassTableViewController.swift */,
-				3F4CF6712298E5A200DADA1E /* ClassAssignmentsViewController.swift */,
-				3F645A0522D1730300496EBD /* ClassTableViewCell.swift */,
-				3FF072F122D95FC5008BFB99 /* CalendarView.swift */,
+				3FF072F622E27F6F008BFB99 /* Pending */,
+				3FF072F722E27FFD008BFB99 /* Classes */,
+				3FF072F822E2808B008BFB99 /* Edit */,
+				3FF072F522E27F42008BFB99 /* Schedule */,
 				3FA38FEC228624E900BFC118 /* Assets.xcassets */,
 				3F83383822934EEF00BAFA4F /* Homework.xcdatamodeld */,
 				3FA38FF1228624E900BFC118 /* Info.plist */,
@@ -184,6 +177,48 @@
 				3FA39007228624E900BFC118 /* Info.plist */,
 			);
 			path = HomeworkUITests;
+			sourceTree = "<group>";
+		};
+		3FF072F522E27F42008BFB99 /* Schedule */ = {
+			isa = PBXGroup;
+			children = (
+				3FF072F322E25FFE008BFB99 /* ScheduleViewController.swift */,
+				3FF072F922E280EC008BFB99 /* ScheduleView.swift */,
+				3FF072FB22E2B575008BFB99 /* ScheduleDay.swift */,
+			);
+			path = Schedule;
+			sourceTree = "<group>";
+		};
+		3FF072F622E27F6F008BFB99 /* Pending */ = {
+			isa = PBXGroup;
+			children = (
+				3FEE60A2228764620070F893 /* PendingViewController.swift */,
+				3FFBF68922964FD0001ECE93 /* PendingCellView.swift */,
+				3FA761DD22973B8C00CF2F03 /* ViewAssignmentViewController.swift */,
+			);
+			path = Pending;
+			sourceTree = "<group>";
+		};
+		3FF072F722E27FFD008BFB99 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				3F645A0522D1730300496EBD /* ClassTableViewCell.swift */,
+				3F4CF66F2298C6D300DADA1E /* ViewClassTableViewController.swift */,
+				3F4CF6712298E5A200DADA1E /* ClassAssignmentsViewController.swift */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		3FF072F822E2808B008BFB99 /* Edit */ = {
+			isa = PBXGroup;
+			children = (
+				3F1014FD229F78CD003A7D70 /* AddClassViewController.swift */,
+				3F1014FF229F7F58003A7D70 /* AddAssignmentViewController.swift */,
+				3FEA94062294892900F6A0F2 /* EditClassViewController.swift */,
+				3F7C2CF922978F6A00E28110 /* EditAssignmentViewController.swift */,
+				3FF072F122D95FC5008BFB99 /* CalendarView.swift */,
+			);
+			path = Edit;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -317,19 +352,20 @@
 			files = (
 				3FA761DE22973B8C00CF2F03 /* ViewAssignmentViewController.swift in Sources */,
 				3FFBF68A22964FD0001ECE93 /* PendingCellView.swift in Sources */,
+				3FF072FC22E2B575008BFB99 /* ScheduleDay.swift in Sources */,
 				3FF072F222D95FC5008BFB99 /* CalendarView.swift in Sources */,
 				3F0B2ED422A6E997006031B9 /* AppStyle.swift in Sources */,
-				3F92A36E22CC53870019F2F1 /* TableViewCellButton.swift in Sources */,
 				3F32A9C322D06BFB002C9A68 /* SchoolClass+CoreDataClass.swift in Sources */,
 				3F83383A22934EEF00BAFA4F /* Homework.xcdatamodeld in Sources */,
 				3FEE60A3228764620070F893 /* PendingViewController.swift in Sources */,
 				3F4D04092295FE160031E5D9 /* Assignment+CoreDataProperties.swift in Sources */,
 				3F521CA822B6A5F400ED3DEC /* PersistantData.swift in Sources */,
+				3FF072FA22E280EC008BFB99 /* ScheduleView.swift in Sources */,
 				3F4D04082295FE160031E5D9 /* Assignment+CoreDataClass.swift in Sources */,
 				3FA38FE8228624E700BFC118 /* TabBarController.swift in Sources */,
 				3F7C2CFA22978F6A00E28110 /* EditAssignmentViewController.swift in Sources */,
-				3F7C2CFC2297B1E000E28110 /* CompleteTableViewController.swift in Sources */,
 				3F4CF6722298E5A200DADA1E /* ClassAssignmentsViewController.swift in Sources */,
+				3FF072F422E25FFE008BFB99 /* ScheduleViewController.swift in Sources */,
 				3F32A9CA22D06C5F002C9A68 /* Exam+CoreDataProperties.swift in Sources */,
 				3F32A9C422D06BFB002C9A68 /* SchoolClass+CoreDataProperties.swift in Sources */,
 				3FEA94072294892900F6A0F2 /* EditClassViewController.swift in Sources */,
@@ -494,6 +530,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = YT7XVS87LD;
 				INFOPLIST_FILE = Homework/Info.plist;
@@ -504,6 +541,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = PQ.Homework;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -513,6 +551,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = YT7XVS87LD;
 				INFOPLIST_FILE = Homework/Info.plist;
@@ -523,6 +562,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = PQ.Homework;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
