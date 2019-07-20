@@ -19,6 +19,7 @@ class ScheduleViewController: UIViewController, ScheduleViewDelegate, UITableVie
     var sectionCount = 0
     let cellID = "cellID"
     let tableView = UITableView()
+    var selectedDay: ScheduleDay?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,11 +32,16 @@ class ScheduleViewController: UIViewController, ScheduleViewDelegate, UITableVie
         tableView.dataSource = self
         tableView.register(PendingCellView.self, forCellReuseIdentifier: cellID)
         tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+        self.navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addItem(_:))), animated: true)
         setUp()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        calendar.updateData(seedDate: Date())
+        if let day = selectedDay {
+            calendar.updateData(seedDate: day.date!)
+            day.handleTap(day.dateButton)
+        }
+        tableView.reloadData()
     }
     
     func setUp() {
@@ -56,7 +62,7 @@ class ScheduleViewController: UIViewController, ScheduleViewDelegate, UITableVie
         
         self.view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.topAnchor.constraint(equalTo: calendar.bottomAnchor, constant: 5).isActive = true
+        tableView.topAnchor.constraint(equalTo: calendar.bottomAnchor, constant: 1).isActive = true
         tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
@@ -125,13 +131,66 @@ class ScheduleViewController: UIViewController, ScheduleViewDelegate, UITableVie
         navigationController?.pushViewController(viewController, animated: false)
     }
     
+    func checkForClasses() {
+        let context = persistantData!.context
+        do {
+            let schoolClasses = try context.fetch(SchoolClass.fetchRequest()) as! [SchoolClass]
+            if !(schoolClasses.count > 0) {
+                let alert = UIAlertController(title: "No Classes",
+                                              message: "You need to add a class before you can add a test or homework assignment.",
+                                              preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "OK",
+                                             style: .default) { (action) in
+                }
+                alert.addAction(okAction)
+                present(alert, animated: true) {
+                    
+                }
+            }
+        }
+        catch {
+            print("Failed Fetch")
+        }
+        
+    }
+    
+    @objc func addItem(_ sender:UIBarButtonItem){
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let homeWorkAction = UIAlertAction(title: "Homework", style: .default) { (action) in
+            self.checkForClasses()
+            let viewController = AddAssignmentViewController()
+            viewController.addType = "Homework"
+            viewController.persistantData = self.persistantData
+            self.navigationController?.pushViewController(viewController, animated: false)
+            
+        }
+        let testAction = UIAlertAction(title: "Test", style: .default) { (action) in
+            self.checkForClasses()
+            let viewController = AddAssignmentViewController()
+            viewController.addType = "Test"
+            viewController.persistantData = self.persistantData
+            self.navigationController?.pushViewController(viewController, animated: false)
+        }
+        let classAction = UIAlertAction(title: "Class", style: .default) { (action) in
+            let viewController = AddClassViewController()
+            viewController.persistantData = self.persistantData
+            self.navigationController?.pushViewController(viewController, animated: false)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+        }
+        for action in [homeWorkAction, testAction, classAction, cancelAction] {
+            alert.addAction(action)
+        }
+        present(alert, animated: true)
+    }
+    
     func dateSelected(day: ScheduleDay) {
         sections = []
         sectionCount = 0
         rows = [[]]
         assignments = day.assignments
         exams = day.exams
-        
+        selectedDay = day
         if day.assignments.count > 0 {
             sections.insert("Homework", at: 0)
             rows[0] = assignments
