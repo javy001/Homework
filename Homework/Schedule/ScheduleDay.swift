@@ -45,7 +45,7 @@ class ScheduleDay: UIView {
         indicator.heightAnchor.constraint(equalToConstant: 5).isActive = true
         indicator.widthAnchor.constraint(equalToConstant: 5).isActive = true
         indicator.layer.cornerRadius = 2.5
-        
+        indicator.addTarget(self, action: #selector(handleTap(_:)), for: .touchUpInside)
         update()
         
     }
@@ -67,6 +67,8 @@ class ScheduleDay: UIView {
     }
     
     @objc func handleTap(_ sender: UIButton) {
-        delegate?.selectDate(sender: self)
+        if willShow {
+         delegate?.selectDate(sender: self)
+        }
     }
 }

@@ -32,16 +32,15 @@ class ScheduleViewController: UIViewController, ScheduleViewDelegate, UITableVie
         tableView.dataSource = self
         tableView.register(PendingCellView.self, forCellReuseIdentifier: cellID)
         tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+        let filterButton = UIBarButtonItem(image: UIImage(named: "filter"), style: .plain, target: self, action: #selector(filterData(_:)))
+        
+        self.navigationItem.setLeftBarButton(filterButton, animated: true)
         self.navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addItem(_:))), animated: true)
         setUp()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        if let day = selectedDay {
-            calendar.updateData(seedDate: day.date!)
-            day.handleTap(day.dateButton)
-        }
-        tableView.reloadData()
+        resetTable()
     }
     
     func setUp() {
@@ -55,7 +54,7 @@ class ScheduleViewController: UIViewController, ScheduleViewDelegate, UITableVie
         calendar.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
         calendar.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
         calendar.topAnchor.constraint(equalTo: self.view.topAnchor, constant: safeOffset + navOffset).isActive = true
-        let height = (8 * 30) + (6 * 6) + (9 * 3) + 1
+        let height = (8 * 30) + (6 * 6) + (3 * 3) + (5 * 2) + 1
         calendar.heightAnchor.constraint(equalToConstant: CGFloat(height)).isActive = true
         
         calendar.genCalendar(seedDate: Date())
@@ -110,7 +109,7 @@ class ScheduleViewController: UIViewController, ScheduleViewDelegate, UITableVie
         label.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         
         label.text = sections[section]
-        label.font = UIFont(name: "Avenir-Heavy", size: 22)
+        label.font = UIFont(name: "Avenir-Heavy", size: 18)
         
         return view
     }
@@ -182,6 +181,39 @@ class ScheduleViewController: UIViewController, ScheduleViewDelegate, UITableVie
             alert.addAction(action)
         }
         present(alert, animated: true)
+    }
+    
+    @objc func filterData(_ sender:UIBarButtonItem){
+        let alert = UIAlertController(title: "Filter Items", message: nil, preferredStyle: .actionSheet)
+        let completeActoin = UIAlertAction(title: "Completed", style: .default) { (action) in
+            self.calendar.filter = NSPredicate(format: "isComplete == true")
+            self.calendar.updateData(seedDate: self.calendar.firstDate!)
+            self.resetTable()
+        }
+        let pendingAction = UIAlertAction(title: "Pending", style: .default) { (action) in
+            self.calendar.filter = NSPredicate(format: "isComplete == false")
+            self.calendar.updateData(seedDate: self.calendar.firstDate!)
+            self.resetTable()
+        }
+        let allAction = UIAlertAction(title: "All", style: .default) { (action) in
+            self.calendar.filter = nil
+            self.calendar.updateData(seedDate: self.calendar.firstDate!)
+            self.resetTable()
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+        }
+        for action in [allAction, pendingAction, completeActoin, cancelAction] {
+            alert.addAction(action)
+        }
+        present(alert, animated: true)
+    }
+    
+    func resetTable() {
+        if let day = selectedDay {
+            calendar.updateData(seedDate: day.date!)
+            day.handleTap(day.dateButton)
+        }
+        tableView.reloadData()
     }
     
     func dateSelected(day: ScheduleDay) {

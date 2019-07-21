@@ -34,6 +34,7 @@ class ScheduleView: UIView, ScheduleDayDelegate {
     var superWidth: CGFloat?
     let today = Date()
     var initialDay: ScheduleDay?
+    var filter: NSPredicate?
     
     
     func updateData(seedDate: Date) {
@@ -113,14 +114,13 @@ class ScheduleView: UIView, ScheduleDayDelegate {
         monthLabel.text = monthString
         
         self.addSubview(monthLabel)
-        
         monthLabel.textAlignment = .center
         monthLabel.translatesAutoresizingMaskIntoConstraints = false
         monthLabel.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         monthLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         monthLabel.widthAnchor.constraint(equalToConstant: 100).isActive = true
         monthLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        monthLabel.font = .boldSystemFont(ofSize: 19)
+        monthLabel.font = UIFont(name: "Avenir-Heavy", size: 18)
         
         nextButton.setTitle(">", for: .normal)
         nextButton.setTitleColor(.black, for: .normal)
@@ -161,6 +161,7 @@ class ScheduleView: UIView, ScheduleDayDelegate {
             dayLabel.text = day
             dayLabel.textColor = UIColor.black.withAlphaComponent(0.7)
             dayLabel.textAlignment = .center
+            dayLabel.font = UIFont(name: "Avenir-Light", size: 14)
             dayLabels.append(dayLabel)
             self.addSubview(dayLabel)
             dayLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -241,7 +242,7 @@ class ScheduleView: UIView, ScheduleDayDelegate {
                 }
             }
             else {
-                day.topAnchor.constraint(equalTo: days[i-7].bottomAnchor, constant: 3).isActive = true
+                day.topAnchor.constraint(equalTo: days[i-7].bottomAnchor, constant: 2).isActive = true
                 day.leadingAnchor.constraint(equalTo: days[i-7].leadingAnchor).isActive = true
             }
             day.heightAnchor.constraint(equalToConstant: 36).isActive = true
@@ -317,10 +318,19 @@ class ScheduleView: UIView, ScheduleDayDelegate {
     func fetchData(day: ScheduleDay) {
         let lowerBound = calendar.startOfDay(for: day.date!)
         let upperBound = calendar.date(byAdding: .day, value: 1, to: lowerBound)
+        let datePredicate = NSPredicate(format: "(dueDate >= %@) AND (dueDate < %@)", lowerBound as NSDate, upperBound! as NSDate)
+        
         //get assignments
         do{
             let fetchRequest = Assignment.assignmentFetchRequest()
-            fetchRequest.predicate = NSPredicate(format: "(dueDate >= %@) AND (dueDate < %@)", lowerBound as NSDate, upperBound! as NSDate)
+            if let additionalPredicate = filter {
+                let compound = NSCompoundPredicate(andPredicateWithSubpredicates: [additionalPredicate, datePredicate])
+                fetchRequest.predicate = compound
+            }
+            else {
+                fetchRequest.predicate = datePredicate
+            }
+            
             fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Assignment.dueDate), ascending: true)]
             day.assignments = try persistantData!.context.fetch(fetchRequest)
         }
@@ -330,7 +340,13 @@ class ScheduleView: UIView, ScheduleDayDelegate {
         // get exams
         do{
             let fetchRequest = Exam.examFetchRequest()
-            fetchRequest.predicate = NSPredicate(format: "(dueDate >= %@) AND (dueDate < %@)", lowerBound as NSDate, upperBound! as NSDate)
+            if let additionalPredicate = filter {
+                let compound = NSCompoundPredicate(andPredicateWithSubpredicates: [additionalPredicate, datePredicate])
+                fetchRequest.predicate = compound
+            }
+            else {
+                fetchRequest.predicate = datePredicate
+            }
             fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(Exam.dueDate), ascending: true)]
             day.exams = try persistantData!.context.fetch(fetchRequest)
         } catch {
