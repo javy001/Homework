@@ -30,9 +30,12 @@ class ViewClassTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         do{
-//            let fetchRequest = SchoolClass.fetchRequest()
 //            fetchRequest.predicate = NSPredicate(format: "isComplete == true")
-            rows = try persistantData!.context.fetch(SchoolClass.fetchRequest())
+            let fetchRequest = SchoolClass.schoolClassFetchRequest()
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(SchoolClass.name), ascending: true)]
+//            rows = try persistantData!.context.fetch(SchoolClass.fetchRequest())
+            rows = try persistantData!.context.fetch(fetchRequest)
+            
             self.tableView.reloadData()
         } catch {
             print("fetch failed")
@@ -63,7 +66,7 @@ class ViewClassTableViewController: UITableViewController {
         let viewController = ClassAssignmentsViewController()
         viewController.schoolClass = rows[indexPath.row]
         viewController.persistantData = persistantData
-        self.navigationController?.pushViewController(viewController, animated: false)
+        self.navigationController?.pushViewController(viewController, animated: true)
     }
     
     @objc func addItem(_ sender:UIBarButtonItem){

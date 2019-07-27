@@ -24,7 +24,7 @@ class AppStyle {
             genRedColor(alpha: 0.7),
             genPurpleColor(alpha: 0.7),
             genOrangeColor(alpha: 0.7),
-            genBlueVapor(alpha: 1),
+            UIColor(red: 1/255, green: 205/255, blue: 254/255, alpha: 0.3),
             
             genGreenColor(alpha: 0.3),
             genRedColor(alpha: 0.3),
@@ -32,7 +32,7 @@ class AppStyle {
             genOrangeColor(alpha: 0.3),
             UIColor.blue.withAlphaComponent(0.3),
             
-            genBlue(alpha: 0.3),
+            UIColor(red: 0, green: 238/255, blue: 101/255, alpha: 0.3),
             genPinkColor(alpha: 0.3),
             genAltRed(alpha: 0.3),
             genPaleMaroon(alpha: 0.3),
@@ -44,7 +44,7 @@ class AppStyle {
             UIColor.white,
             UIColor.white,
             UIColor.white,
-            UIColor.white,
+            UIColor(red: 0, green: 128/255, blue: 158/255, alpha: 1),
             
             genGreenColor(alpha: 1),
             genRedColor(alpha: 1),
@@ -52,7 +52,7 @@ class AppStyle {
             genOrangeColor(alpha: 1),
             UIColor.blue,
 
-            genBlue(alpha: 1),
+            UIColor(red: 0, green: 193/255, blue: 11/255, alpha: 1),
             genPinkColor(alpha: 1),
             genAltRed(alpha: 1),
             genPaleMaroon(alpha: 1),

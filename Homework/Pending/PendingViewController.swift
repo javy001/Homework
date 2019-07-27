@@ -130,7 +130,7 @@ class PendingViewController: UITableViewController {
         }
         viewController.persistantData = persistantData
         
-        navigationController?.pushViewController(viewController, animated: false)
+        navigationController?.pushViewController(viewController, animated: true)
     }
     
     func setInitialConditions() {

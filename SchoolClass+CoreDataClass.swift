@@ -12,5 +12,7 @@ import CoreData
 
 
 public class SchoolClass: NSManagedObject {
-
+    @nonobjc public class func schoolClassFetchRequest() -> NSFetchRequest<SchoolClass> {
+        return NSFetchRequest<SchoolClass>(entityName: "SchoolClass")
+    }
 }

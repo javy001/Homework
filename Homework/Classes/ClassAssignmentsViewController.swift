@@ -123,7 +123,7 @@ class ClassAssignmentsViewController: UITableViewController {
         }
         
         newView.persistantData = persistantData
-        navigationController?.pushViewController(newView, animated: false)
+        navigationController?.pushViewController(newView, animated: true)
     }
     
     @objc private func editClass(_ sender:UIBarButtonItem!) {

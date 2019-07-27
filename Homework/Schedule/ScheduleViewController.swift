@@ -32,7 +32,7 @@ class ScheduleViewController: UIViewController, ScheduleViewDelegate, UITableVie
         tableView.dataSource = self
         tableView.register(PendingCellView.self, forCellReuseIdentifier: cellID)
         tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
-        let filterButton = UIBarButtonItem(image: UIImage(named: "filter"), style: .plain, target: self, action: #selector(filterData(_:)))
+        let filterButton = UIBarButtonItem(title: "Filter", style: .plain, target: self, action: #selector(filterData(_:)))
         
         self.navigationItem.setLeftBarButton(filterButton, animated: true)
         self.navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addItem(_:))), animated: true)
@@ -127,7 +127,7 @@ class ScheduleViewController: UIViewController, ScheduleViewDelegate, UITableVie
         }
         viewController.persistantData = persistantData
         
-        navigationController?.pushViewController(viewController, animated: false)
+        navigationController?.pushViewController(viewController, animated: true)
     }
     
     func checkForClasses() {
@@ -160,6 +160,10 @@ class ScheduleViewController: UIViewController, ScheduleViewDelegate, UITableVie
             let viewController = AddAssignmentViewController()
             viewController.addType = "Homework"
             viewController.persistantData = self.persistantData
+            if let date = self.selectedDay?.date {
+                viewController.initialDate = date
+            }
+            
             self.navigationController?.pushViewController(viewController, animated: false)
             
         }
@@ -168,6 +172,9 @@ class ScheduleViewController: UIViewController, ScheduleViewDelegate, UITableVie
             let viewController = AddAssignmentViewController()
             viewController.addType = "Test"
             viewController.persistantData = self.persistantData
+            if let date = self.selectedDay?.date {
+                viewController.initialDate = date
+            }
             self.navigationController?.pushViewController(viewController, animated: false)
         }
         let classAction = UIAlertAction(title: "Class", style: .default) { (action) in
@@ -184,7 +191,7 @@ class ScheduleViewController: UIViewController, ScheduleViewDelegate, UITableVie
     }
     
     @objc func filterData(_ sender:UIBarButtonItem){
-        let alert = UIAlertController(title: "Filter Items", message: nil, preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "Select items to show", message: nil, preferredStyle: .actionSheet)
         let completeActoin = UIAlertAction(title: "Completed", style: .default) { (action) in
             self.calendar.filter = NSPredicate(format: "isComplete == true")
             self.calendar.updateData(seedDate: self.calendar.firstDate!)

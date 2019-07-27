@@ -218,7 +218,7 @@ class ViewAssignmentViewController: UIViewController {
         }
         
         viewController.persistantData = persistantData
-        navigationController?.pushViewController(viewController, animated: false)
+        navigationController?.pushViewController(viewController, animated: true)
     }
     
     func genHLine(topAnchor: NSLayoutYAxisAnchor, container: UIView, topMargin: CGFloat) -> UIView {

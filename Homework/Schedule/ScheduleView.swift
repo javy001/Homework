@@ -35,12 +35,13 @@ class ScheduleView: UIView, ScheduleDayDelegate {
     let today = Date()
     var initialDay: ScheduleDay?
     var filter: NSPredicate?
+    var monthDidChange = false
     
     
     func updateData(seedDate: Date) {
         month = calendar.component(.month, from: seedDate)
         year = calendar.component(.year, from: seedDate)
-        dateformatter.dateFormat = "MMMM"
+        dateformatter.dateFormat = "MMMM YYYY"
         
         if month != calendar.component(.month, from: selectedDay) {
             selectedButton?.dateButton.backgroundColor = .white
@@ -59,8 +60,10 @@ class ScheduleView: UIView, ScheduleDayDelegate {
         dateformatter.dateFormat = "yyyy-MM-dd"
         var i = 1
         for day in days {
-            
             if i >= firstWeekDay && i < (numDays + firstWeekDay) {
+                if i == firstWeekDay && monthDidChange {
+                    selectedButton = day
+                }
                 day.willShow = true
                 let j = firstWeekDay - 1
                 var ds = "\(year!)-\(month!)-\(i-j)"
@@ -72,6 +75,9 @@ class ScheduleView: UIView, ScheduleDayDelegate {
                 }
                 ds = dateformatter.string(from: today)
                 if day.date == dateformatter.date(from: ds) {
+                    if monthDidChange {
+                        selectedButton = day
+                    }
                     day.dateButton.layer.borderWidth = 1
                     day.dateButton.layer.borderColor = UIColor.black.withAlphaComponent(0.3).cgColor
                 }
@@ -81,9 +87,8 @@ class ScheduleView: UIView, ScheduleDayDelegate {
                 lastDate = day.date
                 if day != selectedButton {
                     day.dateButton.setTitleColor(UIColor.black.withAlphaComponent(0.7), for: .normal)
+                    day.dateButton.backgroundColor = .white
                 }
-                
-                day.indicator.backgroundColor = UIColor.black.withAlphaComponent(0.5)
                 
             }
             else {
@@ -93,10 +98,12 @@ class ScheduleView: UIView, ScheduleDayDelegate {
             day.update()
             i += 1
         }
-        
+        selectDate(sender: selectedButton!)
+        monthDidChange = false
     }
     
     func genCalendar(seedDate: Date) {
+        filter = NSPredicate(format: "isComplete == false")
         let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(nextMonth(_:)))
         let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(prevMonth(_:)))
         
@@ -109,18 +116,6 @@ class ScheduleView: UIView, ScheduleDayDelegate {
         let margin = (superWidth! - 7 * 30)/8
         month = calendar.component(.month, from: seedDate)
         year = calendar.component(.year, from: seedDate)
-        dateformatter.dateFormat = "MMMM"
-        let monthString = dateformatter.string(from: seedDate)
-        monthLabel.text = monthString
-        
-        self.addSubview(monthLabel)
-        monthLabel.textAlignment = .center
-        monthLabel.translatesAutoresizingMaskIntoConstraints = false
-        monthLabel.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        monthLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        monthLabel.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        monthLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        monthLabel.font = UIFont(name: "Avenir-Heavy", size: 18)
         
         nextButton.setTitle(">", for: .normal)
         nextButton.setTitleColor(.black, for: .normal)
@@ -130,7 +125,7 @@ class ScheduleView: UIView, ScheduleDayDelegate {
         nextButton.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         nextButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
         nextButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -1 * margin).isActive = true
-        nextButton.bottomAnchor.constraint(equalTo: monthLabel.bottomAnchor).isActive = true
+        nextButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
         
         let prevButton = DayButton()
         prevButton.setTitle("<", for: .normal)
@@ -141,7 +136,20 @@ class ScheduleView: UIView, ScheduleDayDelegate {
         prevButton.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         prevButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
         prevButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: margin).isActive = true
-        prevButton.bottomAnchor.constraint(equalTo: monthLabel.bottomAnchor).isActive = true
+        prevButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        
+        dateformatter.dateFormat = "MMMM YYYY"
+        let monthString = dateformatter.string(from: seedDate)
+        monthLabel.text = monthString
+        
+        self.addSubview(monthLabel)
+        monthLabel.textAlignment = .center
+        monthLabel.translatesAutoresizingMaskIntoConstraints = false
+        monthLabel.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        monthLabel.trailingAnchor.constraint(equalTo: nextButton.leadingAnchor).isActive = true
+        monthLabel.leadingAnchor.constraint(equalTo: prevButton.trailingAnchor).isActive = true
+        monthLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        monthLabel.font = UIFont(name: "Avenir-Heavy", size: 18)
         
         
         let daystrings = [
@@ -307,12 +315,20 @@ class ScheduleView: UIView, ScheduleDayDelegate {
     
     @objc func nextMonth(_ sender: UIButton) {
         let newDate = calendar.date(byAdding: .day, value: 1, to: lastDate!)!
-        self.updateData(seedDate: newDate)
+        monthDidChange = true
+        UIView.animate(withDuration: 0.3, animations: {
+            self.updateData(seedDate: newDate)
+            })
+        
+        
     }
     
     @objc func prevMonth(_ sender: UIButton) {
         let newDate = calendar.date(byAdding: .day, value: -1, to: firstDate!)!
-        self.updateData(seedDate: newDate)
+        monthDidChange = true
+        UIView.animate(withDuration: 0.3, animations: {
+            self.updateData(seedDate: newDate)
+        })
     }
     
     func fetchData(day: ScheduleDay) {

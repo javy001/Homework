@@ -16,7 +16,7 @@ class AddAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPic
     var classes: [SchoolClass] = []
     var picker = UIPickerView()
     var name = UITextField()
-    var dueDate = UIDatePicker()
+    var initialDate = Date()
     var schoolClass: SchoolClass?
     var note = UITextView()
     var container = UIScrollView()
@@ -165,7 +165,8 @@ class AddAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPic
         calendar.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 15).isActive = true
         calendar.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 10).isActive = true
         calendar.heightAnchor.constraint(equalToConstant: 261).isActive = true
-        calendar.genCalendar(seedDate: Date())
+        calendar.selectedDay = initialDate
+        calendar.genCalendar(seedDate: initialDate)
         
         let noteLabel = UILabel()
         container.addSubview(noteLabel)
