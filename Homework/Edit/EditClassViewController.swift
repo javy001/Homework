@@ -29,7 +29,12 @@ class EditClassViewController: UIViewController {
         }
         
         buttons[color].layer.borderWidth = 1
-        buttons[color].layer.borderColor = UIColor.black.cgColor
+        if style.textColors[color] != UIColor.white {
+            buttons[color].layer.borderColor = style.textColors[color].cgColor
+        }
+        else {
+            buttons[color].layer.borderColor = UIColor.black.cgColor
+        }
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel(_:)))
         
@@ -130,15 +135,34 @@ class EditClassViewController: UIViewController {
             btn.tag = i
             btn.addTarget(self, action: #selector(addColor(_:)), for: .touchUpInside)
             btn.backgroundColor = style.backgroundColors[i]
+            btn.layer.cornerRadius = 3
         }
     }
     
     @objc func addColor(_ sender:UIButton){
         let i = sender.tag
-        buttons[i].layer.borderWidth = 1
-        buttons[i].layer.borderColor = UIColor.black.cgColor
-        buttons[color].layer.borderWidth = 0
-        color = i
+        let button = buttons[i]
+        if color != i {
+            button.layer.borderWidth = 1
+            if style.textColors[i] != UIColor.white {
+                button.layer.borderColor = style.textColors[i].cgColor
+            }
+            else {
+                button.layer.borderColor = UIColor.black.cgColor
+            }
+            buttons[color].layer.borderWidth = 0
+            color = i
+        }
+        
+        UIView.animate(withDuration: 0.1, animations: {
+            button.frame.size = CGSize(width: 52, height: 52)
+            button.transform = CGAffineTransform(translationX: -2, y: -2)
+        }, completion: { (_) in
+            UIView.animate(withDuration: 0.1, animations: {
+                button.frame.size = CGSize(width: 50, height: 50)
+                button.transform = CGAffineTransform.identity
+            })
+        })
     }
     
     @objc func deleteClass(_ sender:UIButton!){

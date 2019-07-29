@@ -79,16 +79,40 @@ class AddClassViewController: UIViewController {
         colorLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
         
         genColorButtons(n: buttons.count-1)
+        if style.textColors[0] != UIColor.white {
+            buttons[0].layer.borderColor = style.textColors[color].cgColor
+        }
+        else {
+            buttons[0].layer.borderColor = UIColor.black.cgColor
+        }
         buttons[0].layer.borderWidth = 1
-        buttons[0].layer.borderColor = UIColor.black.cgColor
     }
     
     @objc func addColor(_ sender:UIButton){
         let i = sender.tag
-        buttons[i].layer.borderWidth = 1
-        buttons[i].layer.borderColor = UIColor.black.cgColor
-        buttons[color].layer.borderWidth = 0
-        color = i
+        let button = self.buttons[i]
+        
+        if color != i {
+            button.layer.borderWidth = 1
+            if style.textColors[i] != UIColor.white {
+                button.layer.borderColor = style.textColors[i].cgColor
+            }
+            else {
+                button.layer.borderColor = UIColor.black.cgColor
+            }
+            buttons[color].layer.borderWidth = 0
+            color = i
+        }
+        
+        UIView.animate(withDuration: 0.1, animations: {
+            button.frame.size = CGSize(width: 52, height: 52)
+            button.transform = CGAffineTransform(translationX: -2, y: -2)
+        }, completion: { (_) in
+            UIView.animate(withDuration: 0.1, animations: {
+                button.frame.size = CGSize(width: 50, height: 50)
+                button.transform = CGAffineTransform.identity
+            })
+        })
     }
     
     @objc func saveClass(_ sender:UIBarButtonItem) {
@@ -164,6 +188,7 @@ class AddClassViewController: UIViewController {
             
             btn.widthAnchor.constraint(equalToConstant: 50).isActive = true
             btn.heightAnchor.constraint(equalToConstant: 50).isActive = true
+            btn.layer.cornerRadius = 3
             btn.tag = i
             btn.addTarget(self, action: #selector(addColor(_:)), for: .touchUpInside)
             btn.backgroundColor = style.backgroundColors[i]
