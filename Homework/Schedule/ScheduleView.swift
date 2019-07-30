@@ -29,7 +29,7 @@ class ScheduleView: UIView, ScheduleDayDelegate {
     var indiButtons: [UIButton] = []
     var firstDate: Date?
     var lastDate: Date?
-    var color = 6
+    var color = 11
     let style = AppStyle()
     var superWidth: CGFloat?
     let today = Date()

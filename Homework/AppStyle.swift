@@ -20,44 +20,48 @@ class AppStyle {
     
     init() {
         backgroundColors = [
-            genGreenColor(alpha: 0.8),
-            genRedColor(alpha: 0.7),
-            genPurpleColor(alpha: 0.7),
-            genOrangeColor(alpha: 0.7),
-            UIColor(red: 1/255, green: 205/255, blue: 254/255, alpha: 0.3),
+            makeColor(red: 12, green: 78, blue: 78, alpha: 0.4),
+            makeColor(red: 203, green: 132, blue: 132, alpha: 1),
+            makeColor(red: 0, green: 51, blue: 102, alpha: 0.45),
+            makeColor(red: 12, green: 147, blue: 150, alpha: 0.65),
+            makeColor(red: 170, green: 111, blue: 115, alpha: 0.3),
             
-            genGreenColor(alpha: 0.3),
-            genRedColor(alpha: 0.3),
-            genPurpleColor(alpha: 0.3),
-            genOrangeColor(alpha: 0.3),
-            UIColor.blue.withAlphaComponent(0.3),
+            makeColor(red: 0, green: 136, blue: 136 , alpha: 0.3),
+            makeColor(red: 70, green: 2, blue: 70, alpha: 0.3),
+            makeColor(red: 76, green: 165, blue: 230, alpha: 0.85),
+            makeColor(red: 238, green: 168, blue: 168, alpha: 1),
+            makeColor(red: 145, green: 63, blue: 252, alpha: 0.3),
             
-            UIColor(red: 0, green: 238/255, blue: 101/255, alpha: 0.3),
-            genPinkColor(alpha: 0.3),
-            genAltRed(alpha: 0.3),
-            genPaleMaroon(alpha: 0.3),
-            genDarkPurple(alpha: 0.3)
+            makeColor(red: 0, green: 238, blue: 101, alpha: 0.3),
+            makeColor(red: 255, green: 34, blue: 129, alpha: 0.3),
+            makeColor(red: 1, green: 205, blue: 254, alpha: 0.3),
+            makeColor(red: 202, green: 250, blue: 1, alpha: 0.5),
+            makeColor(red: 245, green: 66, blue: 245, alpha: 0.3)
         ]
         
         textColors = [
-            UIColor.white,
-            UIColor.white,
-            UIColor.white,
-            UIColor.white,
-            UIColor(red: 0, green: 128/255, blue: 158/255, alpha: 1),
+            makeColor(red: 12, green: 78, blue: 78, alpha: 1),
+            makeColor(red: 111, green: 16, blue: 16, alpha: 1),
+            makeColor(red: 0, green: 51, blue: 102, alpha: 1),
+            makeColor(red: 4, green: 106, blue: 108, alpha: 1),
+            makeColor(red: 170, green: 111, blue: 115, alpha: 1),
             
-            genGreenColor(alpha: 1),
-            genRedColor(alpha: 1),
-            genPurpleColor(alpha: 1),
-            genOrangeColor(alpha: 1),
-            UIColor.blue,
+            makeColor(red: 0, green: 136, blue: 136 , alpha: 1),
+            makeColor(red: 70, green: 2, blue: 70, alpha: 1),
+            makeColor(red: 0, green: 51, blue: 102, alpha: 1),
+            makeColor(red: 159, green: 56, blue: 56, alpha: 1),
+            makeColor(red: 145, green: 63, blue: 252, alpha: 1),
 
-            UIColor(red: 0, green: 193/255, blue: 11/255, alpha: 1),
-            genPinkColor(alpha: 1),
-            genAltRed(alpha: 1),
-            genPaleMaroon(alpha: 1),
-            genDarkPurple(alpha: 1)
+            makeColor(red: 0, green: 193, blue: 11, alpha: 1),
+            makeColor(red: 255, green: 34, blue: 129, alpha: 1),
+            makeColor(red: 0, green: 128, blue: 158, alpha: 1),
+            makeColor(red: 129, green: 153, blue: 27, alpha: 1),
+            makeColor(red: 245, green: 66, blue: 245, alpha: 1)
         ]
+    }
+    
+    func makeColor(red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) ->UIColor {
+        return UIColor(red: red/255, green: green/255, blue: blue/255, alpha: alpha)
     }
     
     func genGreenColor(alpha: CGFloat) ->UIColor {
