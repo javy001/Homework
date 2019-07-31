@@ -49,7 +49,7 @@ class AppStyle {
             makeColor(red: 0, green: 136, blue: 136 , alpha: 1),
             makeColor(red: 70, green: 2, blue: 70, alpha: 1),
             makeColor(red: 0, green: 51, blue: 102, alpha: 1),
-            makeColor(red: 159, green: 56, blue: 56, alpha: 1),
+            makeColor(red: 228, green: 29, blue: 29, alpha: 1),
             makeColor(red: 145, green: 63, blue: 252, alpha: 1),
 
             makeColor(red: 0, green: 193, blue: 11, alpha: 1),

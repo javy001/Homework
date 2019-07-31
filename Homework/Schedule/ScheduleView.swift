@@ -29,10 +29,10 @@ class ScheduleView: UIView, ScheduleDayDelegate {
     var indiButtons: [UIButton] = []
     var firstDate: Date?
     var lastDate: Date?
-    var color = 11
+    var color = 8
     let style = AppStyle()
     var superWidth: CGFloat?
-    let today = Date()
+    var today = Date()
     var initialDay: ScheduleDay?
     var filter: NSPredicate?
     var monthDidChange = false

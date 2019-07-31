@@ -22,7 +22,7 @@ class CalendarView: UIView {
     var dayLabels: [UILabel] = []
     var firstDate: Date?
     var lastDate: Date?
-    var color = 11
+    var color = 8
     let style = AppStyle()
     var superWidth: CGFloat?
     let today = Date()

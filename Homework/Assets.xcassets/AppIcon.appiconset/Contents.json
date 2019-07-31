@@ -1,25 +1,25 @@
 {
   "images" : [
     {
-      "idiom" : "iphone",
       "size" : "20x20",
+      "idiom" : "iphone",
+      "filename" : "icon_notif@2.png",
       "scale" : "2x"
     },
     {
-      "size" : "20x20",
       "idiom" : "iphone",
-      "filename" : "notif.png",
+      "size" : "20x20",
       "scale" : "3x"
     },
     {
-      "idiom" : "iphone",
       "size" : "29x29",
+      "idiom" : "iphone",
+      "filename" : "icon_setting@2.png",
       "scale" : "2x"
     },
     {
-      "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "settings.png",
+      "size" : "29x29",
       "scale" : "3x"
     },
     {
@@ -30,13 +30,13 @@
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "icon-1.png",
+      "filename" : "icon_icon@3-1.png",
       "scale" : "3x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "icon.png",
+      "filename" : "icon_icon@3.png",
       "scale" : "2x"
     },
     {
@@ -92,7 +92,7 @@
     {
       "size" : "1024x1024",
       "idiom" : "ios-marketing",
-      "filename" : "appstore.png",
+      "filename" : "icon_appstore.png",
       "scale" : "1x"
     }
   ],

@@ -43,6 +43,8 @@ class ScheduleViewController: UIViewController, ScheduleViewDelegate, UITableVie
         resetTable()
     }
     
+    
+    
     func setUp() {
         let safeOffset = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0
         let navOffset = self.navigationController?.navigationBar.frame.size.height ?? 0
@@ -216,6 +218,7 @@ class ScheduleViewController: UIViewController, ScheduleViewDelegate, UITableVie
     }
     
     func resetTable() {
+        calendar.today = Date()
         if let day = selectedDay {
             calendar.updateData(seedDate: day.date!)
             day.handleTap(day.dateButton)
