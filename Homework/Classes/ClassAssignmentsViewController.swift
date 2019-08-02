@@ -21,7 +21,7 @@ class ClassAssignmentsViewController: UIViewController, UITableViewDelegate, UIT
     let style = AppStyle()
     var persistantData: PersistantData?
     let tableView = UITableView()
-    var tableOffset = 0
+    var tableOffset: UILabel?
     
     
     override func viewDidLoad() {
@@ -119,33 +119,41 @@ class ClassAssignmentsViewController: UIViewController, UITableViewDelegate, UIT
         let teacherName = UILabel()
         self.view.addSubview(teacherName)
         teacherName.translatesAutoresizingMaskIntoConstraints = false
-        teacherName.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
-        teacherName.leadingAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-        teacherName.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -15).isActive = true
-        teacherName.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        teacherName.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
+        teacherName.trailingAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        teacherName.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 15).isActive = true
+        teacherName.heightAnchor.constraint(greaterThanOrEqualToConstant: 25).isActive = true
         teacherName.text = schoolClass?.teacherName
-        teacherName.textAlignment = .right
+        teacherName.textAlignment = .left
+        teacherName.numberOfLines = 0
         if schoolClass?.teacherName?.count ?? 0 > 0 {
-            tableOffset = 30
+            tableOffset = teacherName
         }
         
         let location = UILabel()
         self.view.addSubview(location)
         location.translatesAutoresizingMaskIntoConstraints = false
-        location.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
-        location.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 15).isActive = true
-        location.trailingAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        location.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
+        location.leadingAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        location.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -15).isActive = true
         location.heightAnchor.constraint(greaterThanOrEqualToConstant: 25).isActive = true
         location.numberOfLines = 0
+        location.textAlignment = .right
         location.text = schoolClass?.location
         if schoolClass?.location?.count ?? 0 > 0 {
-            tableOffset = 30
+            tableOffset = location
         }
         
         let email = UILabel()
         self.view.addSubview(email)
         email.translatesAutoresizingMaskIntoConstraints = false
-        email.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: CGFloat(tableOffset)).isActive = true
+        if let _ = tableOffset  {
+            email.topAnchor.constraint(equalTo: teacherName.bottomAnchor, constant: 10).isActive = true
+        }
+        else {
+            email.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
+        }
+        
         email.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 15).isActive = true
         email.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -15).isActive = true
         email.heightAnchor.constraint(equalToConstant: 25).isActive = true
@@ -155,12 +163,19 @@ class ClassAssignmentsViewController: UIViewController, UITableViewDelegate, UIT
         let tap = UITapGestureRecognizer(target: self, action: #selector(emailTap(_:)))
         email.addGestureRecognizer(tap)
         if schoolClass?.emailAddress?.count ?? 0 > 0 {
-            tableOffset += 30
+            tableOffset = email
         }
         
         self.view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: CGFloat(10 + tableOffset)).isActive = true
+        
+        if let offset = tableOffset {
+            tableView.topAnchor.constraint(equalTo: offset.bottomAnchor, constant: 10).isActive = true
+        }
+        else {
+            tableView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
+        }
+        
         tableView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
