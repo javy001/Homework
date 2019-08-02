@@ -140,6 +140,8 @@ class EditClassViewController: UIViewController {
         teacherInput.heightAnchor.constraint(equalToConstant: 40).isActive = true
         teacherInput.topAnchor.constraint(equalTo: teacherLabel.bottomAnchor).isActive = true
         teacherInput.text = schoolClass?.teacherName
+        teacherInput.placeholder = "Optional"
+        teacherInput.clearButtonMode = .always
         
         let emailLabel = UILabel()
         scrollView.addSubview(emailLabel)
@@ -161,6 +163,8 @@ class EditClassViewController: UIViewController {
         emailInput.heightAnchor.constraint(equalToConstant: 40).isActive = true
         emailInput.topAnchor.constraint(equalTo: emailLabel.bottomAnchor).isActive = true
         emailInput.text = schoolClass?.emailAddress
+        emailInput.placeholder = "Optional"
+        emailInput.clearButtonMode = .always
         
         let locationLabel = UILabel()
         scrollView.addSubview(locationLabel)
@@ -182,6 +186,8 @@ class EditClassViewController: UIViewController {
         roomNumber.heightAnchor.constraint(equalToConstant: 40).isActive = true
         roomNumber.topAnchor.constraint(equalTo: locationLabel.bottomAnchor).isActive = true
         roomNumber.text = schoolClass?.location
+        roomNumber.placeholder = "Optional"
+        roomNumber.clearButtonMode = .always
         
         scrollView.addSubview(bottomView)
         bottomView.translatesAutoresizingMaskIntoConstraints = false

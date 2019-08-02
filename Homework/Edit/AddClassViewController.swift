@@ -118,7 +118,6 @@ class AddClassViewController: UIViewController {
         teacherLabel.text = "Teacher's name"
         teacherLabel.textAlignment = .left
         
-        
         teacherInput.borderStyle = .roundedRect
         scrollView.addSubview(teacherInput)
         teacherInput.translatesAutoresizingMaskIntoConstraints = false
@@ -126,6 +125,8 @@ class AddClassViewController: UIViewController {
         teacherInput.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10).isActive = true
         teacherInput.heightAnchor.constraint(equalToConstant: 40).isActive = true
         teacherInput.topAnchor.constraint(equalTo: teacherLabel.bottomAnchor).isActive = true
+        teacherInput.placeholder = "Optional"
+        teacherInput.clearButtonMode = .always
         
         let emailLabel = UILabel()
         scrollView.addSubview(emailLabel)
@@ -146,6 +147,8 @@ class AddClassViewController: UIViewController {
         emailInput.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10).isActive = true
         emailInput.heightAnchor.constraint(equalToConstant: 40).isActive = true
         emailInput.topAnchor.constraint(equalTo: emailLabel.bottomAnchor).isActive = true
+        emailInput.placeholder = "Optional"
+        emailInput.clearButtonMode = .always
         
         let locationLabel = UILabel()
         scrollView.addSubview(locationLabel)
@@ -166,6 +169,8 @@ class AddClassViewController: UIViewController {
         roomNumber.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10).isActive = true
         roomNumber.heightAnchor.constraint(equalToConstant: 40).isActive = true
         roomNumber.topAnchor.constraint(equalTo: locationLabel.bottomAnchor).isActive = true
+        roomNumber.placeholder = "Optional"
+        roomNumber.clearButtonMode = .always
         
         scrollView.addSubview(bottomView)
         bottomView.translatesAutoresizingMaskIntoConstraints = false

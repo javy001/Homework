@@ -170,6 +170,7 @@ class EditAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPi
         }
 
         name.textColor = styles.mainTextColor
+        name.clearButtonMode = .always
 
         
         container.addSubview(dateLabel)

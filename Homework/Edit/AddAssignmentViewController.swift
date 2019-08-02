@@ -148,6 +148,7 @@ class AddAssignmentViewController: UIViewController, UIPickerViewDelegate, UIPic
         name.leadingAnchor.constraint(equalTo: container.leadingAnchor).isActive = true
         name.topAnchor.constraint(equalTo:assignmentLabel.bottomAnchor).isActive = true
         name.borderStyle = .roundedRect
+        name.clearButtonMode = .always
         
         
         container.addSubview(dateLabel)
