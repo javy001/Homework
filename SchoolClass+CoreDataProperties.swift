@@ -2,7 +2,7 @@
 //  SchoolClass+CoreDataProperties.swift
 //  Homework
 //
-//  Created by Javier Quintero on 7/6/19.
+//  Created by Javier Quintero on 8/1/19.
 //  Copyright © 2019 Javier Quintero. All rights reserved.
 //
 //
@@ -17,8 +17,11 @@ extension SchoolClass {
         return NSFetchRequest<SchoolClass>(entityName: "SchoolClass")
     }
 
-    @NSManaged public var name: String?
     @NSManaged public var color: Int16
+    @NSManaged public var name: String?
+    @NSManaged public var teacherName: String?
+    @NSManaged public var emailAddress: String?
+    @NSManaged public var location: String?
     @NSManaged public var assignment: NSSet?
     @NSManaged public var exam: NSSet?
 

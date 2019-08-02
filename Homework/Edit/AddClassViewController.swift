@@ -17,6 +17,12 @@ class AddClassViewController: UIViewController {
     let label = UILabel()
     var buttons: [UIButton] = []
     let colorLabel = UILabel()
+    var teacherInput = UITextField()
+    let scrollView = UIScrollView()
+    var emailInput = UITextField()
+    var bottomViewHeightConstraint: NSLayoutConstraint?
+    let bottomView = UIView()
+    var roomNumber = UITextField()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +36,10 @@ class AddClassViewController: UIViewController {
             buttons.insert(UIButton(), at: i)
         }
         
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyBoardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
         setUp()
     }
     
@@ -40,29 +50,39 @@ class AddClassViewController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        self.navigationController?.navigationBar.barTintColor = .white
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     
     func setUp(){
         self.view.backgroundColor = .white
+        let tapListener = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        scrollView.addGestureRecognizer(tapListener)
+        
+        self.view.addSubview(scrollView)
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
+        scrollView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
         
         
         label.text = "Class Name"
         label.textColor = UIColor.black
-        self.view.addSubview(label)
-        let safeOffset = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0
-        let navOffset = self.navigationController?.navigationBar.frame.size.height ?? 0
+        scrollView.addSubview(label)
+//        let safeOffset = UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0
+//        let navOffset = self.navigationController?.navigationBar.frame.size.height ?? 0
         label.translatesAutoresizingMaskIntoConstraints = false
         
         label.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10).isActive = true
         label.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
         label.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        label.topAnchor.constraint(equalTo: self.view.topAnchor, constant: safeOffset + navOffset).isActive = true
+        label.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
         
         
         input.borderStyle = .roundedRect
-        self.view.addSubview(input)
+        scrollView.addSubview(input)
         input.translatesAutoresizingMaskIntoConstraints = false
         input.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10).isActive = true
         input.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10).isActive = true
@@ -70,7 +90,7 @@ class AddClassViewController: UIViewController {
         input.topAnchor.constraint(equalTo: label.bottomAnchor).isActive = true
         
         
-        self.view.addSubview(colorLabel)
+        scrollView.addSubview(colorLabel)
         colorLabel.text = "Color"
         colorLabel.translatesAutoresizingMaskIntoConstraints = false
         colorLabel.topAnchor.constraint(equalTo: input.bottomAnchor, constant: 10).isActive = true
@@ -86,6 +106,76 @@ class AddClassViewController: UIViewController {
             buttons[0].layer.borderColor = UIColor.black.cgColor
         }
         buttons[0].layer.borderWidth = 1
+        
+        let teacherLabel = UILabel()
+        scrollView.addSubview(teacherLabel)
+        teacherLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        teacherLabel.topAnchor.constraint(equalTo: buttons[buttons.count-1].bottomAnchor, constant: 20).isActive = true
+        teacherLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10).isActive = true
+        teacherLabel.trailingAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        teacherLabel.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        teacherLabel.text = "Teacher's name"
+        teacherLabel.textAlignment = .left
+        
+        
+        teacherInput.borderStyle = .roundedRect
+        scrollView.addSubview(teacherInput)
+        teacherInput.translatesAutoresizingMaskIntoConstraints = false
+        teacherInput.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10).isActive = true
+        teacherInput.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10).isActive = true
+        teacherInput.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        teacherInput.topAnchor.constraint(equalTo: teacherLabel.bottomAnchor).isActive = true
+        
+        let emailLabel = UILabel()
+        scrollView.addSubview(emailLabel)
+        emailLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        emailLabel.topAnchor.constraint(equalTo:teacherInput.bottomAnchor, constant: 20).isActive = true
+        emailLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10).isActive = true
+        emailLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+        emailLabel.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        emailLabel.text = "Teacher's email address"
+        emailLabel.textAlignment = .left
+        
+        
+        emailInput.borderStyle = .roundedRect
+        scrollView.addSubview(emailInput)
+        emailInput.translatesAutoresizingMaskIntoConstraints = false
+        emailInput.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10).isActive = true
+        emailInput.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10).isActive = true
+        emailInput.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        emailInput.topAnchor.constraint(equalTo: emailLabel.bottomAnchor).isActive = true
+        
+        let locationLabel = UILabel()
+        scrollView.addSubview(locationLabel)
+        locationLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        locationLabel.topAnchor.constraint(equalTo:emailInput.bottomAnchor, constant: 20).isActive = true
+        locationLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10).isActive = true
+        locationLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+        locationLabel.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        locationLabel.text = "Class Room Number"
+        locationLabel.textAlignment = .left
+        
+        
+        roomNumber.borderStyle = .roundedRect
+        scrollView.addSubview(roomNumber)
+        roomNumber.translatesAutoresizingMaskIntoConstraints = false
+        roomNumber.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10).isActive = true
+        roomNumber.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10).isActive = true
+        roomNumber.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        roomNumber.topAnchor.constraint(equalTo: locationLabel.bottomAnchor).isActive = true
+        
+        scrollView.addSubview(bottomView)
+        bottomView.translatesAutoresizingMaskIntoConstraints = false
+        bottomView.topAnchor.constraint(equalTo: roomNumber.bottomAnchor).isActive = true
+        bottomView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
+        bottomView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor).isActive = true
+        bottomView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+        
+        bottomViewHeightConstraint = bottomView.heightAnchor.constraint(equalToConstant: 50)
+        bottomViewHeightConstraint?.isActive = true
     }
     
     @objc func addColor(_ sender:UIButton){
@@ -135,6 +225,9 @@ class AddClassViewController: UIViewController {
                 let schoolClass = SchoolClass(context: context)
                 schoolClass.name = name
                 schoolClass.color = Int16(color)
+                schoolClass.teacherName = teacherInput.text
+                schoolClass.emailAddress = emailInput.text
+                schoolClass.location = roomNumber.text
                 persistantData!.appDelegate.saveContext()
                 
                 navigationController?.popViewController(animated: false)
@@ -171,7 +264,7 @@ class AddClassViewController: UIViewController {
         let margin = (self.view.frame.width - 270)/2
         for i in 0...n {
             let btn = buttons[i]
-            self.view.addSubview(btn)
+            scrollView.addSubview(btn)
             btn.translatesAutoresizingMaskIntoConstraints = false
             if i == 0 {
                 btn.topAnchor.constraint(equalTo: colorLabel.bottomAnchor, constant: 10).isActive = true
@@ -193,6 +286,34 @@ class AddClassViewController: UIViewController {
             btn.addTarget(self, action: #selector(addColor(_:)), for: .touchUpInside)
             btn.backgroundColor = style.backgroundColors[i]
         }
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        bottomViewHeightConstraint?.isActive = false
+        bottomViewHeightConstraint = self.bottomView.heightAnchor.constraint(equalToConstant: 500)
+        bottomViewHeightConstraint?.isActive = true
+        if emailInput.isFirstResponder || teacherInput.isFirstResponder || roomNumber.isFirstResponder {
+            if let userInfo = notification.userInfo {
+                let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! CGRect
+                let offset = keyboardFrame.height - (self.scrollView.frame.height - self.roomNumber.frame.origin.y - self.roomNumber.frame.height)
+                let bottomOffset = CGPoint(x: 0, y: offset)
+                self.scrollView.setContentOffset(bottomOffset, animated: true)
+                print(offset)
+                
+            }
+        }
+        
+    }
+    
+    @objc func keyBoardWillHide(notification: NSNotification) {
+        bottomViewHeightConstraint?.isActive = false
+        bottomViewHeightConstraint = self.bottomView.heightAnchor.constraint(equalToConstant: 50)
+        bottomViewHeightConstraint?.isActive = true
+        
+    }
+    
+    @objc func hideKeyboard(sender: UITapGestureRecognizer) {
+        self.scrollView.endEditing(true)
     }
 
 }

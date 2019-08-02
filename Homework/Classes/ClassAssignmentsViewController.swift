@@ -21,6 +21,7 @@ class ClassAssignmentsViewController: UIViewController, UITableViewDelegate, UIT
     let style = AppStyle()
     var persistantData: PersistantData?
     let tableView = UITableView()
+    var tableOffset = 0
     
     
     override func viewDidLoad() {
@@ -122,8 +123,11 @@ class ClassAssignmentsViewController: UIViewController, UITableViewDelegate, UIT
         teacherName.leadingAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         teacherName.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -15).isActive = true
         teacherName.heightAnchor.constraint(equalToConstant: 25).isActive = true
-        teacherName.text = "Mr. PoopyHead"
+        teacherName.text = schoolClass?.teacherName
         teacherName.textAlignment = .right
+        if schoolClass?.teacherName?.count ?? 0 > 0 {
+            tableOffset = 30
+        }
         
         let location = UILabel()
         self.view.addSubview(location)
@@ -133,24 +137,30 @@ class ClassAssignmentsViewController: UIViewController, UITableViewDelegate, UIT
         location.trailingAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         location.heightAnchor.constraint(greaterThanOrEqualToConstant: 25).isActive = true
         location.numberOfLines = 0
-        location.text = "Building C Room 301"
+        location.text = schoolClass?.location
+        if schoolClass?.location?.count ?? 0 > 0 {
+            tableOffset = 30
+        }
         
         let email = UILabel()
         self.view.addSubview(email)
         email.translatesAutoresizingMaskIntoConstraints = false
-        email.topAnchor.constraint(equalTo: location.bottomAnchor, constant: 5).isActive = true
+        email.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: CGFloat(tableOffset)).isActive = true
         email.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 15).isActive = true
         email.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -15).isActive = true
         email.heightAnchor.constraint(equalToConstant: 25).isActive = true
-        email.text = "jquintero001@gmail.com"
+        email.text = schoolClass?.emailAddress
         email.textColor = .blue
         email.isUserInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(emailTap(_:)))
         email.addGestureRecognizer(tap)
+        if schoolClass?.emailAddress?.count ?? 0 > 0 {
+            tableOffset += 30
+        }
         
         self.view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.topAnchor.constraint(equalTo: email.bottomAnchor, constant: 10).isActive = true
+        tableView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: CGFloat(10 + tableOffset)).isActive = true
         tableView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
@@ -190,13 +200,12 @@ class ClassAssignmentsViewController: UIViewController, UITableViewDelegate, UIT
     }
     
     @objc func emailTap(_ sender:UITapGestureRecognizer) {
-        print("tapped")
         if MFMailComposeViewController.canSendMail() {
             let mail = MFMailComposeViewController()
             mail.mailComposeDelegate = self
             mail.delegate = self
-            mail.setToRecipients(["jquintero001@gmail.com"])
-            mail.setMessageBody("<p>You're so awesome!</p>", isHTML: true)
+            mail.setToRecipients([schoolClass?.emailAddress ?? ""])
+            mail.setSubject(schoolClass?.name ?? "")
             
             present(mail, animated: true)
         }
