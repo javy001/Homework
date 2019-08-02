@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import MessageUI
 
-class ClassAssignmentsViewController: UITableViewController {
+class ClassAssignmentsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, MFMailComposeViewControllerDelegate, UINavigationControllerDelegate {
 
     var schoolClass: SchoolClass?
     var cellID = "cellID"
@@ -19,35 +20,40 @@ class ClassAssignmentsViewController: UITableViewController {
     var sections: [String] = []
     let style = AppStyle()
     var persistantData: PersistantData?
+    let tableView = UITableView()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.delegate = self
+        tableView.dataSource = self
         setInitialConditions()
-        self.tableView.reloadData()
+        tableView.reloadData()
         
         if let name = schoolClass?.name {
             self.navigationItem.title = name
         }
-        self.tableView.register(PendingCellView.self, forCellReuseIdentifier: cellID)
+        
+        tableView.register(PendingCellView.self, forCellReuseIdentifier: cellID)
         self.navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(editClass(_:))), animated: true)
         
-        setuUpView()
+        setUpView()
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.tableView.reloadData()
+        tableView.reloadData()
     }
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return sections.count
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return rows[section].count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! PendingCellView
         let item = rows[indexPath.section][indexPath.row]
         cell.className = item.schoolClass?.name
@@ -65,7 +71,7 @@ class ClassAssignmentsViewController: UITableViewController {
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let view = UIView()
         view.backgroundColor = .white
         let label = UILabel()
@@ -83,7 +89,7 @@ class ClassAssignmentsViewController: UITableViewController {
         return view
     }
     
-    func setuUpView(){
+    func setUpView(){
         if let assignmentSet = schoolClass?.assignment {
             let tempAssignments = assignmentSet.allObjects as! [Assignment]
             let sortedAssignments = tempAssignments.sorted(by: { $0.dueDate?.timeIntervalSinceNow ?? 0 > $1.dueDate?.timeIntervalSinceNow ?? 0 })
@@ -107,10 +113,50 @@ class ClassAssignmentsViewController: UITableViewController {
             }
         }
         self.view.backgroundColor = style.backgroundColor
-        self.tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+        tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
+        
+        let teacherName = UILabel()
+        self.view.addSubview(teacherName)
+        teacherName.translatesAutoresizingMaskIntoConstraints = false
+        teacherName.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
+        teacherName.leadingAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        teacherName.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -15).isActive = true
+        teacherName.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        teacherName.text = "Mr. PoopyHead"
+        teacherName.textAlignment = .right
+        
+        let location = UILabel()
+        self.view.addSubview(location)
+        location.translatesAutoresizingMaskIntoConstraints = false
+        location.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
+        location.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 15).isActive = true
+        location.trailingAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        location.heightAnchor.constraint(greaterThanOrEqualToConstant: 25).isActive = true
+        location.numberOfLines = 0
+        location.text = "Building C Room 301"
+        
+        let email = UILabel()
+        self.view.addSubview(email)
+        email.translatesAutoresizingMaskIntoConstraints = false
+        email.topAnchor.constraint(equalTo: location.bottomAnchor, constant: 5).isActive = true
+        email.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 15).isActive = true
+        email.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -15).isActive = true
+        email.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        email.text = "jquintero001@gmail.com"
+        email.textColor = .blue
+        email.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(emailTap(_:)))
+        email.addGestureRecognizer(tap)
+        
+        self.view.addSubview(tableView)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.topAnchor.constraint(equalTo: email.bottomAnchor, constant: 10).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let newView = ViewAssignmentViewController()
         if sections[indexPath.section] == "Homework" {
             newView.assignment = assignments[indexPath.row]
@@ -141,6 +187,23 @@ class ClassAssignmentsViewController: UITableViewController {
         assignments = []
         sections = []
         sectionCount = 0
+    }
+    
+    @objc func emailTap(_ sender:UITapGestureRecognizer) {
+        print("tapped")
+        if MFMailComposeViewController.canSendMail() {
+            let mail = MFMailComposeViewController()
+            mail.mailComposeDelegate = self
+            mail.delegate = self
+            mail.setToRecipients(["jquintero001@gmail.com"])
+            mail.setMessageBody("<p>You're so awesome!</p>", isHTML: true)
+            
+            present(mail, animated: true)
+        }
+    }
+    
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        dismiss(animated: true)
     }
     
 }

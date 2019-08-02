@@ -8,16 +8,19 @@
 
 import UIKit
 
-class ViewClassTableViewController: UITableViewController {
+class ViewClassTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var cellId = "cellId"
     var rows: [SchoolClass] = []
     var persistantData: PersistantData?
+    let tableView = UITableView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         rows = []
+        tableView.delegate = self
+        tableView.dataSource = self
         tableView.register(ClassTableViewCell.self, forCellReuseIdentifier: cellId)
         navigationItem.title = "Classes"
         self.view.backgroundColor = .white
@@ -26,6 +29,18 @@ class ViewClassTableViewController: UITableViewController {
         self.navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addItem(_:))), animated: true)
         
         navigationController?.navigationBar.prefersLargeTitles = true
+        
+        setUp()
+    }
+    
+    func setUp() {
+        self.view.addSubview(tableView)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
+        tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -43,17 +58,17 @@ class ViewClassTableViewController: UITableViewController {
     }
 
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return rows.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! ClassTableViewCell
         cell.textLabel?.text = rows[indexPath.row].name
         cell.textLabel?.textAlignment = .center
@@ -62,7 +77,7 @@ class ViewClassTableViewController: UITableViewController {
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let viewController = ClassAssignmentsViewController()
         viewController.schoolClass = rows[indexPath.row]
         viewController.persistantData = persistantData
