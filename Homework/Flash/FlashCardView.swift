@@ -15,11 +15,19 @@ class FlashCardView: UIView {
     let reveal = UIButton()
     var card: FlashCard?
     var hasData = false
+    let scrollView = UIScrollView()
     
     func setUp() {
-        self.addSubview(question)
+        self.addSubview(scrollView)
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        scrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        scrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
+        scrollView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+        
+        scrollView.addSubview(question)
         question.translatesAutoresizingMaskIntoConstraints = false
-        question.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        question.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
         question.heightAnchor.constraint(greaterThanOrEqualToConstant: 25).isActive = true
         question.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
         question.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
@@ -27,7 +35,7 @@ class FlashCardView: UIView {
         question.textAlignment = .center
         
         
-        self.addSubview(reveal)
+        scrollView.addSubview(reveal)
         reveal.translatesAutoresizingMaskIntoConstraints = false
         reveal.topAnchor.constraint(equalTo: question.bottomAnchor, constant: 10).isActive = true
         reveal.heightAnchor.constraint(equalToConstant: 30).isActive = true
@@ -38,7 +46,7 @@ class FlashCardView: UIView {
         reveal.isHidden = true
         reveal.addTarget(self, action: #selector(toggleAnswer(_:)), for: .touchUpInside)
         
-        self.addSubview(answer)
+        scrollView.addSubview(answer)
         answer.translatesAutoresizingMaskIntoConstraints = false
         answer.topAnchor.constraint(equalTo: reveal.bottomAnchor, constant: 25).isActive = true
         answer.heightAnchor.constraint(greaterThanOrEqualToConstant: 25).isActive = true
@@ -48,10 +56,20 @@ class FlashCardView: UIView {
         answer.numberOfLines = 0
         answer.isHidden = true
         
+        let bottomView = UIView()
+        scrollView.addSubview(bottomView)
+        bottomView.translatesAutoresizingMaskIntoConstraints = false
+        bottomView.topAnchor.constraint(equalTo: answer.bottomAnchor, constant: 10).isActive = true
+        bottomView.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        bottomView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
+        bottomView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+        bottomView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
+        
         refresh()
     }
     
     func refresh() {
+        scrollView.setContentOffset(CGPoint(x: 0, y: -self.scrollView.contentInset.top), animated: false)
         if let card = card {
             question.text = card.question
             reveal.isHidden = false

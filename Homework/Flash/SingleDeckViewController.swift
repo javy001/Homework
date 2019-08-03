@@ -43,6 +43,17 @@ class SingleDeckViewController: UIViewController {
             cards = flashCards.allObjects as! [FlashCard]
         }
         
+        let shuffleButton = UIButton()
+        self.view.addSubview(shuffleButton)
+        shuffleButton.translatesAutoresizingMaskIntoConstraints = false
+        shuffleButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -10).isActive = true
+        shuffleButton.widthAnchor.constraint(greaterThanOrEqualToConstant: 50).isActive = true
+        shuffleButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        shuffleButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        shuffleButton.setTitle("Shuffle", for: .normal)
+        shuffleButton.setTitleColor(style.buttonTextColor, for: .normal)
+        shuffleButton.addTarget(self, action: #selector(shuffleCards(_:)), for: .touchUpInside)
+        
         let nextButton = UIButton()
         self.view.addSubview(nextButton)
         nextButton.translatesAutoresizingMaskIntoConstraints = false
@@ -69,6 +80,7 @@ class SingleDeckViewController: UIViewController {
             card.card = cards[0]
         }
         self.view.addSubview(card)
+        card.clipsToBounds = true
         card.translatesAutoresizingMaskIntoConstraints = false
         card.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
         card.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 15).isActive = true
@@ -141,6 +153,20 @@ class SingleDeckViewController: UIViewController {
             card.card = cards[currentCard]
             card.refresh()
         } 
+    }
+    
+    @objc func shuffleCards(_ sender: UIButton) {
+        cards.shuffle()
+        if cards.count > 0 {
+            let max = cards.count - 1
+            var nextCard = max
+            if currentCard != 0 {
+                nextCard = currentCard - 1
+            }
+            currentCard = nextCard
+            card.card = cards[currentCard]
+            card.refresh()
+        }
     }
 
 }
