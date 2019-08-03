@@ -1,35 +1,33 @@
 //
-//  AddFlashCardViewController.swift
+//  EditFlashCardViewController.swift
 //  Homework
 //
-//  Created by Javier Quintero on 8/2/19.
+//  Created by Javier Quintero on 8/3/19.
 //  Copyright © 2019 Javier Quintero. All rights reserved.
 //
 
 import UIKit
 
-class AddFlashCardViewController: UIViewController {
+class EditFlashCardViewController: UIViewController {
     
     var persistantData: PersistantData?
-    var deck: FlashDeck?
+    var card: FlashCard?
+    let scrollView = UIScrollView()
     var question = UITextView()
     var answer = UITextView()
-    let scrollView = UIScrollView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.view.backgroundColor = .white
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel(_:)))
+        self.navigationItem.title = "Edit Flash Card"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save(_:)))
-        
-        self.navigationItem.title = "New Flash Card"
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel(_:)))
         
         setUp()
     }
     
     func setUp() {
-        self.view.addSubview(scrollView)
         self.view.addSubview(scrollView)
         let tap = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard(_:)))
         scrollView.addGestureRecognizer(tap)
@@ -58,6 +56,7 @@ class AddFlashCardViewController: UIViewController {
         question.heightAnchor.constraint(equalToConstant: 150).isActive = true
         question.layer.borderWidth = 0.3
         question.font = UIFont(name: "HelveticaNeue", size: 15)
+        question.text = card?.question
         
         let answerLabel = UILabel()
         scrollView.addSubview(answerLabel)
@@ -78,13 +77,28 @@ class AddFlashCardViewController: UIViewController {
         answer.heightAnchor.constraint(equalToConstant: 150).isActive = true
         answer.layer.borderWidth = 0.3
         answer.font = UIFont(name: "HelveticaNeue", size: 15)
+        answer.text = card?.answer
+        
+        let deleteButton = UIButton()
+        self.view.addSubview(deleteButton)
+        deleteButton.setTitle("Delete", for: .normal)
+        deleteButton.setTitleColor(UIColor.red, for: .normal)
+        //        deleteButton.layer.cornerRadius = 8
+        
+        deleteButton.translatesAutoresizingMaskIntoConstraints = false
+        deleteButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        deleteButton.widthAnchor.constraint(equalToConstant: 120).isActive = true
+        deleteButton.topAnchor.constraint(equalTo: answer.bottomAnchor, constant: 30).isActive = true
+        deleteButton.heightAnchor.constraint(equalToConstant: 35).isActive = true
+        
+        deleteButton.addTarget(self, action: #selector(self.deleteCard(_:)), for: .touchUpInside)
         
         let bottomView = UIView()
         scrollView.addSubview(bottomView)
         bottomView.translatesAutoresizingMaskIntoConstraints = false
         bottomView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
         bottomView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
-        bottomView.topAnchor.constraint(equalTo: answer.bottomAnchor, constant: 10).isActive = true
+        bottomView.topAnchor.constraint(equalTo: deleteButton.bottomAnchor, constant: 10).isActive = true
         bottomView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
         bottomView.heightAnchor.constraint(equalToConstant: 500).isActive = true
     }
@@ -95,13 +109,37 @@ class AddFlashCardViewController: UIViewController {
     }
     
     @objc func save(_ sender: UIBarButtonItem) {
-        let context = persistantData!.context
-        let card = FlashCard(context: context)
-        card.answer = answer.text
-        card.question = question.text
-        card.deck = deck
+        self.card?.answer = answer.text
+        self.card?.question = question.text
         persistantData!.appDelegate.saveContext()
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func deleteCard(_ sender: UIBarButtonItem) {
+        let defaultAction = UIAlertAction(title: "Delete",
+                                          style: .destructive) { (action) in
+            self.persistantData!.context.delete(self.card!)
+            do{
+                try self.persistantData!.context.save()
+                self.navigationController?.popViewController(animated: true)
+            } catch {
+                print("Failed to save")
+            }
+                                            
+        }
+        let cancelAction = UIAlertAction(title: "Cancel",
+                                         style: .cancel) { (action) in
+        }
+        
+        let alert = UIAlertController(title: "Are you sure?",
+                                      message: nil,
+                                      preferredStyle: .alert)
+        alert.addAction(defaultAction)
+        alert.addAction(cancelAction)
+        
+        self.present(alert, animated: true) {
+            
+        }
     }
     
     @objc func hideKeyboard(_ sender: UITapGestureRecognizer) {

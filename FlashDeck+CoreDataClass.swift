@@ -12,5 +12,7 @@ import CoreData
 
 
 public class FlashDeck: NSManagedObject {
-
+    @nonobjc public class func flashDeckFetchRequest() -> NSFetchRequest<FlashDeck> {
+        return NSFetchRequest<FlashDeck>(entityName: "FlashDeck")
+    }
 }

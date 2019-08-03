@@ -27,6 +27,13 @@ class FlashDecksViewController: UITableViewController {
 //        tableView.separatorStyle = .none
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        if let flashDecks = schoolClass?.flashDeck {
+            decks = flashDecks.allObjects as! [FlashDeck]
+        }
+        tableView.reloadData()
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }

@@ -2,7 +2,7 @@
 //  FlashDeck+CoreDataProperties.swift
 //  Homework
 //
-//  Created by Javier Quintero on 8/2/19.
+//  Created by Javier Quintero on 8/3/19.
 //  Copyright © 2019 Javier Quintero. All rights reserved.
 //
 //

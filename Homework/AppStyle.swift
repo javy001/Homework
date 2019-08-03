@@ -122,6 +122,8 @@ class AppStyle {
     func genDarkGreen(alpha: CGFloat) ->UIColor {
         return UIColor(red: 37/255, green: 80/255, blue: 96/255, alpha: alpha)
     }
+    
+    let buttonTextColor = UIColor(red: 0, green: 122/255, blue: 1, alpha: 1)
 }
 
 

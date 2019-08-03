@@ -21,7 +21,7 @@
     </entity>
     <entity name="FlashDeck" representedClassName=".FlashDeck" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="flashCard" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="FlashCard" inverseName="deck" inverseEntity="FlashCard" syncable="YES"/>
+        <relationship name="flashCard" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="FlashCard" inverseName="deck" inverseEntity="FlashCard" syncable="YES"/>
         <relationship name="schoolClass" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SchoolClass" inverseName="flashDeck" inverseEntity="SchoolClass" syncable="YES"/>
     </entity>
     <entity name="SchoolClass" representedClassName=".SchoolClass" syncable="YES">

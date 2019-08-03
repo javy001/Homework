@@ -37,6 +37,8 @@
 		3FC8D1A622F5432400BF9528 /* FlashCard+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8D1A422F5432400BF9528 /* FlashCard+CoreDataClass.swift */; };
 		3FC8D1A722F5432400BF9528 /* FlashCard+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8D1A522F5432400BF9528 /* FlashCard+CoreDataProperties.swift */; };
 		3FC8D1A922F543B300BF9528 /* FlashCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8D1A822F543B300BF9528 /* FlashCardView.swift */; };
+		3FC8D1AB22F5FB6000BF9528 /* EditDeckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8D1AA22F5FB6000BF9528 /* EditDeckViewController.swift */; };
+		3FC8D1AD22F6177F00BF9528 /* EditFlashCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8D1AC22F6177F00BF9528 /* EditFlashCardViewController.swift */; };
 		3FEA94072294892900F6A0F2 /* EditClassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FEA94062294892900F6A0F2 /* EditClassViewController.swift */; };
 		3FEE60A3228764620070F893 /* PendingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FEE60A2228764620070F893 /* PendingViewController.swift */; };
 		3FF072F222D95FC5008BFB99 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF072F122D95FC5008BFB99 /* CalendarView.swift */; };
@@ -101,6 +103,8 @@
 		3FC8D1A422F5432400BF9528 /* FlashCard+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FlashCard+CoreDataClass.swift"; sourceTree = "<group>"; };
 		3FC8D1A522F5432400BF9528 /* FlashCard+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FlashCard+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		3FC8D1A822F543B300BF9528 /* FlashCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashCardView.swift; sourceTree = "<group>"; };
+		3FC8D1AA22F5FB6000BF9528 /* EditDeckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDeckViewController.swift; sourceTree = "<group>"; };
+		3FC8D1AC22F6177F00BF9528 /* EditFlashCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditFlashCardViewController.swift; sourceTree = "<group>"; };
 		3FEA94062294892900F6A0F2 /* EditClassViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditClassViewController.swift; sourceTree = "<group>"; };
 		3FEE60A2228764620070F893 /* PendingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingViewController.swift; sourceTree = "<group>"; };
 		3FF072F122D95FC5008BFB99 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
@@ -210,6 +214,8 @@
 				3FC8D1A822F543B300BF9528 /* FlashCardView.swift */,
 				3FC8D19E22F52CE900BF9528 /* AddFlashDeckViewController.swift */,
 				3FC8D1A222F5415400BF9528 /* AddFlashCardViewController.swift */,
+				3FC8D1AA22F5FB6000BF9528 /* EditDeckViewController.swift */,
+				3FC8D1AC22F6177F00BF9528 /* EditFlashCardViewController.swift */,
 			);
 			path = Flash;
 			sourceTree = "<group>";
@@ -392,6 +398,7 @@
 				3FF072FC22E2B575008BFB99 /* ScheduleDay.swift in Sources */,
 				3FC8D1A622F5432400BF9528 /* FlashCard+CoreDataClass.swift in Sources */,
 				3FF072F222D95FC5008BFB99 /* CalendarView.swift in Sources */,
+				3FC8D1AB22F5FB6000BF9528 /* EditDeckViewController.swift in Sources */,
 				3F0B2ED422A6E997006031B9 /* AppStyle.swift in Sources */,
 				3F32A9C322D06BFB002C9A68 /* SchoolClass+CoreDataClass.swift in Sources */,
 				3FC8D1A922F543B300BF9528 /* FlashCardView.swift in Sources */,
@@ -403,6 +410,7 @@
 				3F4D04082295FE160031E5D9 /* Assignment+CoreDataClass.swift in Sources */,
 				3FA38FE8228624E700BFC118 /* TabBarController.swift in Sources */,
 				3F7C2CFA22978F6A00E28110 /* EditAssignmentViewController.swift in Sources */,
+				3FC8D1AD22F6177F00BF9528 /* EditFlashCardViewController.swift in Sources */,
 				3FC8D19922F5222500BF9528 /* FlashDecksViewController.swift in Sources */,
 				3F4CF6722298E5A200DADA1E /* ClassAssignmentsViewController.swift in Sources */,
 				3FC8D19C22F52CA700BF9528 /* FlashDeck+CoreDataClass.swift in Sources */,

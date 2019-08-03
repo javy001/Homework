@@ -30,6 +30,32 @@ class PendingViewController: UITableViewController {
         self.navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addItem(_:))), animated: true)
         
         navigationController?.navigationBar.prefersLargeTitles = true
+        
+    }
+    
+    func removeOrphan() {
+        do{
+            let fetchRequest = FlashDeck.flashDeckFetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "schoolClass = nil")
+            let cards = try persistantData!.context.fetch(fetchRequest)
+            if cards.count > 0 {
+                print(cards.count)
+                for card in cards {
+                    self.persistantData!.context.delete(card)
+                }
+                do{
+                    try self.persistantData!.context.save()
+                } catch {
+                    print("Failed to save")
+                }
+                
+            }
+            else {
+                print("no orphans")
+            }
+        } catch {
+            print("fetch failed")
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

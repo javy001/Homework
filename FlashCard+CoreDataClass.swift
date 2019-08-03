@@ -12,5 +12,7 @@ import CoreData
 
 
 public class FlashCard: NSManagedObject {
-
+    @nonobjc public class func flashCardFetchRequest() -> NSFetchRequest<FlashCard> {
+        return NSFetchRequest<FlashCard>(entityName: "FlashCard")
+    }
 }
