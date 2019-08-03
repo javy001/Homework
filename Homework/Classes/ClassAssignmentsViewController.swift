@@ -116,10 +116,26 @@ class ClassAssignmentsViewController: UIViewController, UITableViewDelegate, UIT
         self.view.backgroundColor = style.backgroundColor
         tableView.separatorStyle = UITableViewCell.SeparatorStyle.none
         
+        let flashCard = UILabel()
+        self.view.addSubview(flashCard)
+        flashCard.translatesAutoresizingMaskIntoConstraints = false
+        flashCard.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
+        flashCard.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 15).isActive = true
+        flashCard.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -15).isActive = true
+        flashCard.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        flashCard.text = "Flash Cards"
+        flashCard.textColor = UIColor(red: 0, green: 122/255, blue: 1, alpha: 1)
+        
+        let flashTap = UITapGestureRecognizer(target: self, action: #selector(goToFlashCards(_:)))
+        flashCard.isUserInteractionEnabled = true
+        flashCard.addGestureRecognizer(flashTap)
+        tableOffset = flashCard
+        
+        
         let teacherName = UILabel()
         self.view.addSubview(teacherName)
         teacherName.translatesAutoresizingMaskIntoConstraints = false
-        teacherName.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
+        teacherName.topAnchor.constraint(equalTo: flashCard.bottomAnchor, constant: 10).isActive = true
         teacherName.trailingAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         teacherName.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 15).isActive = true
         teacherName.heightAnchor.constraint(greaterThanOrEqualToConstant: 25).isActive = true
@@ -133,7 +149,7 @@ class ClassAssignmentsViewController: UIViewController, UITableViewDelegate, UIT
         let location = UILabel()
         self.view.addSubview(location)
         location.translatesAutoresizingMaskIntoConstraints = false
-        location.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
+        location.topAnchor.constraint(equalTo: flashCard.bottomAnchor, constant: 10).isActive = true
         location.leadingAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         location.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -15).isActive = true
         location.heightAnchor.constraint(greaterThanOrEqualToConstant: 25).isActive = true
@@ -147,18 +163,18 @@ class ClassAssignmentsViewController: UIViewController, UITableViewDelegate, UIT
         let email = UILabel()
         self.view.addSubview(email)
         email.translatesAutoresizingMaskIntoConstraints = false
-        if let _ = tableOffset  {
-            email.topAnchor.constraint(equalTo: teacherName.bottomAnchor, constant: 10).isActive = true
+        if let offset = tableOffset  {
+            email.topAnchor.constraint(equalTo: offset.bottomAnchor, constant: 10).isActive = true
         }
         else {
-            email.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
+            email.topAnchor.constraint(equalTo: flashCard.bottomAnchor, constant: 10).isActive = true
         }
         
         email.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 15).isActive = true
         email.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -15).isActive = true
         email.heightAnchor.constraint(equalToConstant: 25).isActive = true
         email.text = schoolClass?.emailAddress
-        email.textColor = .blue
+        email.textColor = UIColor(red: 0, green: 122/255, blue: 1, alpha: 1)
         email.isUserInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(emailTap(_:)))
         email.addGestureRecognizer(tap)
@@ -166,16 +182,24 @@ class ClassAssignmentsViewController: UIViewController, UITableViewDelegate, UIT
             tableOffset = email
         }
         
+        let hLine = UIView()
+        self.view.addSubview(hLine)
+        hLine.translatesAutoresizingMaskIntoConstraints = false
+        hLine.topAnchor.constraint(equalTo: tableOffset!.bottomAnchor, constant: 10).isActive = true
+        hLine.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        hLine.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        hLine.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+        hLine.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.15)
         self.view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
-        if let offset = tableOffset {
-            tableView.topAnchor.constraint(equalTo: offset.bottomAnchor, constant: 10).isActive = true
-        }
-        else {
-            tableView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
-        }
-        
+//        if let offset = tableOffset {
+//            tableView.topAnchor.constraint(equalTo: offset.bottomAnchor, constant: 10).isActive = true
+//        }
+//        else {
+//            tableView.topAnchor.constraint(equalTo: flashCard.bottomAnchor).isActive = true
+//        }
+        tableView.topAnchor.constraint(equalTo: hLine.bottomAnchor, constant: 5).isActive = true
         tableView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
@@ -228,6 +252,13 @@ class ClassAssignmentsViewController: UIViewController, UITableViewDelegate, UIT
     
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
         dismiss(animated: true)
+    }
+    
+    @objc func goToFlashCards(_ sender: UITapGestureRecognizer) {
+        let vc = FlashDecksViewController()
+        vc.persistantData = persistantData
+        vc.schoolClass = self.schoolClass
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
 }
