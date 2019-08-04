@@ -74,8 +74,8 @@ class FlashCardView: UIView {
         textData.translatesAutoresizingMaskIntoConstraints = false
         textData.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
         textData.heightAnchor.constraint(greaterThanOrEqualToConstant: 25).isActive = true
-        textData.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        textData.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+        textData.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 8).isActive = true
+        textData.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -8).isActive = true
         textData.numberOfLines = 0
         textData.textAlignment = .center
         

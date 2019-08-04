@@ -137,6 +137,16 @@ class ClassAssignmentsViewController: UIViewController, UITableViewDelegate, UIT
         flashCard.addGestureRecognizer(flashTap)
         tableOffset = flashCard
         
+        let hLine0 = UIView()
+        self.view.addSubview(hLine0)
+        hLine0.translatesAutoresizingMaskIntoConstraints = false
+        hLine0.topAnchor.constraint(equalTo: flashCard.bottomAnchor).isActive = true
+        hLine0.heightAnchor.constraint(equalToConstant: 1).isActive = true
+        hLine0.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        hLine0.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+        hLine0.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.15)
+        hLine0.isHidden = true
+        
         
         self.view.addSubview(teacherName)
         teacherName.translatesAutoresizingMaskIntoConstraints = false
@@ -185,23 +195,22 @@ class ClassAssignmentsViewController: UIViewController, UITableViewDelegate, UIT
             tableOffset = email
         }
         
+        if tableOffset != flashCard {
+            hLine0.isHidden = false
+        }
+        
         let hLine = UIView()
         self.view.addSubview(hLine)
         hLine.translatesAutoresizingMaskIntoConstraints = false
-        hLine.topAnchor.constraint(equalTo: tableOffset!.bottomAnchor, constant: 10).isActive = true
+        hLine.topAnchor.constraint(equalTo: tableOffset!.bottomAnchor, constant: 5).isActive = true
         hLine.heightAnchor.constraint(equalToConstant: 1).isActive = true
         hLine.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
         hLine.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
         hLine.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.15)
+        
         self.view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
-//        if let offset = tableOffset {
-//            tableView.topAnchor.constraint(equalTo: offset.bottomAnchor, constant: 10).isActive = true
-//        }
-//        else {
-//            tableView.topAnchor.constraint(equalTo: flashCard.bottomAnchor).isActive = true
-//        }
         tableView.topAnchor.constraint(equalTo: hLine.bottomAnchor, constant: 5).isActive = true
         tableView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true

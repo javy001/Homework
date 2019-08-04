@@ -67,7 +67,7 @@ class SingleDeckViewController: UIViewController, FlashCardDelegate {
         card.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
         card.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 15).isActive = true
         card.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -15).isActive = true
-        card.bottomAnchor.constraint(equalTo: self.view.centerYAnchor, constant: 40).isActive = true
+        card.bottomAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
         card.setUp()
         
         let shuffleButton = UIButton()
