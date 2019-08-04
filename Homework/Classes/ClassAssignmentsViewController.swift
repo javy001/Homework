@@ -22,6 +22,9 @@ class ClassAssignmentsViewController: UIViewController, UITableViewDelegate, UIT
     var persistantData: PersistantData?
     let tableView = UITableView()
     var tableOffset: UILabel?
+    var teacherName = UILabel()
+    var email = UILabel()
+    var location = UILabel()
     
     
     override func viewDidLoad() {
@@ -43,6 +46,9 @@ class ClassAssignmentsViewController: UIViewController, UITableViewDelegate, UIT
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        teacherName.text = schoolClass?.teacherName
+        email.text = schoolClass?.emailAddress
+        location.text = schoolClass?.location
         tableView.reloadData()
     }
     
@@ -132,7 +138,6 @@ class ClassAssignmentsViewController: UIViewController, UITableViewDelegate, UIT
         tableOffset = flashCard
         
         
-        let teacherName = UILabel()
         self.view.addSubview(teacherName)
         teacherName.translatesAutoresizingMaskIntoConstraints = false
         teacherName.topAnchor.constraint(equalTo: flashCard.bottomAnchor, constant: 10).isActive = true
@@ -146,7 +151,6 @@ class ClassAssignmentsViewController: UIViewController, UITableViewDelegate, UIT
             tableOffset = teacherName
         }
         
-        let location = UILabel()
         self.view.addSubview(location)
         location.translatesAutoresizingMaskIntoConstraints = false
         location.topAnchor.constraint(equalTo: flashCard.bottomAnchor, constant: 10).isActive = true
@@ -160,7 +164,6 @@ class ClassAssignmentsViewController: UIViewController, UITableViewDelegate, UIT
             tableOffset = location
         }
         
-        let email = UILabel()
         self.view.addSubview(email)
         email.translatesAutoresizingMaskIntoConstraints = false
         if let offset = tableOffset  {

@@ -8,59 +8,85 @@
 
 import UIKit
 
-class FlashCardView: UIView {
+protocol FlashCardDelegate: class {
+    func addCard()
+    func editCard()
+}
 
-    var question = UILabel()
+class FlashCardView: UIView {
+    
+    weak var delegate: FlashCardDelegate?
+    var textData = UILabel()
+    let style = AppStyle()
     var answer = UILabel()
     let reveal = UIButton()
     var card: FlashCard?
     var hasData = false
+    var isFront = true
     let scrollView = UIScrollView()
+    var persistantData: PersistantData?
     
     func setUp() {
-        self.addSubview(scrollView)
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        scrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-        scrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        scrollView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+        self.layer.borderColor = UIColor(red: 209/255, green: 209/255, blue: 209/255, alpha: 1).cgColor
+        self.layer.borderWidth = 1
+        self.layer.cornerRadius = 5
         
-        scrollView.addSubview(question)
-        question.translatesAutoresizingMaskIntoConstraints = false
-        question.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
-        question.heightAnchor.constraint(greaterThanOrEqualToConstant: 25).isActive = true
-        question.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        question.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-        question.numberOfLines = 0
-        question.textAlignment = .center
+        let editButton = UIButton()
+        self.addSubview(editButton)
+        editButton.translatesAutoresizingMaskIntoConstraints = false
+        editButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 10).isActive = true
+        editButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        editButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10).isActive = true
+        editButton.widthAnchor.constraint(greaterThanOrEqualToConstant: 30).isActive = true
+        editButton.setTitle("Edit", for: .normal)
+        editButton.setTitleColor(style.buttonTextColor, for: .normal)
+        editButton.addTarget(self, action: #selector(editCard(_:)), for: .touchUpInside)
         
-        
-        scrollView.addSubview(reveal)
+        self.addSubview(reveal)
         reveal.translatesAutoresizingMaskIntoConstraints = false
-        reveal.topAnchor.constraint(equalTo: question.bottomAnchor, constant: 10).isActive = true
+        reveal.topAnchor.constraint(equalTo: self.topAnchor, constant: 10).isActive = true
         reveal.heightAnchor.constraint(equalToConstant: 30).isActive = true
         reveal.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         reveal.widthAnchor.constraint(greaterThanOrEqualToConstant: 30).isActive = true
         reveal.setTitle("Show Answer", for: .normal)
-        reveal.setTitleColor(.blue, for: .normal)
+        reveal.setTitleColor(style.buttonTextColor, for: .normal)
         reveal.isHidden = true
         reveal.addTarget(self, action: #selector(toggleAnswer(_:)), for: .touchUpInside)
         
-        scrollView.addSubview(answer)
-        answer.translatesAutoresizingMaskIntoConstraints = false
-        answer.topAnchor.constraint(equalTo: reveal.bottomAnchor, constant: 25).isActive = true
-        answer.heightAnchor.constraint(greaterThanOrEqualToConstant: 25).isActive = true
-        answer.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        answer.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-        answer.textAlignment = .center
-        answer.numberOfLines = 0
-        answer.isHidden = true
+        let addButton = UIButton()
+        self.addSubview(addButton)
+        addButton.translatesAutoresizingMaskIntoConstraints = false
+        addButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 10).isActive = true
+        addButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        addButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10).isActive = true
+        addButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        addButton.setImage(UIImage(named: "add"), for: .normal)
+        addButton.addTarget(self, action: #selector(addCard(_:)), for: .touchUpInside)
         
+        self.addSubview(scrollView)
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.topAnchor.constraint(equalTo: editButton.bottomAnchor, constant: 5).isActive = true
+        scrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        scrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
+        scrollView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+        
+        scrollView.addSubview(textData)
+        textData.translatesAutoresizingMaskIntoConstraints = false
+        textData.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
+        textData.heightAnchor.constraint(greaterThanOrEqualToConstant: 25).isActive = true
+        textData.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
+        textData.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+        textData.numberOfLines = 0
+        textData.textAlignment = .center
+        
+        
+        
+
         let bottomView = UIView()
         scrollView.addSubview(bottomView)
         bottomView.translatesAutoresizingMaskIntoConstraints = false
-        bottomView.topAnchor.constraint(equalTo: answer.bottomAnchor, constant: 10).isActive = true
-        bottomView.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        bottomView.topAnchor.constraint(equalTo: textData.bottomAnchor).isActive = true
+        bottomView.heightAnchor.constraint(equalToConstant: 10).isActive = true
         bottomView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
         bottomView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
         bottomView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
@@ -71,27 +97,35 @@ class FlashCardView: UIView {
     func refresh() {
         scrollView.setContentOffset(CGPoint(x: 0, y: -self.scrollView.contentInset.top), animated: false)
         if let card = card {
-            question.text = card.question
+            textData.text = card.question
             reveal.isHidden = false
             reveal.setTitle("Show Answer", for: .normal)
-            answer.text = card.answer
-            answer.isHidden = true
         }
         else {
-            question.text = "Add a new flash card by tapping the top right menu"
+            textData.text = "Add a new flash card by tapping the plus button"
         }
     }
     
     @objc func toggleAnswer(_ sender: UIButton) {
-        if answer.isHidden {
-            answer.isHidden = false
-            reveal.setTitle("Hide Answer", for: .normal)
+        if isFront {
+            textData.text = card?.answer
+            reveal.setTitle("Show Question", for: .normal)
+            isFront = false
         }
         else {
-            answer.isHidden = true
+            textData.text = card?.question
+            isFront = true
             reveal.setTitle("Show Answer", for: .normal)
         }
         
+    }
+    
+    @objc func addCard(_ sender: UIButton) {
+        delegate?.addCard()
+    }
+    
+    @objc func editCard(_ sender: UIButton) {
+        delegate?.editCard()
     }
 
 }

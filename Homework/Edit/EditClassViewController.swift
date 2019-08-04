@@ -316,7 +316,7 @@ class EditClassViewController: UIViewController {
                 schoolClass?.emailAddress = emailInput.text
                 schoolClass?.location = roomNumber.text
                 persistantData!.appDelegate.saveContext()
-                navigationController?.popToRootViewController(animated: true)
+                navigationController?.popViewController(animated: true)
             }
             else {
                 let alert = UIAlertController(title: "Pick a different name",
@@ -343,7 +343,7 @@ class EditClassViewController: UIViewController {
     }
     
     @objc func cancel(_ sender:UIBarButtonItem) {
-        self.navigationController?.popToRootViewController(animated: true)
+        self.navigationController?.popViewController(animated: true)
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
