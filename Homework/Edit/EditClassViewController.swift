@@ -316,7 +316,7 @@ class EditClassViewController: UIViewController {
                 schoolClass?.emailAddress = emailInput.text
                 schoolClass?.location = roomNumber.text
                 persistantData!.appDelegate.saveContext()
-                navigationController?.popViewController(animated: true)
+                navigationController?.popToRootViewController(animated: true)
             }
             else {
                 let alert = UIAlertController(title: "Pick a different name",
